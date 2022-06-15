@@ -22,6 +22,10 @@
     color: white;
 }
 
+.search-on-nav {
+    border-color: white;
+}
+
 .header_bottom .nav-link {
     color: white;
 }

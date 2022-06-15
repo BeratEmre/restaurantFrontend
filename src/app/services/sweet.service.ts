@@ -4,12 +4,13 @@ import { Observable } from 'rxjs/internal/Observable';
 import { ListResponseModel } from '../models/list-response-model';
 import { SweetModel } from '../models/sweet-model';
 import { ResponseModel } from '../models/response-model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SweetService {
-  apiUrl = 'https://localhost:44312/api/';
+  apiUrl = environment.sweetUrl;
   constructor(private httpClient:HttpClient) { }
 
   getSweets():Observable<ListResponseModel<SweetModel>> {

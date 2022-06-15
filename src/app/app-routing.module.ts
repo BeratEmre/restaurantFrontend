@@ -16,6 +16,8 @@ const routes: Routes = [
   {path:"GirisYap",component:LoginComponent},
   {path:"Kaydol",component:SignupComponent},
   {path:"sepetim",component:MyBasketComponent},
+  {path:"**",pathMatch:"full",component:HomeComponent},
+
 ];
 
 @NgModule({
