@@ -1,3 +1,74 @@
+.carousel-item {
+    text-align: center;
+}
+
 .carousel-item .card {
     display: inline-block !important;
+}
+
+.carousel-control-prev-icon {
+    background-image: url(../../../assets/icons/left.png);
+    transition: all .3s ease-in-out;
+}
+
+.carousel-control-prev-icon:hover {
+    transform: scale(1.2);
+}
+
+.carousel-control-next-icon {
+    background-image: url(../../../assets/icons/right.png);
+    transition: all .3s ease-in-out;
+}
+
+.carousel-control-next-icon:hover {
+    transform: scale(1.2);
+}
+
+.bck-img {
+    background-image: url(../../../assets/salmon-7.jpg);
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-position: center;
+    background-size: 100%;
+    height: 500px;
+    width: 100%;
+}
+
+.img-content {
+    padding: 30px 50px;
+    background: rgb(0, 0, 0, .5);
+    color: white;
+    top: 100%;
+    position: relative;
+    transform: translateY(-100%) scale(0.94);
+    width: 100%;
+    filter: blur(4px);
+    animation: scale 2s forwards;
+}
+
+@keyframes scale {
+    100% {
+        transform: translateY(-100%) scale(1);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.content-header {
+    color: var(--green);
+}
+
+.content-text {
+    font-size: 19px;
+}
+
+.name {
+    font-size: 22px;
+    color: var(--cream);
+}
+
+.r {
+    font-size: 22px;
+    color: #361500;
+    font-weight: 600;
 }

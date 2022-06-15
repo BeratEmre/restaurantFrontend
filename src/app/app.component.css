@@ -1,3 +1,46 @@
 .header_bottom {
-    background-color: rgb(40, 40, 43);
+    background-color: var(--green);
+    color: white;
+}
+
+.restaurant-name {
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--cream)!important;
+}
+
+.nav-item .dropdown {
+    background-color: var(--green);
+}
+
+.nav-item .dropdown fa-icon {
+    font-size: 30px;
+}
+
+.nav-item .dropdown .dropdown-toggle {
+    padding: 0px 10px;
+    color: white;
+}
+
+.header_bottom .nav-link {
+    color: white;
+}
+
+footer {
+    background-color: var(--green);
+    padding: 60px 100px;
+    color: white;
+    margin-top: 80px;
+}
+
+footer .icon {
+    text-align: center;
+}
+
+footer .col h5 {
+    text-decoration: underline;
+}
+
+.contact-span {
+    text-decoration: none;
 }

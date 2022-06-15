@@ -1,0 +1,20 @@
+.card-element {
+    align-self: center;
+}
+
+.number-of-producs {
+    font-size: 20px;
+}
+
+.number-of-producs .fa-icon {
+    background-color: gray;
+    display: inline;
+    padding: 5px 8px;
+    color: white;
+}
+
+.number-of-producs-text {
+    padding: 5px 11px;
+    align-self: center;
+    background-color: var(--green);
+}

@@ -1,0 +1,23 @@
+.login-row {
+    --bs-gutter-x: 0rem;
+}
+
+.img-content {
+    padding: 30px 50px;
+    background: rgb(0, 0, 0, .5);
+    color: white;
+    top: 100%;
+    position: absolute;
+    transform: translateY(-100%) scale(0.94);
+    width: 50%;
+    filter: blur(4px);
+    animation: scale 2s forwards;
+}
+
+@keyframes scale {
+    100% {
+        transform: translateY(-100%) scale(1);
+        opacity: 1;
+        filter: blur(0);
+    }
+}

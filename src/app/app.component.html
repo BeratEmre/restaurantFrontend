@@ -1,10 +1,8 @@
 <div class="header_bottom">
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="index.html">
-                <span>
-            BenimRestoranım
-          </span>
+            <a class="navbar-brand restaurant-name" href="index.html">                   
+                Benim<span style="color: #361500">R</span>estoranım            
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,21 +10,40 @@
         </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ">
+
+                <form class="d-flex mx-auto" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Ara" aria-label="Search">
+                    <button class="btn btn-outline-success hover-effect" type="submit"><fa-icon [icon]="faSearch"></fa-icon></button>
+                </form>
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/anasayfa">Anasayfa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html"> About</a>
+                        <a class="nav-link" href="about.html"> İçecekler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="product.html">Products</a>
+                        <a class="nav-link" href="product.html">Yiyecekler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="why.html">Why Us</a>
+                        <a class="nav-link" href="why.html">Menüler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="testimonial.html">Testimonial</a>
+                        <a class="nav-link" href="/sepetim">Sepetim</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <fa-icon [icon]="faUser"></fa-icon>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Profilim</a></li>
+                                <li><a class="dropdown-item" href="#">Geçmiş Siparişlerim</a></li>
+                                <li><a class="dropdown-item" href="/GirisYap">Giriş Yap</a></li>
+                            </ul>
+                        </div>
+
                     </li>
                 </ul>
             </div>
@@ -37,3 +54,36 @@
 <div class="container">
     <router-outlet></router-outlet>
 </div>
+<footer>
+    <p class="restaurant-name"> Benim<span style="color: #361500">R</span>estoranım</p>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col">
+            <h5>İletişim</h5>
+            <p><span class="contact-span">Mail Adresimiz</span><br>
+                <a href="mailto:hege@example.com">hege@example.com</a><br> <span class="contact-span"> Telefon Numaramız</span><br>
+                <a href="mailto:hege@example.com">5055832425</a><br> <span class="contact-span">Mail Adresimiz</span><br>
+                <a href="mailto:hege@example.com">hege@example.com</a>
+            </p>
+        </div>
+        <div class="col">
+            <h5>Kampanyalar</h5>
+            <p>
+                <a href="#">Aktif Kampanyalar</a><br>
+                <a href="#">Fırsatlar</a>
+            </p>
+        </div>
+        <div class="col">
+            <h5>Yardım</h5>
+            <p>
+                <a href="#">Sık Sorulan Sorular</a><br>
+            </p>
+        </div>
+
+
+    </div>
+    <hr>
+    <div class="icon">
+        <div> © Berat BAYRAKTAR tarafından yapıldı.</div>
+        <i class="fab fa-instagram"></i>
+    </div>
+</footer>
