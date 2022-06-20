@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SweetService {
-  apiUrl = environment.sweetUrl;
+  apiUrl = environment.apiUrl;
   constructor(private httpClient:HttpClient) { }
 
   getSweets():Observable<ListResponseModel<SweetModel>> {

@@ -108,13 +108,27 @@
         <h3 class="mb-4">Menüler</h3>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
-            <div class="col">
+            <div class="col" *ngFor="let menu of this.menuList">
+                <div class="card " style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Menu Başlığı</h5>
+                        <p class="card-text">Menu Açıklaması</p>
+                        <div class="priceAndAddToCard"> <span class="price">{{(menu.food.price + menu.drink.price+menu.sweet.price).toFixed(2)}} TL</span>
+                            <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Sepete Ekle</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col">
                 <div class="card " style="width: 18rem;">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <div class="priceAndAddToCard"> <span class="price">110.00 Tl</span>
+                            <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Go somewhere</a></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,20 +138,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <div class="priceAndAddToCard"> <span class="price">110.00 Tl</span>
+                            <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Go somewhere</a></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card " style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -149,7 +155,20 @@
         <h3 class="mb-4">Yemekler</h3>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
-            <div class="col">
+            <div class="col" *ngFor="let food of foodList">
+                <div class="card " style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{food.name}}</h5>
+                        <p class="card-text">{{food.description}}</p>
+                        <div class="priceAndAddToCard"> <span class="price">{{food.price.toFixed(2)}} Tl</span>
+                            <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Sepete Ekle</a></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col">
                 <div class="card " style="width: 18rem;">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
@@ -168,17 +187,7 @@
                         <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card " style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -189,7 +198,19 @@
         <h3 class="mb-4">İçecekler</h3>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
-            <div class="col">
+            <div class="col" *ngFor="let drink of drinkList">
+                <div class="card " style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{drink.name}}</h5>
+                        <p class="card-text">{{drink.description}}</p>
+                        <div class="priceAndAddToCard"> <span class="price">{{drink.price.toFixed(2)}} Tl</span>
+                            <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Sepete Ekle</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col">
                 <div class="card " style="width: 18rem;">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
@@ -208,17 +229,7 @@
                         <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card " style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -234,7 +245,9 @@
                         <div class="card-body">
                             <h5 class="card-title">{{sweet.name}}</h5>
                             <p class="card-text">{{sweet.sweetId}}</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <div class="priceAndAddToCard"> <span class="price">{{sweet.price.toFixed(2)}} Tl</span>
+                                <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Sepete Ekle</a></div>
+                            </div>
                         </div>
                     </div>
                 </div>

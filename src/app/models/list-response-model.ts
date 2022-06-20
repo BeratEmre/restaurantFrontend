@@ -1,5 +1,5 @@
 export interface ListResponseModel<T> {
     data:T[];
-    succes:boolean;
+    success:boolean;
     message:string;
 }
