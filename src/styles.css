@@ -5,6 +5,9 @@
     --green: rgb(0, 200, 151);
     --shinygreen: #53BF9D;
     --cream: rgb(245, 223, 153);
+    --red: rgb(221, 74, 72);
+    --add: rgb(16, 86, 82);
+    --edit: rgb(255, 195, 0);
 }
 
 body {

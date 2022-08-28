@@ -1,53 +1,72 @@
-<dir class="container" style="background-color: rgb(54, 69, 79,.7);">
-    <div class="row p-4 row-cols-2 row-cols-lg-4 g-2 g-lg-3 gap-2 ">
-        <div class="card col">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                <a class="ms-2">
-                        Sepete Ekle
-                        <fa-icon [icon]="plus" class="ms-1"></fa-icon>
-                    </a>
-            </div>
-        </div>
+<dir class="container">
+    <div class="buttons">
+        <button type="button" class="btn btn-success me-3">İçecek Ekle</button>
+        <button type="button" class="btn btn-danger">Exele Aktar</button>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr class="border">
+                <th class="text-center colspan-5" colspan="6">
+                    <h4>İçecek Listesi</h4>
+                </th>
+            </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Resmi</th>
+                <th scope="col">İsmi</th>
+                <th scope="col">Açıklaması</th>
+                <th scope="col">Fyatı</th>
+                <th scope="col" [width]="75">İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let drink of drinks">
+                <th>{{drink.drinkId}}</th>
+                <td>
+                    <img src="{{imgUrl}}{{drink.imgUrl}}" alt="" style="width: 100px;">
+                </td>
+                <td>{{drink.name}}</td>
+                <td>{{drink.description}}</td>
+                <td>{{drink.price}}</td>
+                <td class="process">
+                    <fa-icon [icon]="edit" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updatingDrink(drink.drinkId)"></fa-icon>
+                    <fa-icon class="ms-2" [icon]="trash"></fa-icon>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</dir>
 
-        <div class="card col">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                <a class="ms-2">
-                        Sepete Ekle
-                        <fa-icon [icon]="plus" class="ms-1"></fa-icon>
-                    </a>
+<div class="modal" tabindex="-1" id="exampleModal">
+    <div class="modal-dialog">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title">Ürün Güncelleme</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </div>
-        <div class="card col">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                <a class="ms-2">
-                        Sepete Ekle
-                        <fa-icon [icon]="plus" class="ms-1"></fa-icon>
-                    </a>
-            </div>
-        </div>
-        <div class="card col">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                <a class="ms-2">
-                        Sepete Ekle
-                        <fa-icon [icon]="plus" class="ms-1"></fa-icon>
-                    </a>
-            </div>
+            <form (submit)="updateDrink();" onsubmit="return false">
+                <div class="mb-3">
+                    <input type="file" #imgUpdateInput class="form-control" id="imgUpdateInput">
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nameUpdateInput" [(ngModel)]="willUpdatingDrink.name" name="name" placeholder="İsim Giriniz">
+                    <label for="nameUpdateInput">İsim</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="explanationUpdateInput" [(ngModel)]="willUpdatingDrink.description" name="description" placeholder="Açıklama Giriniz">
+                    <label for="explanationUpdateInput">Açıklama</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="number" min="1" class="form-control" id="priceUpdateInput" [(ngModel)]="willUpdatingDrink.price" name="price" placeholder="Fiyat Giriniz">
+                    <label for="priceUpdateInput">Fiyat</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #closeModal>kapat</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
         </div>
     </div>
-</dir>
+</div>

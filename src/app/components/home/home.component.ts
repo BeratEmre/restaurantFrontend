@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { DrinkModel } from 'src/app/models/drink-model';
 import { FoodModel } from 'src/app/models/food-model';
 import { MenuModel } from 'src/app/models/menu-model';
+import { OrderModel } from 'src/app/models/order';
 import { SweetModel } from 'src/app/models/sweet-model';
 import { DrinkService } from 'src/app/services/drink.service';
 import { FoodService } from 'src/app/services/food.service';
 import { MenuService } from 'src/app/services/menu.service';
+import { OrderService } from 'src/app/services/order.service';
 import { SweetService } from 'src/app/services/sweet.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +18,16 @@ import { SweetService } from 'src/app/services/sweet.service';
 })
 export class HomeComponent implements OnInit {
 
+  drinkImgUrl=environment.imgUrl+'/drinks/';
+
+
   sweetList: SweetModel[] = [];
   drinkList: DrinkModel[] = [];
   foodList: FoodModel[] = [];
   menuList: MenuModel[] = [];
 
   constructor(private sweetService: SweetService, private drinkService: DrinkService, private foodService: FoodService,
-      private menuService:MenuService) {
+      private menuService:MenuService, private orderService:OrderService) {
     this.getAllProducts();
   }
 
@@ -52,5 +58,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  addToCard(food:FoodModel){
+     var order=new OrderModel();
+     order.FoodId=food.foodId;
+     
+    this.orderService.addBasket(order).subscribe(p=>{
+      console.log(p);
+    })
+  }
 }
