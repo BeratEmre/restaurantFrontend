@@ -1,9 +1,9 @@
 <dir class="container">
     <div class="buttons">
-        <button type="button" class="btn btn-success me-3">İçecek Ekle</button>
-        <button type="button" class="btn btn-danger">Exele Aktar</button>
+        <button (click)="resetAddForm()" type="button" class="btn btn-success me-3" data-bs-toggle="modal" data-bs-target="#addModal">İçecek Ekle</button>
+        <button type="button" class="btn btn-danger" (click)="ExportTOExcel()">Exele Aktar</button>
     </div>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" #TABLE>
         <thead>
             <tr class="border">
                 <th class="text-center colspan-5" colspan="6">
@@ -15,7 +15,7 @@
                 <th scope="col">Resmi</th>
                 <th scope="col">İsmi</th>
                 <th scope="col">Açıklaması</th>
-                <th scope="col">Fyatı</th>
+                <th scope="col">Fyatı (₺)</th>
                 <th scope="col" [width]="75">İşlem</th>
             </tr>
         </thead>
@@ -29,21 +29,22 @@
                 <td>{{drink.description}}</td>
                 <td>{{drink.price}}</td>
                 <td class="process">
-                    <fa-icon [icon]="edit" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updatingDrink(drink.drinkId)"></fa-icon>
-                    <fa-icon class="ms-2" [icon]="trash"></fa-icon>
+                    <fa-icon [icon]="edit" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="updatingDrink(drink.drinkId)"></fa-icon>
+                    <fa-icon class="ms-2" [icon]="trash" data-bs-toggle="modal" data-bs-target="#removeDrinkModal" (click)="removingDrinkFind(drink.drinkId)"></fa-icon>
                 </td>
             </tr>
         </tbody>
     </table>
 </dir>
 
-<div class="modal" tabindex="-1" id="exampleModal">
+<div class="modal" tabindex="-1" id="updateModal">
     <div class="modal-dialog">
         <div class="modal-content ">
             <div class="modal-header">
                 <h5 class="modal-title">Ürün Güncelleme</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <form (submit)="updateDrink();" onsubmit="return false">
                 <div class="mb-3">
                     <input type="file" #imgUpdateInput class="form-control" id="imgUpdateInput">
@@ -69,4 +70,81 @@
             </form>
         </div>
     </div>
+</div>
+
+
+<div class="modal" tabindex="-1" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title">Ürün Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form [formGroup]="addForm" (ngSubmit)="addDrink()" onsubmit="return false">
+                <div class="mb-3">
+                    <input formControlName="formFile" type="file" class="form-control" (change)="onFileChange($event)">
+                </div>
+                <div class="form-floating mb-3">
+                    <input formControlName="name" type="text" class="form-control" id="nameAddInput" placeholder="İsim Giriniz">
+                    <label for="nameAddInput">İsim</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input formControlName="description" type="text" class="form-control" id="explanationAddInput" placeholder="Açıklama Giriniz">
+                    <label for="explanationAddInput">Açıklama</label>
+                </div>
+
+                <div class="form-floating">
+                    <input formControlName="price" type="number" min="1" class="form-control" id="priceAddInput" placeholder="Fiyat Giriniz">
+                    <label for="priceAddInput">Fiyat</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #closeModal>kapat</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="removeDrinkModal">
+    <div class="modal-dialog">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title">Ürün Sil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="mb-3">
+                <p class="pt-3">Silmek İstediğinize Emin Misiniz?</p>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" (click)="removeDrink()" class="btn btn-primary">Sil</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="successMessageBox d-none" #successMessageBox>
+    <div class="row successBoxRow">
+        <div class="col-2" style="align-self: center;">
+            <fa-icon style="font-size: 30px;" [icon]="faCheckCircle"></fa-icon>
+        </div>
+        <div class="col-9">
+            <h5>Başarılı</h5>
+            <p>{{successMessage}}</p>
+        </div>
+        <div class="col-1">
+            <div (click)="closeSuccessMessageBox()" style="cursor: pointer;">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </div>
+        </div>
+    </div>
+    <div class="successBottom"></div>
 </div>

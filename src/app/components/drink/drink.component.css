@@ -2,6 +2,33 @@
     border-top: 0;
 }
 
+.successMessageBox {
+    background-color: #198754;
+    color: white;
+    width: 500px;
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    /* transform: translate(50%, -50%); */
+    z-index: 1100;
+}
+
+@media (min-width:750px) {
+    .modal-dialog {
+        max-width: 700px;
+    }
+}
+
+.successBoxRow {
+    padding: 20px;
+}
+
+.successBottom {
+    width: 75%;
+    height: 8px;
+    background-color: rgba(13, 255, 142, 0.6);
+}
+
 .buttons {
     text-align: center;
     margin-top: 50px;

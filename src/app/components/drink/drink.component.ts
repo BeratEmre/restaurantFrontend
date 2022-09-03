@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Component,  ElementRef,  OnInit, ViewChild } from '@angular/core';
-import { faEdit, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { faCheckCircle, faEdit, faPlus, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { DrinkModel } from 'src/app/models/drink-model';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { DrinkService } from 'src/app/services/drink.service';
 import { environment } from 'src/environments/environment';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-drink',
@@ -14,24 +15,38 @@ import { environment } from 'src/environments/environment';
 export class DrinkComponent implements OnInit {
   @ViewChild("closeModal") closeModal: ElementRef;
   @ViewChild("imgUpdateInput") imgFileModal: ElementRef;
-  imgUrl=environment.imgUrl+'/drinks/';
-  edit=faEdit;
-  trash=faTrashAlt;
-  drinks:DrinkModel[]=[];
-  fileModel:FileUploadModal<DrinkModel>=new FileUploadModal();
-  willUpdatingDrink:DrinkModel=new DrinkModel();
-  imgFile:FileSystem;
-  constructor(private drinkService:DrinkService, private http:HttpClient) { }
+  @ViewChild("successMessageBox") successMessageBox: ElementRef;
+  @ViewChild('TABLE', { static: false }) exportTable: ElementRef; 
+  imgUrl = environment.imgUrl + '/drinks/';
 
-  changeDen(a:any)
-  {
-    console.log(a)
-  }
+  edit = faEdit;
+  trash = faTrashAlt;
+  faTimes=faTimes;
+  faCheckCircle=faCheckCircle;
+  successMessage='';
+  drinks: DrinkModel[] = [];
+  fileModel: FileUploadModal<DrinkModel> = new FileUploadModal();
+  willUpdatingDrink: DrinkModel = new DrinkModel();
+  removingDrink:DrinkModel=new DrinkModel();
+
+  imgFile: FileSystem;
+  
+    addForm = new FormGroup({
+      formFile: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")])
+    });
+  
+
+
+  constructor(private drinkService: DrinkService) { }
+
   ngOnInit(): void {
     this.getDrinks();
   }
 
-  getDrinks(){
+  getDrinks() {
     this.drinkService.getDrinks().subscribe(res => {
       if (res.success)
         this.drinks = res.data;
@@ -39,42 +54,105 @@ export class DrinkComponent implements OnInit {
     });
   }
 
-  updatingDrink(id:number){
-    var re=this.drinks.find(d=>d.drinkId==id)
-    if(re!=undefined){
-      this.willUpdatingDrink=re;
+  updatingDrink(id: number) {
+    var re = this.drinks.find(d => d.drinkId == id)
+    if (re != undefined) {
+      this.willUpdatingDrink = re;
     }
   }
 
-  updateDrink(){
+  resetAddForm() {
+    console.log(this.addForm.controls['name'])
+    this.addForm.controls['name'].setValue('');
+    this.addForm.controls['description'].setValue('');
+    this.addForm.controls['price'].setValue('');
+    this.addForm.controls['formFile'].setValue('');
 
-    this.fileModel.model=this.willUpdatingDrink;
-    if(this.imgFileModal.nativeElement.files.length !== 0){
-      this.fileModel.formFile=this.imgFileModal.nativeElement.files[0];
-      var res=URL.createObjectURL(this.imgFileModal.nativeElement.files[0])
+  }
+
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.addForm.patchValue({
+        formFile: file
+      });
     }
-    
-    const formData=this.formDataSets();
+  }
 
-    this.drinkService.updateDrink(formData).subscribe(res=>{
+  addDrink(): boolean {
+    console.log(this.addForm)
+    if (this.addForm.status == "INVALID")
+      return false;
+
+    var formData = this.formDataSetsForAdd()
+    this.drinkService.addDrink(formData).subscribe(res => {
       if (res.success) {
-        this.drinks.forEach(d=>{
-          if (d.drinkId==res.data.drinkId) 
-            d=res.data          
-        })        
+        this.drinks.push(res.data); 
+        this.successMessage ='Ürün Ekleme İşlemi Başarıyla Gerçekleşti';
+        this.successMessageBox.nativeElement.classList.remove('d-none')
+        this.resetAddForm();
+      }
+    });
+
+    return true;
+  }
+
+  formDataSetsForAdd(): FormData {
+    console.log(this.addForm.value.formFile)
+    const formData = new FormData();
+    formData.append('formFile', this.addForm.value.formFile as string);
+    formData.append('name', this.addForm.value.name as string);
+    formData.append('description', this.addForm.value.description as string);
+    formData.append('price', this.addForm.value.price as string);
+    return formData;
+  }
+
+  updateDrink() {
+    this.fileModel.model = this.willUpdatingDrink;
+
+    const formData = this.formDataSets();
+
+    this.drinkService.updateDrink(formData).subscribe(res => {
+      if (res.success) {
+        this.drinks.forEach(d => {
+          if (d.drinkId == res.data.drinkId)
+            d = res.data
+        })
       }
     });
   }
 
-  formDataSets():FormData{   
+  formDataSets(): FormData {
     const formData = new FormData();
 
-    formData.append('formFile',this.fileModel.formFile,this.fileModel.formFile.name);
-    formData.append('description',this.fileModel.model.description);
-    formData.append('name',this.fileModel.model.name);
-    formData.append('imgUrl',this.fileModel.model.imgUrl);
-    formData.append('price',this.fileModel.model.price.toString());
-    formData.append('drinkId',this.fileModel.model.drinkId.toString());
+    formData.append('formFile', this.fileModel.formFile, this.fileModel.formFile.name);
+    formData.append('description', this.fileModel.model.description);
+    formData.append('name', this.fileModel.model.name);
+    formData.append('imgUrl', this.fileModel.model.imgUrl);
+    formData.append('price', this.fileModel.model.price.toString());
+    formData.append('drinkId', this.fileModel.model.drinkId.toString());
     return formData;
   }
+  
+  closeSuccessMessageBox(){
+    this.successMessageBox.nativeElement.classList.add('d-none')
+  }
+  removingDrinkFind(id:number){
+    var re = this.drinks.find(d => d.drinkId == id)
+    if (re != undefined) {
+      this.removingDrink = re;
+    }
+  }
+
+  removeDrink(){
+   console.log(this.removingDrink)
+  }
+
+  ExportTOExcel() {  
+    console.log(this.exportTable)
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.exportTable.nativeElement);  
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();  
+    XLSX.utils.book_append_sheet(wb, ws, 'Exel');
+    XLSX.writeFile(wb, 'İçecek Listesi.xlsx');  
+  }  
 }

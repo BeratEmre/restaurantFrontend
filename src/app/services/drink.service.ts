@@ -19,6 +19,10 @@ export class DrinkService {
     let newPath=this.apiUrl+"Drinks/getall"
     return this.httpClient.get<ListResponseModel<DrinkModel>>(newPath);     
   }
+  addDrink(formData:FormData):Observable<ResponseModel<DrinkModel>> {
+    let newPath=this.apiUrl+"Drinks/add";
+    return this.httpClient.post<ResponseModel<DrinkModel>>(newPath,formData);     
+  }
 
   updateDrink(formData:FormData):Observable<ResponseModel<DrinkModel>> {
     let newPath=this.apiUrl+"Drinks/update";
