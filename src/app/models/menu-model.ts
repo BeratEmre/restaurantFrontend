@@ -4,6 +4,12 @@ import { SweetModel } from "./sweet-model";
 
 export class MenuModel {
     menuId: number = 0;
+    name: string = '';
+    description: string = '';
+    imgUrl:string='';
+    price:number=0;
+
+    foodId: number = 0;
     food: FoodModel = new FoodModel();
 
     drinkId: number = 0;

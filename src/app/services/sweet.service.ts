@@ -17,4 +17,18 @@ export class SweetService {
     let newPath=this.apiUrl+"Sweets/getall"
     return this.httpClient.get<ListResponseModel<SweetModel>>(newPath);     
   }
+  addSweet(formData:FormData):Observable<ResponseModel<SweetModel>> {
+    let newPath=this.apiUrl+"Sweets/add";
+    return this.httpClient.post<ResponseModel<SweetModel>>(newPath,formData);     
+  }
+
+  updateSweet(formData:FormData):Observable<ResponseModel<SweetModel>> {
+    let newPath=this.apiUrl+"Sweets/update";
+    return this.httpClient.post<ResponseModel<SweetModel>>(newPath,formData);     
+  }
+
+  remove(id: number) {
+    let newPath=this.apiUrl+"Sweets/Remove?id="+id;
+    return this.httpClient.post<ResponseModel<SweetModel>>(newPath,null);
+  }
 }

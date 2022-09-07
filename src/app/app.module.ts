@@ -13,6 +13,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { MyBasketComponent } from './components/my-basket/my-basket.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DrinkComponent,
     LoginComponent,
     SignupComponent,
-    MyBasketComponent
+    MyBasketComponent,
+    MenuComponent
   ],
   imports: [
     HttpClientModule,

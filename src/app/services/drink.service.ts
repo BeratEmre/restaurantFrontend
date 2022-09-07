@@ -12,6 +12,7 @@ import { ResponseModel } from '../models/response-model';
 })
 export class DrinkService {
 
+
   apiUrl = environment.apiUrl;
   constructor(private httpClient:HttpClient) { }
 
@@ -27,5 +28,10 @@ export class DrinkService {
   updateDrink(formData:FormData):Observable<ResponseModel<DrinkModel>> {
     let newPath=this.apiUrl+"Drinks/update";
     return this.httpClient.post<ResponseModel<DrinkModel>>(newPath,formData);     
+  }
+
+  remove(id: number) {
+    let newPath=this.apiUrl+"Drinks/Remove?id="+id;
+    return this.httpClient.post<ResponseModel<DrinkModel>>(newPath,null);
   }
 }

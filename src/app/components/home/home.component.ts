@@ -19,7 +19,8 @@ import { environment } from 'src/environments/environment';
 export class HomeComponent implements OnInit {
 
   drinkImgUrl=environment.imgUrl+'/drinks/';
-
+  foodImgUrl=environment.imgUrl+'/foods/';
+  sweetImgUrl = environment.imgUrl + '/sweets/';
 
   sweetList: SweetModel[] = [];
   drinkList: DrinkModel[] = [];

@@ -14,8 +14,8 @@ import * as XLSX from 'xlsx';
 })
 export class DrinkComponent implements OnInit {
   @ViewChild("closeModal") closeModal: ElementRef;
-  @ViewChild("imgUpdateInput") imgFileModal: ElementRef;
   @ViewChild("successMessageBox") successMessageBox: ElementRef;
+  @ViewChild("closeRemovePopup") closeRemovePopup: ElementRef;
   @ViewChild('TABLE', { static: false }) exportTable: ElementRef; 
   imgUrl = environment.imgUrl + '/drinks/';
 
@@ -79,6 +79,12 @@ export class DrinkComponent implements OnInit {
     }
   }
 
+  updateFileChange(event:any){
+    if (event.target.files.length > 0) {
+      this.fileModel.formFile = event.target.files[0];
+    }
+  }
+
   addDrink(): boolean {
     console.log(this.addForm)
     if (this.addForm.status == "INVALID")
@@ -90,6 +96,7 @@ export class DrinkComponent implements OnInit {
         this.drinks.push(res.data); 
         this.successMessage ='Ürün Ekleme İşlemi Başarıyla Gerçekleşti';
         this.successMessageBox.nativeElement.classList.remove('d-none')
+        setTimeout(() => { this.closeSuccessMessageBox();}, 5000);
         this.resetAddForm();
       }
     });
@@ -118,6 +125,9 @@ export class DrinkComponent implements OnInit {
           if (d.drinkId == res.data.drinkId)
             d = res.data
         })
+        this.successMessage=res.data.name+" ürünü başarıyla güncellendi!";
+        this.successMessageBox.nativeElement.classList.remove('d-none');
+        setTimeout(() => { this.closeSuccessMessageBox();}, 5000);
       }
     });
   }
@@ -137,6 +147,7 @@ export class DrinkComponent implements OnInit {
   closeSuccessMessageBox(){
     this.successMessageBox.nativeElement.classList.add('d-none')
   }
+
   removingDrinkFind(id:number){
     var re = this.drinks.find(d => d.drinkId == id)
     if (re != undefined) {
@@ -146,6 +157,15 @@ export class DrinkComponent implements OnInit {
 
   removeDrink(){
    console.log(this.removingDrink)
+    this.drinkService.remove(this.removingDrink.drinkId).subscribe(s=>{
+      if (s.success) {
+        this.drinks=this.drinks.filter(d=>d.drinkId!=this.removingDrink.drinkId);
+        this.successMessage=s.data.name+" ürünü başarıyla silindi!";
+        this.successMessageBox.nativeElement.classList.remove('d-none');
+        setTimeout(() => { this.closeSuccessMessageBox();}, 5000);
+        this.closeRemovePopup.nativeElement.click()
+      }
+    });
   }
 
   ExportTOExcel() {  

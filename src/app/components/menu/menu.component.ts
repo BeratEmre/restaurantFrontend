@@ -2,32 +2,32 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCheckCircle, faEdit, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
-import { FoodModel } from 'src/app/models/food-model';
-import { FoodService } from 'src/app/services/food.service';
+import { MenuModel } from 'src/app/models/menu-model';
+import { MenuService } from 'src/app/services/menu.service';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-food',
-  templateUrl: './food.component.html',
-  styleUrls: ['./food.component.css']
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
 })
-export class FoodComponent implements OnInit {
+export class MenuComponent implements OnInit {
   @ViewChild("closeModal") closeUpdateModal: ElementRef;
   @ViewChild("successMessageBox") successMessageBox: ElementRef;
   @ViewChild("closeRemovePopup") closeRemovePopup: ElementRef;
   @ViewChild('TABLE', { static: false }) exportTable: ElementRef; 
-  imgUrl = environment.imgUrl + '/foods/';
+  imgUrl = environment.imgUrl + '/menus/';
 
   edit = faEdit;
   trash = faTrashAlt;
   faTimes=faTimes;
   faCheckCircle=faCheckCircle;
   successMessage='';
-  foods: FoodModel[] = [];
-  fileModel: FileUploadModal<FoodModel> = new FileUploadModal();
-  willUpdatingFood: FoodModel = new FoodModel();
-  removingFood:FoodModel=new FoodModel();
+  menus: MenuModel[] = [];
+  fileModel: FileUploadModal<MenuModel> = new FileUploadModal();
+  willUpdatingMenu: MenuModel = new MenuModel();
+  removingMenu:MenuModel=new MenuModel();
 
   imgFile: FileSystem;
   
@@ -40,40 +40,42 @@ export class FoodComponent implements OnInit {
   
 
 
-  constructor(private foodService: FoodService) { }
+  constructor(private menuService: MenuService) { }
 
   ngOnInit(): void {
-    this.getFoods();
+    this.getMenus();
   }
 
-  getFoods() {
-    this.foodService.getFoods().subscribe(res => {
+  getMenus() {
+    this.menuService.getMenus().subscribe(res => {
       if (res.success)
-        this.foods = res.data;
-      console.log(this.foods)
+        this.menus = res.data;
+      console.log(this.menus)
     });
   }
 
-  updatingFood(id: number) {
-    var re = this.foods.find(d => d.foodId == id)
+  updatingMenu(id: number) {
+    var re = this.menus.find(d => d.menuId == id)
     if (re != undefined) {
-      this.willUpdatingFood = re;
+      this.willUpdatingMenu = re;
     }
   }
 
-  updatefood() {
-    this.fileModel.model = this.willUpdatingFood;
+  updateMenu() {
+    this.fileModel.model = this.willUpdatingMenu;
 
     const formData = this.formDataSets();
-    this.foodService.updateFood(formData).subscribe(res => {
+    this.menuService.updateMenu(formData).subscribe(res => {
       if (res.success) {
-        this.foods.forEach(d => {
-          if (d.foodId == res.data.foodId)
+        this.menus.forEach(d => {
+          if (d.menuId == res.data.menuId)
             d = res.data;
         })
         this.successMessage=res.data.name+" ürünü başarıyla güncellendi!";
         this.successMessageBox.nativeElement.classList.remove('d-none');
-        setTimeout(() => { this.closeSuccessMessageBox();}, 5000);
+        setTimeout(() => {
+          this.closeSuccessMessageBox()
+        }, 5000);
         this.closeUpdateModal.nativeElement.click();
       }
     });
@@ -102,18 +104,20 @@ export class FoodComponent implements OnInit {
     }
   }
 
-  addfood(): boolean {
+  addMenu(): boolean {
     console.log(this.addForm)
     if (this.addForm.status == "INVALID")
       return false;
 
     var formData = this.formDataSetsForAdd()
-    this.foodService.addFood(formData).subscribe(res => {
+    this.menuService.addMenu(formData).subscribe(res => {
       if (res.success) {
-        this.foods.push(res.data); 
+        this.menus.push(res.data); 
         this.successMessage ='Ürün Ekleme İşlemi Başarıyla Gerçekleşti';
         this.successMessageBox.nativeElement.classList.remove('d-none')
-        setTimeout(() => { this.closeSuccessMessageBox();}, 5000);
+        setTimeout(() => {
+          this.closeSuccessMessageBox()
+        }, 5000);
         this.resetAddForm();
       }
     });
@@ -141,7 +145,7 @@ export class FoodComponent implements OnInit {
     formData.append('name', this.fileModel.model.name);
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
-    formData.append('foodId', this.fileModel.model.foodId.toString());
+    formData.append('menuId', this.fileModel.model.menuId.toString());
     return formData;
   }
   
@@ -149,21 +153,23 @@ export class FoodComponent implements OnInit {
     this.successMessageBox.nativeElement.classList.add('d-none')
   }
 
-  removingFoodFind(id:number){
-    var re = this.foods.find(d => d.foodId == id)
+  removingMenuFind(id:number){
+    var re = this.menus.find(d => d.menuId == id)
     if (re != undefined) {
-      this.removingFood = re;
+      this.removingMenu = re;
     }
   }
 
-  removeFood(){
-   console.log(this.removingFood)
-    this.foodService.remove(this.removingFood.foodId).subscribe(s=>{
+  removeMenu(){
+   console.log(this.removingMenu)
+    this.menuService.remove(this.removingMenu.menuId).subscribe(s=>{
       if (s.success) {
-        this.foods=this.foods.filter(d=>d.foodId!=this.removingFood.foodId);
+        this.menus=this.menus.filter(d=>d.menuId!=this.removingMenu.menuId);
         this.successMessage=s.data.name+" ürünü başarıyla silindi!";
         this.successMessageBox.nativeElement.classList.remove('d-none');
-        setTimeout(() => { this.closeSuccessMessageBox();}, 5000);
+        setTimeout(() => {
+          this.closeSuccessMessageBox()
+        }, 5000);
         this.closeRemovePopup.nativeElement.click()
       }
     });
