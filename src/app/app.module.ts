@@ -9,11 +9,13 @@ import { SweetComponent } from './components/sweet/sweet.component';
 import { FoodComponent } from './components/food/food.component';
 import { DrinkComponent } from './components/drink/drink.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { MyBasketComponent } from './components/my-basket/my-basket.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './components/menu/menu.component';
+import { RegisterComponent } from './components/account/register/register.component';
+import { LoginComponent } from './components/account/login/login.component';
+import { AuthGuard } from './guard/auth-guard';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { MenuComponent } from './components/menu/menu.component';
     LoginComponent,
     SignupComponent,
     MyBasketComponent,
-    MenuComponent
+    MenuComponent,
+    RegisterComponent
   ],
   imports: [
     HttpClientModule,
@@ -35,7 +38,7 @@ import { MenuComponent } from './components/menu/menu.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

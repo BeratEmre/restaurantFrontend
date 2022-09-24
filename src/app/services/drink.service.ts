@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { DrinkModel } from '../models/drink-model';
 import { FileUploadModal } from '../models/file-upload-model';
+import { KeyValue } from '../models/key-value';
 import { ListResponseModel } from '../models/list-response-model';
 import { ResponseModel } from '../models/response-model';
 
@@ -20,6 +21,12 @@ export class DrinkService {
     let newPath=this.apiUrl+"Drinks/getall"
     return this.httpClient.get<ListResponseModel<DrinkModel>>(newPath);     
   }
+
+  getKeyValue():Observable<ListResponseModel<KeyValue>> {
+    let newPath=this.apiUrl+"Drinks/GetKeyValue"
+    return this.httpClient.get<ListResponseModel<KeyValue>>(newPath);     
+  }
+  
   addDrink(formData:FormData):Observable<ResponseModel<DrinkModel>> {
     let newPath=this.apiUrl+"Drinks/add";
     return this.httpClient.post<ResponseModel<DrinkModel>>(newPath,formData);     

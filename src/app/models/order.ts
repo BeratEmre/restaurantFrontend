@@ -1,8 +1,9 @@
 export class OrderModel {
-    OrderId: number = 0;
-    FoodId: number = 0;
-    DrinkId: number = 0;
-    SweetId: number = 0;
-    Status: number = 0;
-    Count:number=0;
+    orderId: number = 0;
+    foodId: number = 0;
+    drinkId: number = 0;
+    sweetId: number = 0;
+    status: number = 0;
+    count:number=0;
+    userId:number=0;
 }

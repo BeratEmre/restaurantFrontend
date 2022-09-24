@@ -1,6 +1,6 @@
 <dir class="container">
     <div class="buttons">
-        <button (click)="resetAddForm()" type="button" class="btn btn-success me-3" data-bs-toggle="modal" data-bs-target="#addModal">Menü Ekle</button>
+        <button (click)="resetAddForm();" type="button" class="btn btn-success me-3" data-bs-toggle="modal" data-bs-target="#addModal">Menü Ekle</button>
         <button type="button" class="btn btn-danger" (click)="ExportTOExcel()">Exele Aktar</button>
     </div>
     <table class="table table-striped table-bordered" #TABLE>
@@ -20,8 +20,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let menu of menus">
-                <th>{{menu.menuId}}</th>
+            <tr *ngFor="let menu of menus; let i = index">
+                <!-- <script>
+                    tableIndex++;
+                </script> -->
+                <th>{{i+1}}</th>
                 <td>
                     <img src="{{imgUrl}}{{menu.imgUrl}}" alt="" style="width: 100px;">
                 </td>
@@ -94,6 +97,50 @@
                     <label for="explanationAddInput">Açıklama</label>
                 </div>
 
+                <div class="mb-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" (click)="foodsGet();">
+                        <label class="form-check-label" for="inlineCheckbox1">Yiyecek Listesinden Ekle</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" (click)="drinksGet();">
+                        <label class="form-check-label" for="inlineCheckbox2">İçecek Listesinden Ekle</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" (click)="sweetsGet();">
+                        <label class="form-check-label" for="inlineCheckbox3">Tatlı Listesinden Ekle</label>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-md-3 mb-3 ">
+                    <div class="col d-none" #foodKeyValueHtml>
+                        <label for="foodSelect" class="form-label">Yiyecek Seçiniz</label>
+                        <select id="foodSelect" class="form-select" formControlName="foodId">
+                            <ng-container *ngFor="let food of foodKeyValue">
+                                <option value="{{food.key}}">{{food.value}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+
+                    <div class="col d-none" #drinkKeyValueHtml>
+                        <label for="drinkSelect" class="form-label">İçecek Seçiniz</label>
+                        <select id="drinkSelect" class="form-select" formControlName="drinkId">
+                            <ng-container *ngFor="let drink of drinkKeyValue">
+                                <option value="{{drink.key}}">{{drink.value}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+
+                    <div class="col d-none" #sweetKeyValueHtml>
+                        <label for="sweetSelect" class="form-label">Tatlı Seçiniz</label>
+                        <select id="sweetSelect" class="form-select" formControlName="sweetId">
+                            <ng-container *ngFor="let sweet of sweetKeyValue">
+                                <option value="{{sweet.key}}">{{sweet.value}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-floating">
                     <input formControlName="price" type="number" min="1" class="form-control" id="priceAddInput" placeholder="Fiyat Giriniz">
                     <label for="priceAddInput">Fiyat</label>
@@ -116,11 +163,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-
             <div class="mb-3">
                 <p class="pt-3">Silmek İstediğinize Emin Misiniz?</p>
             </div>
-
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #closeRemovePopup>Vazgeç</button>

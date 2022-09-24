@@ -1,6 +1,37 @@
 .header_bottom {
     background-color: var(--green);
     color: white;
+    position: fixed;
+    top: 0;
+    z-index: 1001;
+    width: 100%;
+}
+
+.admin-navbar {
+    height: 40px;
+    display: flex;
+}
+
+.admin-navbar-item div {
+    list-style: none;
+    display: inline-flex;
+    margin: auto;
+}
+
+.admin-navbar-item .admin-links li :hover {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+
+.admin-start {
+    position: absolute;
+    left: 25px;
+}
+
+.admin-links {
+    position: absolute;
+    right: 25px;
 }
 
 .restaurant-name {

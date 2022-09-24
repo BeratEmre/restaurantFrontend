@@ -7,7 +7,8 @@
 <div class="bck-img">
     <div class="img-content">
         <h3 class="content-header">Kolayca Sipariş Verin</h3>
-        <p class="content-text">Aradığınız çeşitlilik burada <span class="name">Benim<span class="r">R</span>estoranım</span>da !
+        <p class="content-text">Aradığınız çeşitlilik burada <span class="name">Benim<span
+                    class="r">R</span>estoranım</span>da !
         </p>
     </div>
 </div>
@@ -109,11 +110,11 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
             <div class="col" *ngFor="let menu of this.menuList">
                 <div class="card " style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="{{menuImgUrl}}{{menu.imgUrl}}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Menu Başlığı</h5>
                         <p class="card-text">Menu Açıklaması</p>
-                        <div class="priceAndAddToCard"> <span class="price">{{(menu.food.price + menu.drink.price+menu.sweet.price).toFixed(2)}} TL</span>
+                        <div class="priceAndAddToCard"> <span class="price">{{(menu.price).toFixed(2)}} TL</span>
                             <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Sepete Ekle</a></div>
                         </div>
                     </div>
@@ -136,7 +137,8 @@
                         <h5 class="card-title">{{food.name}}</h5>
                         <p class="card-text">{{food.description}}</p>
                         <div class="priceAndAddToCard"> <span class="price">{{food.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn"> <a (click)="addToCard(food)" class="btn btn-primary">Sepete Ekle</a></div>
+                            <div class="addToCardBtn"> <a (click)="addToCard(food)" class="btn btn-primary">Sepete
+                                    Ekle</a></div>
                         </div>
 
                     </div>
@@ -187,5 +189,36 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!--Sepetim -->
+<div class="basketCard">
+    <div class="card-header">
+        <h4 align="center"> Sepetiniz</h4>
+    </div>
+    <div class="card-body">
+        <ng-container *ngFor="let basket of basketList">
+
+            <div class="basket">
+                <h5 class="card-title" style="display: inline;">{{basket.name}}</h5>
+                <p class="card-text" style="display: inline;">
+                    {{basket.price}} TL
+                </p>
+            </div>
+            <p style="float: right;">
+                <fa-icon [icon]="faTrash"></fa-icon>
+                {{basket.count}}
+                <fa-icon [icon]="faPlus"></fa-icon>
+            </p>
+        </ng-container>
+    </div>
+    <div class="card-footer">
+        <p class="mb-4" style="text-align: initial;">
+            <b class="fs-22">Toplam</b>
+            <span style="float: right;">{{basketSum()}}</span>
+        </p>
+        <button class="greenBtn hover-effect">Sepete git</button>
+
     </div>
 </div>

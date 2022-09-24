@@ -11,4 +11,10 @@ export class AppComponent {
   faCoffee = faCoffee;
   faUser = faUserCircle;
   faSearch = faSearch;
+  isThisAdmin=false;
+  constructor() {
+    var token=localStorage.getItem('token');
+    if(token!=undefined && token!=null && token != '')
+      this.isThisAdmin=true;
+  }
 }

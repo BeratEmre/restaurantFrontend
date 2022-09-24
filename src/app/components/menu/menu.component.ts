@@ -2,8 +2,12 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCheckCircle, faEdit, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
+import { KeyValue } from 'src/app/models/key-value';
 import { MenuModel } from 'src/app/models/menu-model';
+import { DrinkService } from 'src/app/services/drink.service';
+import { FoodService } from 'src/app/services/food.service';
 import { MenuService } from 'src/app/services/menu.service';
+import { SweetService } from 'src/app/services/sweet.service';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
 
@@ -15,32 +19,42 @@ import * as XLSX from 'xlsx';
 export class MenuComponent implements OnInit {
   @ViewChild("closeModal") closeUpdateModal: ElementRef;
   @ViewChild("successMessageBox") successMessageBox: ElementRef;
+  @ViewChild("foodKeyValueHtml") foodKeyValueHtml: ElementRef;
+  @ViewChild("drinkKeyValueHtml") drinkKeyValueHtml: ElementRef;
+  @ViewChild("sweetKeyValueHtml") sweetKeyValueHtml: ElementRef;
   @ViewChild("closeRemovePopup") closeRemovePopup: ElementRef;
-  @ViewChild('TABLE', { static: false }) exportTable: ElementRef; 
+  @ViewChild('TABLE', { static: false }) exportTable: ElementRef;
   imgUrl = environment.imgUrl + '/menus/';
 
   edit = faEdit;
   trash = faTrashAlt;
-  faTimes=faTimes;
-  faCheckCircle=faCheckCircle;
-  successMessage='';
+  faTimes = faTimes;
+  faCheckCircle = faCheckCircle;
+  successMessage = '';
+
   menus: MenuModel[] = [];
+  sweetKeyValue: KeyValue[] = [];
+  drinkKeyValue: KeyValue[] = [];
+  foodKeyValue: KeyValue[] = [];
+
   fileModel: FileUploadModal<MenuModel> = new FileUploadModal();
   willUpdatingMenu: MenuModel = new MenuModel();
-  removingMenu:MenuModel=new MenuModel();
+  removingMenu: MenuModel = new MenuModel();
+  formFile:File;
 
   imgFile: FileSystem;
-  
-    addForm = new FormGroup({
-      formFile: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
-      price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")])
-    });
-  
 
+  addForm = new FormGroup({
+    formFile: new FormControl(''),
+    name: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
+    sweetId: new FormControl('', [Validators.pattern("^[0-9]*$")]),
+    foodId: new FormControl('', [Validators.pattern("^[0-9]*$")]),
+    drinkId: new FormControl('', [Validators.pattern("^[0-9]*$")]),
+  });
 
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService, private sweetService: SweetService, private foodService: FoodService, private drinkService: DrinkService) { }
 
   ngOnInit(): void {
     this.getMenus();
@@ -71,7 +85,7 @@ export class MenuComponent implements OnInit {
           if (d.menuId == res.data.menuId)
             d = res.data;
         })
-        this.successMessage=res.data.name+" ürünü başarıyla güncellendi!";
+        this.successMessage = res.data.name + " ürünü başarıyla güncellendi!";
         this.successMessageBox.nativeElement.classList.remove('d-none');
         setTimeout(() => {
           this.closeSuccessMessageBox()
@@ -92,28 +106,31 @@ export class MenuComponent implements OnInit {
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.addForm.patchValue({
-        formFile: file
-      });
+      this.formFile = event.target.files[0];      
+      // this.addForm.patchValue({
+      //   formFile: file
+      // });
     }
   }
-  updateFileChange(event:any){
+  updateFileChange(event: any) {
     if (event.target.files.length > 0) {
       this.fileModel.formFile = event.target.files[0];
     }
   }
 
   addMenu(): boolean {
-    console.log(this.addForm)
+    console.log(this.addForm.value.formFile)
     if (this.addForm.status == "INVALID")
       return false;
 
     var formData = this.formDataSetsForAdd()
+    console.log(formData)
     this.menuService.addMenu(formData).subscribe(res => {
       if (res.success) {
-        this.menus.push(res.data); 
-        this.successMessage ='Ürün Ekleme İşlemi Başarıyla Gerçekleşti';
+        console.log(res.data)
+        this.menus.push(res.data);
+        console.log(this.menus)
+        this.successMessage = 'Ürün Ekleme İşlemi Başarıyla Gerçekleşti';
         this.successMessageBox.nativeElement.classList.remove('d-none')
         setTimeout(() => {
           this.closeSuccessMessageBox()
@@ -125,13 +142,16 @@ export class MenuComponent implements OnInit {
     return true;
   }
 
-  formDataSetsForAdd(): FormData {
-    console.log(this.addForm.value.formFile)
+  formDataSetsForAdd(): FormData {    
     const formData = new FormData();
-    formData.append('formFile', this.addForm.value.formFile as string);
+    formData.append('formFile',  this.formFile, this.formFile.name);
     formData.append('name', this.addForm.value.name as string);
     formData.append('description', this.addForm.value.description as string);
     formData.append('price', this.addForm.value.price as string);
+    formData.append('foodId', this.addForm.value.foodId  as string);
+    formData.append('drinkId', this.addForm.value.drinkId as unknown as string);
+    formData.append('sweetId', this.addForm.value.sweetId as unknown as string);
+
     return formData;
   }
 
@@ -146,26 +166,28 @@ export class MenuComponent implements OnInit {
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
     formData.append('menuId', this.fileModel.model.menuId.toString());
+    formData.append('foodId', this.fileModel.model.foodId.toString());
+    formData.append('drinkId', this.fileModel.model.drinkId.toString());
+    formData.append('sweetId', this.fileModel.model.sweetId.toString());
     return formData;
   }
-  
-  closeSuccessMessageBox(){
+
+  closeSuccessMessageBox() {
     this.successMessageBox.nativeElement.classList.add('d-none')
   }
 
-  removingMenuFind(id:number){
+  removingMenuFind(id: number) {
     var re = this.menus.find(d => d.menuId == id)
     if (re != undefined) {
       this.removingMenu = re;
     }
   }
 
-  removeMenu(){
-   console.log(this.removingMenu)
-    this.menuService.remove(this.removingMenu.menuId).subscribe(s=>{
+  removeMenu() {
+    this.menuService.remove(this.removingMenu.menuId).subscribe(s => {
       if (s.success) {
-        this.menus=this.menus.filter(d=>d.menuId!=this.removingMenu.menuId);
-        this.successMessage=s.data.name+" ürünü başarıyla silindi!";
+        this.menus = this.menus.filter(d => d.menuId != this.removingMenu.menuId);
+        this.successMessage = s.data.name + " ürünü başarıyla silindi!";
         this.successMessageBox.nativeElement.classList.remove('d-none');
         setTimeout(() => {
           this.closeSuccessMessageBox()
@@ -175,11 +197,50 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  ExportTOExcel() {  
+  ExportTOExcel() {
     console.log(this.exportTable)
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.exportTable.nativeElement);  
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();  
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.exportTable.nativeElement);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Exel');
-    XLSX.writeFile(wb, 'İçecek Listesi.xlsx');  
+    XLSX.writeFile(wb, 'İçecek Listesi.xlsx');
+  }
+
+  foodsGet() {
+    console.log(this.foodKeyValueHtml.nativeElement.className.search('d-none'))
+    if (this.foodKeyValueHtml.nativeElement.className.search('d-none') != -1) {
+      this.foodService.getKeyValue().subscribe(s => {
+        if (s.success) {
+          this.foodKeyValue = s.data;
+          this.foodKeyValueHtml.nativeElement.classList.remove('d-none')
+        }
+      })
+    } else
+      this.foodKeyValueHtml.nativeElement.classList.add('d-none')
+  }
+
+  drinksGet() {
+    console.log(this.drinkKeyValueHtml.nativeElement.className.search('d-none'))
+    if (this.drinkKeyValueHtml.nativeElement.className.search('d-none') != -1) {
+      this.drinkService.getKeyValue().subscribe(s => {
+        if (s.success) {
+          this.drinkKeyValue = s.data;
+          this.drinkKeyValueHtml.nativeElement.classList.remove('d-none')
+        }
+      })
+    } else
+      this.drinkKeyValueHtml.nativeElement.classList.add('d-none')
+  }
+
+  sweetsGet() {
+    console.log(this.sweetKeyValueHtml.nativeElement.className.search('d-none'))
+    if (this.sweetKeyValueHtml.nativeElement.className.search('d-none') != -1) {
+      this.sweetService.getKeyValue().subscribe(s => {
+        if (s.success) {
+          this.sweetKeyValue = s.data;
+          this.sweetKeyValueHtml.nativeElement.classList.remove('d-none')
+        }
+      })
+    } else
+      this.sweetKeyValueHtml.nativeElement.classList.add('d-none')
   }
 }

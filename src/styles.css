@@ -2,7 +2,8 @@
 
 :root {
     --navyellow: rgb(255, 212, 112);
-    --green: rgb(0, 200, 151);
+    /* --green: rgb(0, 200, 151); */
+    --green: #31906E;
     --shinygreen: #53BF9D;
     --cream: rgb(245, 223, 153);
     --red: rgb(221, 74, 72);
@@ -40,4 +41,36 @@ body {
     background-color: var(--shinygreen);
     transform: scale(1.1);
     box-shadow: 0 0 0 0.25rem rgb(0, 200, 151, .4);
+}
+
+.fs-12 {
+    font-size: 14px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.fs-22 {
+    font-size: 22px;
+}
+
+.fs-24 {
+    font-size: 24px;
+}
+
+.fs-26 {
+    font-size: 26px;
 }
