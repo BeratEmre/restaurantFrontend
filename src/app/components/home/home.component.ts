@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { OrderStatus } from 'src/app/enums/order-status';
 import { ProductType } from 'src/app/enums/product-type';
 import DecodeToken from 'src/app/helper/decode-token';
 import { BasketModel } from 'src/app/models/basket-model';
@@ -21,21 +22,26 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  drinkImgUrl=environment.imgUrl+'/drinks/';
-  foodImgUrl=environment.imgUrl+'/foods/';
+  drinkImgUrl = environment.imgUrl + '/drinks/';
+  foodImgUrl = environment.imgUrl + '/foods/';
   sweetImgUrl = environment.imgUrl + '/sweets/';
   menuImgUrl = environment.imgUrl + '/menus/';
-  faTrash=faTrash;
-  faPlus=faPlus;
+  faTrash = faTrash;
+  faPlus = faPlus;
   sweetList: SweetModel[] = [];
   drinkList: DrinkModel[] = [];
   foodList: FoodModel[] = [];
   menuList: MenuModel[] = [];
-  basketList:BasketModel[]=[];
-  
+  basketList: BasketModel[] = [];
+  userId: number = 0;
+
   constructor(private sweetService: SweetService, private drinkService: DrinkService, private foodService: FoodService,
-      private menuService:MenuService, private orderService:OrderService) {
+    private menuService: MenuService, private orderService: OrderService) {
+    this.userId = Number(DecodeToken.decode().id);
     this.getAllProducts();
+    this.getOrders()
+  }
+  ngOnInit(): void {
   }
 
   getAllProducts() {
@@ -58,40 +64,202 @@ export class HomeComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-  }
-  addToCard(food:FoodModel){
-     var order=new OrderModel();
-     order.foodId=food.foodId;
+  getOrders() {
+    if (this.userId == 0) { return }
 
-    order.userId=Number(DecodeToken.decode().id)
-    var isItAlreadyAdded:Boolean=false
-    if (this.basketList.length>0 ) {
-      isItAlreadyAdded = this.basketList.some(b=>b.type == ProductType.food && b.id == order.foodId);
+    this.orderService.getBasketWithUserId(this.userId).subscribe(res => {
+
+      if (!res.success || res.data == null || res.data.length < 1) { return }
+      this.basketList = res.data;
+    });
+  }
+
+  addToCardFood(id: number) {
+    var order = new OrderModel();
+    order.foodId = id;
+
+    order.userId = this.userId;
+    var isItAlreadyAdded: Boolean = false
+    if (this.basketList.length > 0) {
+      isItAlreadyAdded = this.basketList.some(b => b.type == ProductType.food && b.id == order.foodId);
     }
 
-    this.orderService.addBasket(order).subscribe(p=>{
+    this.orderService.addBasket(order).subscribe(p => {
       if (p.success) {
         if (!isItAlreadyAdded) {
-          var orderFood=new FoodModel();
-          var food=this.foodList.find(f=>f.foodId==p.data.foodId);
-          if (food!=undefined) 
-            orderFood= food;      
-    
-          var basket:BasketModel={id:p.data.foodId, name:orderFood.name, price:orderFood.price, type:ProductType.food, count:1};
+          var orderFood = new FoodModel();
+          var food = this.foodList.find(f => f.foodId == p.data.foodId);
+          if (food != undefined)
+            orderFood = food;
+
+          var basket: BasketModel = { id: p.data.foodId, name: orderFood.name, price: orderFood.price, type: ProductType.food, count: 1 };
           this.basketList.push(basket);
         }
-        else{
-          this.basketList.forEach(b=>{ if (b.id==p.data.foodId) { b.count++}});
-        }
-     
-      }     
+        else
+          this.basketList.forEach(b => { if (b.id == p.data.foodId) { b.count++ } });
+      }
     })
   }
 
-  basketSum(): Number{
-    var res=0
-    this.basketList.forEach(f=>{res=res+f.price})
+  addToCardSweet(id: number) {
+    var order = new OrderModel();
+    order.sweetId = id;
+
+    order.userId = this.userId;
+    var isItAlreadyAdded: Boolean = false
+    if (this.basketList.length > 0) {
+      isItAlreadyAdded = this.basketList.some(b => b.type == ProductType.sweet && b.id == order.sweetId);
+    }
+
+    this.orderService.addBasket(order).subscribe(p => {
+      if (p.success) {
+        if (!isItAlreadyAdded) {
+          var orderSweet = new SweetModel();
+          var sweet = this.sweetList.find(f => f.sweetId == p.data.sweetId);
+          if (sweet != undefined)
+            orderSweet = sweet;
+
+          var basket: BasketModel = { id: p.data.sweetId, name: orderSweet.name, price: orderSweet.price, type: ProductType.sweet, count: 1 };
+          this.basketList.push(basket);
+        }
+        else
+          this.basketList.forEach(b => { if (b.id == p.data.sweetId) { b.count++ } });
+      }
+    })
+  }
+
+  addToCardDrink(id: number) {
+    var order = new OrderModel();
+    order.drinkId = id;
+
+    order.userId = this.userId;
+    var isItAlreadyAdded: Boolean = false
+    if (this.basketList.length > 0) {
+      isItAlreadyAdded = this.basketList.some(b => b.type == ProductType.drink && b.id == order.drinkId);
+    }
+
+    this.orderService.addBasket(order).subscribe(p => {
+      if (p.success) {
+        if (!isItAlreadyAdded) {
+          var orderDrink = new DrinkModel();
+          var drink = this.drinkList.find(f => f.drinkId == p.data.drinkId);
+          if (drink != undefined)
+            orderDrink = drink;
+
+          var basket: BasketModel = { id: p.data.drinkId, name: orderDrink.name, price: orderDrink.price, type: ProductType.drink, count: 1 };
+          this.basketList.push(basket);
+        }
+        else
+          this.basketList.forEach(b => { if (b.id == p.data.drinkId) { b.count++ } });
+      }
+    })
+  }
+
+  basketSum(): Number {
+    var res = 0
+    this.basketList.forEach(f => { res = res + f.price })
     return res;
   }
+
+  increaseBasket(basket: BasketModel) {
+    switch (basket.type) {
+      case ProductType.drink:
+        this.addToCardDrink(basket.id);
+        break;
+
+      case ProductType.food:
+        this.addToCardFood(basket.id);
+        break;
+
+      case ProductType.sweet:
+        this.addToCardSweet(basket.id);
+        break;
+    }
+  }
+
+  deleteBasket(basket: BasketModel) {
+    switch (basket.type) {
+      case ProductType.drink:
+        this.deleteToCardDrink(basket.id);
+        break;
+
+      case ProductType.food:
+        this.deleteToCardFood(basket.id);
+        break;
+
+      case ProductType.sweet:
+        this.deleteToCardSweet(basket.id);
+        break;
+    }
+  }
+
+  deleteToCardDrink(drinkId: number) {
+    var orderModel = new OrderModel();
+    orderModel.drinkId = drinkId;
+    orderModel.userId = this.userId;
+    orderModel.status = OrderStatus.basket;
+
+    this.orderService.deleteBasket(orderModel).subscribe(o => {
+      if (o.data == 0) {
+        var index= this.basketList.findIndex(b => b.id != drinkId && b.type != ProductType.drink);
+        this.basketList.splice(index,1);
+        return;
+      }
+
+      var basket = this.basketList.find(b => b.id == drinkId && b.type == ProductType.drink);
+      if (basket != null && basket != undefined) {
+        this.basketList.forEach(b => {
+          if (b != undefined && b.id == drinkId && b.type == ProductType.drink)
+            b.count = o.data;
+        });
+      }
+    })
+  }
+
+  deleteToCardFood(foodId: number) {
+    var orderModel = new OrderModel();
+    orderModel.foodId = foodId;
+    orderModel.userId = this.userId;
+    orderModel.status = OrderStatus.basket;
+
+    this.orderService.deleteBasket(orderModel).subscribe(o => {
+      if (o.data == 0) {
+        var index = this.basketList.findIndex(b => b.id == foodId && b.type == ProductType.food);
+        this.basketList.splice(index,1)
+        return;
+      }
+      
+      var basket = this.basketList.find(b => b.id == foodId && b.type == ProductType.food);
+      if (basket != null && basket != undefined) {
+        this.basketList.forEach(b => {
+          if (b != undefined && b.id == foodId && b.type == ProductType.food)
+            b.count = o.data;
+        });
+      }
+    })
+  }
+
+  deleteToCardSweet(sweetId: number) {
+    var orderModel = new OrderModel();
+    orderModel.sweetId = sweetId;
+    orderModel.userId = this.userId;
+    orderModel.status = OrderStatus.basket;
+
+    this.orderService.deleteBasket(orderModel).subscribe(o => {
+      if (o.data == 0) {
+        var index = this.basketList.findIndex(b => b.id == sweetId && b.type == ProductType.sweet);
+        this.basketList.splice(index,1)
+        return;
+      }
+      
+      var basket = this.basketList.find(b => b.id == sweetId && b.type == ProductType.sweet);
+      if (basket != null && basket != undefined) {
+        this.basketList.forEach(b => {
+          if (b != undefined && b.id == sweetId && b.type == ProductType.sweet)
+            b.count = o.data;
+        });
+      }
+    })
+  }
 }
+

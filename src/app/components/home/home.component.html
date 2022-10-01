@@ -137,7 +137,7 @@
                         <h5 class="card-title">{{food.name}}</h5>
                         <p class="card-text">{{food.description}}</p>
                         <div class="priceAndAddToCard"> <span class="price">{{food.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn"> <a (click)="addToCard(food)" class="btn btn-primary">Sepete
+                            <div class="addToCardBtn"> <a (click)="addToCardFood(food.foodId)" class="btn btn-primary">Sepete
                                     Ekle</a></div>
                         </div>
 
@@ -161,7 +161,7 @@
                         <h5 class="card-title">{{drink.name}}</h5>
                         <p class="card-text">{{drink.description}}</p>
                         <div class="priceAndAddToCard"> <span class="price">{{drink.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Sepete Ekle</a></div>
+                            <div class="addToCardBtn"> <a (click)="addToCardDrink(drink.drinkId)" class="btn btn-primary">Sepete Ekle</a></div>
                         </div>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                             <h5 class="card-title">{{sweet.name}}</h5>
                             <p class="card-text">{{sweet.description}}</p>
                             <div class="priceAndAddToCard"> <span class="price">{{sweet.price.toFixed(2)}} Tl</span>
-                                <div class="addToCardBtn"> <a href="#" class="btn btn-primary">Sepete Ekle</a></div>
+                                <div class="addToCardBtn"> <a (click)="addToCardSweet(sweet.sweetId)" class="btn btn-primary">Sepete Ekle</a></div>
                             </div>
                         </div>
                     </div>
@@ -206,17 +206,21 @@
                     {{basket.price}} TL
                 </p>
             </div>
-            <p style="float: right;">
-                <fa-icon [icon]="faTrash"></fa-icon>
-                {{basket.count}}
-                <fa-icon [icon]="faPlus"></fa-icon>
+            <p class="basket-bottom-p">
+                <span class="trash-icon" (click)="deleteBasket(basket)">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </span> {{basket.count}}
+                <span class="plus-icon" (click)="increaseBasket(basket)">
+                    <fa-icon [icon]="faPlus" ></fa-icon>
+                </span>
             </p>
+            <div class="basket-container"></div>
         </ng-container>
     </div>
     <div class="card-footer">
         <p class="mb-4" style="text-align: initial;">
             <b class="fs-22">Toplam</b>
-            <span style="float: right;">{{basketSum()}}</span>
+            <span style="float: right;">{{basketSum()}} TL</span>
         </p>
         <button class="greenBtn hover-effect">Sepete git</button>
 

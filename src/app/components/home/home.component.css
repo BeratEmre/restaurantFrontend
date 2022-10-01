@@ -121,7 +121,44 @@
 }
 
 .basketCard .card-body .basket:not(:first-child) {
-    margin-top: 40px;
+    margin-top: 15px;
+}
+
+.basket-container {
+    border-bottom: 1px solid var(--green);
+    padding-top: 25px;
+}
+
+.basket-bottom-p {
+    float: right;
+}
+
+.basket-bottom-p fa-icon {
+    cursor: pointer;
+}
+
+.basket-bottom-p .trash-icon:hover {
+    color: red;
+    animation: transformscale forwards .2s;
+    display: inline-block;
+}
+
+.basket-bottom-p .plus-icon:hover {
+    color: var( --shinygreen);
+    animation: transformscale forwards .2s;
+    display: inline-block;
+}
+
+@keyframes transformscale {
+    33% {
+        transform: scale(1.1);
+    }
+    66% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1.3);
+    }
 }
 
 .basket .card-text {
