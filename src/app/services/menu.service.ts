@@ -32,4 +32,9 @@ export class MenuService {
     let newPath=this.apiUrl+"Menus/Remove?id="+id;
     return this.httpClient.post<ResponseModel<MenuModel>>(newPath,null);
   }
+
+  addStar(menuId:number):Observable<boolean> {
+    let newPath=this.apiUrl+"Menus/AddStar?menuId="+menuId;
+    return this.httpClient.post<boolean>(newPath,null);     
+  }
 }

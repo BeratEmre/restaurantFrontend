@@ -8,6 +8,7 @@ export class MenuModel {
     description: string = '';
     imgUrl:string='';
     price:number=0;
+    isHaveStar:boolean=false;
 
     foodId: number = 0;
     food: FoodModel = new FoodModel();

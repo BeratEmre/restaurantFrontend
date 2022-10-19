@@ -36,7 +36,7 @@ import { AuthGuard } from './guard/auth-guard';
     AppRoutingModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { faCheckCircle, faEdit, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faEdit, faStar, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { KeyValue } from 'src/app/models/key-value';
 import { MenuModel } from 'src/app/models/menu-model';
@@ -30,7 +30,9 @@ export class MenuComponent implements OnInit {
   trash = faTrashAlt;
   faTimes = faTimes;
   faCheckCircle = faCheckCircle;
+  faStar=faStar;
   successMessage = '';
+
 
   menus: MenuModel[] = [];
   sweetKeyValue: KeyValue[] = [];
@@ -242,5 +244,15 @@ export class MenuComponent implements OnInit {
       })
     } else
       this.sweetKeyValueHtml.nativeElement.classList.add('d-none')
+  }
+
+  starTheMenu(menuId:number){
+    console.log(menuId)
+    this.menuService.addStar(menuId).subscribe(s=>{
+      if (s) {
+        var menu=this.menus.find(m=>m.menuId==menuId);
+        menu!=null?menu.isHaveStar=true:menu;
+      }
+    })
   }
 }

@@ -32,8 +32,9 @@
                 <td>{{menu.description}}</td>
                 <td>{{menu.price}}</td>
                 <td class="process">
-                    <fa-icon [icon]="edit" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="updatingMenu(menu.menuId)"></fa-icon>
-                    <fa-icon class="ms-2" [icon]="trash" data-bs-toggle="modal" data-bs-target="#removeMenuModal" (click)="removingMenuFind(menu.menuId)"></fa-icon>
+                    <fa-icon [ngClass]="{ 'shiny': menu.isHaveStar, 'uninspiring': !menu.isHaveStar}" [icon]="faStar" (click)="starTheMenu(menu.menuId)"></fa-icon>
+                    <fa-icon class="ms-2 uninspiring" [icon]="edit" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="updatingMenu(menu.menuId)"></fa-icon>
+                    <fa-icon class="ms-2 uninspiring" [icon]="trash" data-bs-toggle="modal" data-bs-target="#removeMenuModal" (click)="removingMenuFind(menu.menuId)"></fa-icon>
                 </td>
             </tr>
         </tbody>

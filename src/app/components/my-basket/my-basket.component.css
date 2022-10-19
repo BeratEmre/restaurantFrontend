@@ -7,14 +7,51 @@
 }
 
 .number-of-producs .fa-icon {
-    background-color: gray;
+    background-color: rgb(169, 169, 169);
     display: inline;
     padding: 5px 8px;
     color: white;
+    cursor: pointer;
 }
 
 .number-of-producs-text {
     padding: 5px 11px;
     align-self: center;
-    background-color: var(--green);
+    background-color: rgb(169, 169, 169, .8);
+    color: rgb(1, 1, 1, .9);
+    font-weight: bold;
+}
+
+.basketList {
+    box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.30);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.basketList:hover {
+    box-shadow: 2px 5px 9px 1px rgba(0, 0, 0, 0.60);
+}
+
+.fa-icon .faTrash:hover {
+    color: rgb(250, 0, 0, .6);
+    animation: transformscale forwards .2s;
+    display: inline-block;
+}
+
+.fa-icon .faPlus:hover {
+    color: var( --shinygreen);
+    animation: transformscale forwards .2s;
+    display: inline-block;
+}
+
+@keyframes transformscale {
+    33% {
+        transform: scale(1.05);
+    }
+    66% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1.15);
+    }
 }

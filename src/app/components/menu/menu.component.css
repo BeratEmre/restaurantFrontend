@@ -45,6 +45,11 @@
     padding-bottom: 50px;
 }
 
+.process {
+    width: 100px;
+    text-align: center;
+}
+
 .process fa-icon {
     cursor: pointer;
 }
@@ -68,4 +73,12 @@
     .modal-content {
         max-width: 90vw;
     }
+}
+
+.uninspiring {
+    opacity: .7;
+}
+
+.shiny {
+    color: rgb(204, 204, 0);
 }

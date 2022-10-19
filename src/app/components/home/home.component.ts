@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { OrderStatus } from 'src/app/enums/order-status';
 import { ProductType } from 'src/app/enums/product-type';
@@ -15,6 +16,7 @@ import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SweetService } from 'src/app/services/sweet.service';
 import { environment } from 'src/environments/environment';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +37,11 @@ export class HomeComponent implements OnInit {
   basketList: BasketModel[] = [];
   userId: number = 0;
 
+  // @Output() public sendData=new EventEmitter();
+  // sendBasket(){
+  //   this.sendData.emit(JSON.stringify(this.basketList));
+  //   this.router.navigate(['/sepetim']);
+  // }
   constructor(private sweetService: SweetService, private drinkService: DrinkService, private foodService: FoodService,
     private menuService: MenuService, private orderService: OrderService) {
     this.userId = Number(DecodeToken.decode().id);
@@ -66,7 +73,7 @@ export class HomeComponent implements OnInit {
 
   getOrders() {
     if (this.userId == 0) { return }
-
+    console.log(this.userId)
     this.orderService.getBasketWithUserId(this.userId).subscribe(res => {
 
       if (!res.success || res.data == null || res.data.length < 1) { return }
@@ -92,7 +99,7 @@ export class HomeComponent implements OnInit {
           if (food != undefined)
             orderFood = food;
 
-          var basket: BasketModel = { id: p.data.foodId, name: orderFood.name, price: orderFood.price, type: ProductType.food, count: 1 };
+          var basket: BasketModel = { id: p.data.foodId, name: orderFood.name, price: orderFood.price, type: ProductType.food, count: 1, imgUrl: this.foodImgUrl + orderFood.imgUrl };
           this.basketList.push(basket);
         }
         else
@@ -119,7 +126,7 @@ export class HomeComponent implements OnInit {
           if (sweet != undefined)
             orderSweet = sweet;
 
-          var basket: BasketModel = { id: p.data.sweetId, name: orderSweet.name, price: orderSweet.price, type: ProductType.sweet, count: 1 };
+          var basket: BasketModel = { id: p.data.sweetId, name: orderSweet.name, price: orderSweet.price, type: ProductType.sweet, count: 1, imgUrl: this.sweetImgUrl + orderSweet.imgUrl };
           this.basketList.push(basket);
         }
         else
@@ -146,11 +153,37 @@ export class HomeComponent implements OnInit {
           if (drink != undefined)
             orderDrink = drink;
 
-          var basket: BasketModel = { id: p.data.drinkId, name: orderDrink.name, price: orderDrink.price, type: ProductType.drink, count: 1 };
+          var basket: BasketModel = { id: p.data.drinkId, name: orderDrink.name, price: orderDrink.price, type: ProductType.drink, count: 1, imgUrl: this.drinkImgUrl + orderDrink.imgUrl };
           this.basketList.push(basket);
         }
         else
           this.basketList.forEach(b => { if (b.id == p.data.drinkId) { b.count++ } });
+      }
+    })
+  }
+  addToCardMenu(id: number) {
+    var order = new OrderModel();
+    order.menuId = id;
+
+    order.userId = this.userId;
+    var isItAlreadyAdded: Boolean = false
+    if (this.basketList.length > 0)
+      isItAlreadyAdded = this.basketList.some(b => b.type == ProductType.menu && b.id == order.menuId);
+
+
+    this.orderService.addBasket(order).subscribe(p => {
+      if (p.success) {
+        if (!isItAlreadyAdded) {
+          var orderMenu = new MenuModel();
+          var menu = this.menuList.find(f => f.menuId == p.data.menuId);
+          if (menu != undefined)
+            orderMenu = menu;
+
+          var basket: BasketModel = { id: p.data.menuId, name: orderMenu.name, price: orderMenu.price, type: ProductType.menu, count: 1, imgUrl: this.menuImgUrl + orderMenu.imgUrl };
+          this.basketList.push(basket);
+        }
+        else
+          this.basketList.forEach(b => { if (b.id == p.data.menuId) { b.count++ } });
       }
     })
   }
@@ -174,6 +207,10 @@ export class HomeComponent implements OnInit {
       case ProductType.sweet:
         this.addToCardSweet(basket.id);
         break;
+
+      case ProductType.menu:
+        this.addToCardMenu(basket.id);
+        break;
     }
   }
 
@@ -190,6 +227,10 @@ export class HomeComponent implements OnInit {
       case ProductType.sweet:
         this.deleteToCardSweet(basket.id);
         break;
+
+      case ProductType.menu:
+        this.deleteToCardMenu(basket.id);
+        break;
     }
   }
 
@@ -201,8 +242,8 @@ export class HomeComponent implements OnInit {
 
     this.orderService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
-        var index= this.basketList.findIndex(b => b.id != drinkId && b.type != ProductType.drink);
-        this.basketList.splice(index,1);
+        var index = this.basketList.findIndex(b => b.id != drinkId && b.type != ProductType.drink);
+        this.basketList.splice(index, 1);
         return;
       }
 
@@ -225,10 +266,10 @@ export class HomeComponent implements OnInit {
     this.orderService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id == foodId && b.type == ProductType.food);
-        this.basketList.splice(index,1)
+        this.basketList.splice(index, 1)
         return;
       }
-      
+
       var basket = this.basketList.find(b => b.id == foodId && b.type == ProductType.food);
       if (basket != null && basket != undefined) {
         this.basketList.forEach(b => {
@@ -248,14 +289,37 @@ export class HomeComponent implements OnInit {
     this.orderService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id == sweetId && b.type == ProductType.sweet);
-        this.basketList.splice(index,1)
+        this.basketList.splice(index, 1)
         return;
       }
-      
+
       var basket = this.basketList.find(b => b.id == sweetId && b.type == ProductType.sweet);
       if (basket != null && basket != undefined) {
         this.basketList.forEach(b => {
           if (b != undefined && b.id == sweetId && b.type == ProductType.sweet)
+            b.count = o.data;
+        });
+      }
+    })
+  }
+
+  deleteToCardMenu(menuId: number) {
+    var orderModel = new OrderModel();
+    orderModel.menuId = menuId;
+    orderModel.userId = this.userId;
+    orderModel.status = OrderStatus.basket;
+
+    this.orderService.deleteBasket(orderModel).subscribe(o => {
+      if (o.data == 0) {
+        var index = this.basketList.findIndex(b => b.id == menuId && b.type == ProductType.menu);
+        this.basketList.splice(index, 1)
+        return;
+      }
+
+      var basket = this.basketList.find(b => b.id == menuId && b.type == ProductType.menu);
+      if (basket != null && basket != undefined) {
+        this.basketList.forEach(b => {
+          if (b != undefined && b.id == menuId && b.type == ProductType.menu)
             b.count = o.data;
         });
       }

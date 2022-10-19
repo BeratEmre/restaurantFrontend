@@ -4,4 +4,5 @@ export class BasketModel {
     id:number;
     price:number;
     count:number;
+    imgUrl:string;
 }
