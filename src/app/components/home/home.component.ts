@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   drinkList: DrinkModel[] = [];
   foodList: FoodModel[] = [];
   menuList: MenuModel[] = [];
+  menuStarList: MenuModel[] = [];
   basketList: BasketModel[] = [];
   userId: number = 0;
 
@@ -68,7 +69,10 @@ export class HomeComponent implements OnInit {
       if (res.success)
         this.menuList = res.data;
     });
-
+    this.menuService.getMenus().subscribe(res => {
+      if (res.success)
+        this.menuStarList = res.data;
+    });
   }
 
   getOrders() {

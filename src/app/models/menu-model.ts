@@ -9,6 +9,7 @@ export class MenuModel {
     imgUrl:string='';
     price:number=0;
     isHaveStar:boolean=false;
+    order:number=0;
 
     foodId: number = 0;
     food: FoodModel = new FoodModel();

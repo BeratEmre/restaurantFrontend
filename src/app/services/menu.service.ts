@@ -37,4 +37,9 @@ export class MenuService {
     let newPath=this.apiUrl+"Menus/AddStar?menuId="+menuId;
     return this.httpClient.post<boolean>(newPath,null);     
   }
+
+  getStarMenus():Observable<ListResponseModel<MenuModel>> {
+    let newPath=this.apiUrl+"Menus/GetStarMenus"
+    return this.httpClient.get<ListResponseModel<MenuModel>>(newPath);     
+  }
 }
