@@ -1,6 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCandyCane, faGlassWater, faPlus, faPlusCircle,  faStar, faTrash, faUtensils, faUtensilSpoon } from '@fortawesome/free-solid-svg-icons';
 import { OrderStatus } from 'src/app/enums/order-status';
 import { ProductType } from 'src/app/enums/product-type';
 import DecodeToken from 'src/app/helper/decode-token';
@@ -16,7 +15,6 @@ import { MenuService } from 'src/app/services/menu.service';
 import { OrderService } from 'src/app/services/order.service';
 import { SweetService } from 'src/app/services/sweet.service';
 import { environment } from 'src/environments/environment';
-import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +28,12 @@ export class HomeComponent implements OnInit {
   menuImgUrl = environment.imgUrl + '/menus/';
   faTrash = faTrash;
   faPlus = faPlus;
+  faPlusCircle= faPlusCircle;
+  faUtensils=faUtensils;
+  faCandyCane=faCandyCane;
+  faUtensilSpoon=faUtensilSpoon;
+  faGlassWater=faGlassWater;
+  faStar=faStar
   sweetList: SweetModel[] = [];
   drinkList: DrinkModel[] = [];
   foodList: FoodModel[] = [];
@@ -37,7 +41,10 @@ export class HomeComponent implements OnInit {
   menuStarList: MenuModel[] = [];
   basketList: BasketModel[] = [];
   userId: number = 0;
-
+  menuActive=0;
+  basketSize=false;
+  carouselPrev=false;
+  carouselNext=false;
   // @Output() public sendData=new EventEmitter();
   // sendBasket(){
   //   this.sendData.emit(JSON.stringify(this.basketList));
@@ -48,6 +55,7 @@ export class HomeComponent implements OnInit {
     this.userId = Number(DecodeToken.decode().id);
     this.getAllProducts();
     this.getOrders()
+   
   }
   ngOnInit(): void {
   }
@@ -194,7 +202,7 @@ export class HomeComponent implements OnInit {
 
   basketSum(): Number {
     var res = 0
-    this.basketList.forEach(f => { res = res + f.price })
+    this.basketList.forEach(f => { res = res + f.count * f.price })
     return res;
   }
 
@@ -328,6 +336,48 @@ export class HomeComponent implements OnInit {
         });
       }
     })
+  }
+  carouselActiveClass(item:number):string{
+   var resultStr=item==this.menuActive?'carousel-item active':'carousel-item';
+  //  if (this.carouselNext) 
+  //   resultStr.concat(' ','carouselNext')
+  //   if (this.carouselPrev) 
+  //   resultStr.concat(' ','carouselPrev')
+    return resultStr;
+  }
+  menuActivePluss(){
+    // this.carouselNext=true;
+    // setTimeout(() => {
+    //   this.carouselNext=false;
+    // }, 8000);
+    this.menuActive++;
+  }
+  menuActiveSour(){   
+    // this.carouselPrev=true;
+    // setTimeout(() => {
+    //   this.carouselPrev=false;
+    // }, 8000);
+    this.menuActive--;
+  }
+
+  starMenuGroupCount():Array<number>{
+    var count=Math.ceil(this.menuStarList.length / 3);
+    var arr=[0];
+    for (let index = 1; index < count; index++) {     
+      arr.push(index);
+    }
+    console.log(this.menuStarList.slice(2,3))
+    console.log(arr)
+    return arr;
+  }
+
+  basketSizeChange(){
+    this.basketSize=!this.basketSize;
+  }
+  basketCardClass():string{
+    if (this.basketSize) 
+      return "basketCard bigBasketCard";
+      return "basketCard smallBasketCard";
   }
 }
 

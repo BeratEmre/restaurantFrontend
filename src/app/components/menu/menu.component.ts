@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCheckCircle, faEdit, faStar, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import Helper from 'src/app/helper/helper';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { KeyValue } from 'src/app/models/key-value';
 import { MenuModel } from 'src/app/models/menu-model';
@@ -121,7 +122,6 @@ export class MenuComponent implements OnInit {
   }
 
   addMenu(): boolean {
-    console.log(this.addForm.value.formFile)
     if (this.addForm.status == "INVALID")
       return false;
 
@@ -144,7 +144,13 @@ export class MenuComponent implements OnInit {
     return true;
   }
 
-  formDataSetsForAdd(): FormData {    
+  formDataSetsForAdd(): FormData {
+    if (Helper.isEmpty(this.addForm.value.drinkId)) 
+    this.addForm.value.drinkId='0';
+    if (Helper.isEmpty(this.addForm.value.foodId)) 
+    this.addForm.value.foodId='0';
+    if (Helper.isEmpty(this.addForm.value.sweetId)) 
+    this.addForm.value.sweetId='0';
     const formData = new FormData();
     formData.append('formFile',  this.formFile, this.formFile.name);
     formData.append('name', this.addForm.value.name as string);
@@ -153,6 +159,7 @@ export class MenuComponent implements OnInit {
     formData.append('foodId', this.addForm.value.foodId  as string);
     formData.append('drinkId', this.addForm.value.drinkId as unknown as string);
     formData.append('sweetId', this.addForm.value.sweetId as unknown as string);
+    // formData.append('isHaveStar', 'false' as string);
 
     return formData;
   }

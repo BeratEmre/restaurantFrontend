@@ -230,7 +230,7 @@ export class MyBasketComponent implements OnInit {
   //#endregion
   sumBasketPrice() {
     var res = 0;
-    this.basketList.forEach(f => { res = res + f.price })
+    this.basketList.forEach(f => { res = res + f.count * f.price })
     return res;
   }
 }

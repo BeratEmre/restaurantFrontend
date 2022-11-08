@@ -12,120 +12,33 @@
         </p>
     </div>
 </div>
-
+<h3 class="pt-5 ps-5 pb-4">Seçilmiş Menüler
+    <fa-icon [icon]="faStar" class="headerIcon"></fa-icon>
+</h3>
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-    <h3 class="pt-5 ps-5 pb-4">Seçilmiş Menüler</h3>
+
     <div class="carousel-inner">
-
-        <div class="carousel-item active">
-            <ng-container *ngFor="let menu of menuStarList.slice(0,3)">
-                <div class="card ms-4" style="width: 18rem;">
-                    <img src="{{menuImgUrl}}{{menu.imgUrl}}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{menu.name}}</h5>
-                        <p class="card-text">{{menu.description}}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <ng-container *ngFor="let item of starMenuGroupCount()">
+            <div [class]="carouselActiveClass(item)">
+                <ng-container *ngFor="let menu of menuStarList.slice(item,item+3)">
+                    <!-- <div [class]="carouselActiveClass(menu)"> -->
+                    <div class="card ms-4 productCard" style="width: 18rem;">
+                        <img src="{{menuImgUrl}}{{menu.imgUrl}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{menu.name}}</h5>
+                            <p class="card-text">{{menu.description}}</p>
+                            <button href="#" class="greenBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button>
+                        </div>
                     </div>
-                </div>
-            </ng-container>
-        </div>
-        <div class="carousel-item" *ngIf="menuStarList.length>3">
-            <ng-container *ngFor="let menu of menuStarList">
-                <div class="card" style="width: 18rem;" *ngIf="menu.order>3">
-                    <img src="{{menuImgUrl}}{{menu.imgUrl}}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{menu.name}}</h5>
-                        <p class="card-text">{{menu.description}}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </ng-container>
-        </div>
-        <!-- <div class="carousel-item active">
-            <div class="card " style="width: 18rem;">
-                <img src="../../../assets/images.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+                </ng-container>
             </div>
-            <div class="card ms-4" style="width: 18rem;">
-                <img src="../../../assets/images.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card ms-4" style="width: 18rem;">
-                <img src="../../../assets/wszd-listing.webp" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <div class="card " style="width: 18rem;">
-                <img src="../../../assets/images.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card ms-4" style="width: 18rem;">
-                <img src="../../../assets/images.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card ms-4" style="width: 18rem;">
-                <img src="../../../assets/wszd-listing.webp" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card " style="width: 18rem;">
-                <img src="../../../assets/images.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card ms-4" style="width: 18rem;">
-                <img src="../../../assets/images.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card ms-4" style="width: 18rem;">
-                <img src="../../../assets/wszd-listing.webp" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div> -->
+        </ng-container>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <button (click)="menuActiveSour()" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden" >Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <button (click)="menuActivePluss()" class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
@@ -133,16 +46,18 @@
 
 <div class="card mx-auto mt-5 pb-5" style="width: 90%;">
     <div class="container mt-5">
-        <h3 class="mb-4">Menüler</h3>
+        <h3 class="mb-4">Menüler
+            <fa-icon [icon]="faUtensilSpoon" class="headerIcon"></fa-icon>
+        </h3>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
             <div class="col" *ngFor="let menu of this.menuList">
-                <div class="card " style="width: 18rem;">
+                <div class="card productCard" style="width: 18rem;">
                     <img src="{{menuImgUrl}}{{menu.imgUrl}}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{menu.name}}</h5>
                         <p class="card-text">{{menu.description}}</p>
                         <div class="priceAndAddToCard"> <span class="price">{{(menu.price).toFixed(2)}} TL</span>
-                            <div class="addToCardBtn"> <a class="btn btn-primary" (click)="addToCardMenu(menu.menuId)">Sepete Ekle</a></div>
+                            <div class="addToCardBtn"> <button class="greenBtn hover-effect" (click)="addToCardMenu(menu.menuId)">Sepete Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button></div>
                         </div>
                     </div>
                 </div>
@@ -154,18 +69,20 @@
 <div class="card mx-auto mt-5 pb-5" style="width: 90%;">
 
     <div class="container mt-5">
-        <h3 class="mb-4">Yemekler</h3>
+        <h3 class="mb-4">Yemekler
+            <fa-icon [icon]="faUtensils" class="headerIcon"></fa-icon>
+        </h3>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
             <div class="col" *ngFor="let food of foodList">
-                <div class="card " style="width: 18rem;">
+                <div class="card productCard" style="width: 18rem;">
                     <img src="{{foodImgUrl}}{{food.imgUrl}}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{food.name}}</h5>
                         <p class="card-text">{{food.description}}</p>
                         <div class="priceAndAddToCard"> <span class="price">{{food.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn"> <a (click)="addToCardFood(food.foodId)" class="btn btn-primary">Sepete
-                                    Ekle</a></div>
+                            <div class="addToCardBtn"> <button (click)="addToCardFood(food.foodId)" class="greenBtn hover-effect">Sepete
+                                    Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button></div>
                         </div>
 
                     </div>
@@ -178,17 +95,19 @@
 <div class="card mx-auto mt-5 pb-5" style="width: 90%;">
 
     <div class="container mt-5">
-        <h3 class="mb-4">İçecekler</h3>
+        <h3 class="mb-4">İçecekler
+            <fa-icon [icon]="faGlassWater" class="headerIcon"></fa-icon>
+        </h3>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
             <div class="col" *ngFor="let drink of drinkList">
-                <div class="card " style="width: 18rem;">
+                <div class="card productCard" style="width: 18rem;">
                     <img src="{{drinkImgUrl}}{{drink.imgUrl}}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{drink.name}}</h5>
                         <p class="card-text">{{drink.description}}</p>
                         <div class="priceAndAddToCard"> <span class="price">{{drink.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn"> <a (click)="addToCardDrink(drink.drinkId)" class="btn btn-primary">Sepete Ekle</a></div>
+                            <div class="addToCardBtn"> <button (click)="addToCardDrink(drink.drinkId)" class="greenBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button></div>
                         </div>
                     </div>
                 </div>
@@ -199,17 +118,19 @@
 
 <div class="card mx-auto mt-5 pb-5" style="width: 90%;">
     <div class="container mt-5">
-        <h3 class="mb-4">Tatlılar</h3>
+        <h3 class="mb-4">Tatlılar
+            <fa-icon [icon]="faCandyCane" class="headerIcon"></fa-icon>
+        </h3>
         <div *ngIf="this.sweetList.length>0" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
             <div *ngFor="let sweet of sweetList">
                 <div class="col">
-                    <div class="card " style="width: 18rem;">
+                    <div class="card productCard" style="width: 18rem;">
                         <img src="{{sweetImgUrl}}{{sweet.imgUrl}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{sweet.name}}</h5>
                             <p class="card-text">{{sweet.description}}</p>
                             <div class="priceAndAddToCard"> <span class="price">{{sweet.price.toFixed(2)}} Tl</span>
-                                <div class="addToCardBtn"> <a (click)="addToCardSweet(sweet.sweetId)" class="btn btn-primary">Sepete Ekle</a></div>
+                                <div class="addToCardBtn"> <button (click)="addToCardSweet(sweet.sweetId)" class="greenBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button></div>
                             </div>
                         </div>
                     </div>
@@ -220,11 +141,11 @@
 </div>
 
 <!--Sepetim -->
-<div class="basketCard">
-    <div class="card-header">
+<div [class]="basketCardClass()">
+    <div class="card-header" (click)="basketSizeChange()">
         <h4 align="center"> Sepetiniz</h4>
     </div>
-    <div class="card-body">
+    <div class="card-body" *ngIf="basketSize">
         <ng-container *ngFor="let basket of basketList">
 
             <div class="basket">
@@ -235,21 +156,20 @@
             </div>
             <p class="basket-bottom-p">
                 <span class="trash-icon" (click)="deleteBasket(basket)">
-                    <fa-icon [icon]="faTrash"></fa-icon>
+                    <fa-icon class="basketIcon" [icon]="faTrash"></fa-icon>
                 </span> {{basket.count}}
                 <span class="plus-icon" (click)="increaseBasket(basket)">
-                    <fa-icon [icon]="faPlus"></fa-icon>
+                    <fa-icon class="basketIcon" [icon]="faPlus"></fa-icon>
                 </span>
             </p>
             <div class="basket-container"></div>
         </ng-container>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" *ngIf="basketSize">
         <p class="mb-4" style="text-align: initial;">
             <b class="fs-22">Toplam</b>
             <span style="float: right;">{{basketSum()}} TL</span>
         </p>
-        <button class="greenBtn hover-effect" routerLink="/sepetim">Sepete git</button>
-
+        <button id="greenBtn" class="hover-effect" routerLink="/sepetim">Sepete git</button>
     </div>
 </div>

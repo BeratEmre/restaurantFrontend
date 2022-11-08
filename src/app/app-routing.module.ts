@@ -22,7 +22,6 @@ const routes: Routes = [
   {path:"kayitol",component:RegisterComponent},
   {path:"girisyap",component:LoginComponent},
   {path:"**",pathMatch:"full",component:HomeComponent},
-
 ];
 
 @NgModule({
