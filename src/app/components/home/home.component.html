@@ -15,49 +15,58 @@
 <h3 class="pt-5 ps-5 pb-4">Seçilmiş Menüler
     <fa-icon [icon]="faStar" class="headerIcon"></fa-icon>
 </h3>
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 
+
+<div id="carouselExampleControl" class="carousel slide" data-bs-ride="true">
+    <div class="carousel-indicators">
+        <ng-container *ngFor="let item of carouselButonCount() ">
+            <button type="button " data-bs-target="#carouselExampleControl" [attr.data-bs-slide-to]="item" [class]="item==0? 'active': '' " [attr.aria-current]="item==0?true:false " [attr.aria-label]=" 'Slide '+ item "></button>
+        </ng-container>
+    </div>
     <div class="carousel-inner">
-        <ng-container *ngFor="let item of starMenuGroupCount()">
+        <ng-container *ngFor="let item of starMenuGroupCount() ">
             <div [class]="carouselActiveClass(item)">
                 <ng-container *ngFor="let menu of menuStarList.slice(item,item+3)">
-                    <!-- <div [class]="carouselActiveClass(menu)"> -->
-                    <div class="card ms-4 productCard" style="width: 18rem;">
-                        <img src="{{menuImgUrl}}{{menu.imgUrl}}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{menu.name}}</h5>
-                            <p class="card-text">{{menu.description}}</p>
-                            <button href="#" class="greenBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button>
+                    <div class="card ms-4 productCard " style="width: 18rem; ">
+                        <img src="{{menuImgUrl}}{{menu.imgUrl}} " class="card-img-top " alt="... ">
+                        <div class="card-body ">
+                            <h5 class="card-title ">{{menu.name}}</h5>
+                            <p class="card-text ">{{menu.description}}</p>
+                            <button href="# " class="greenBtn hover-effect ">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
+                                </fa-icon></button>
                         </div>
                     </div>
                 </ng-container>
+
             </div>
         </ng-container>
     </div>
-    <button (click)="menuActiveSour()" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden" >Previous</span>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControl" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
     </button>
-    <button (click)="menuActivePluss()" class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControl" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
     </button>
 </div>
 
-<div class="card mx-auto mt-5 pb-5" style="width: 90%;">
-    <div class="container mt-5">
-        <h3 class="mb-4">Menüler
-            <fa-icon [icon]="faUtensilSpoon" class="headerIcon"></fa-icon>
+
+<div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
+    <div class="container mt-5 ">
+        <h3 class="mb-4 ">Menüler
+            <fa-icon [icon]="faUtensilSpoon " class="headerIcon "></fa-icon>
         </h3>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
-            <div class="col" *ngFor="let menu of this.menuList">
-                <div class="card productCard" style="width: 18rem;">
-                    <img src="{{menuImgUrl}}{{menu.imgUrl}}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{menu.name}}</h5>
-                        <p class="card-text">{{menu.description}}</p>
-                        <div class="priceAndAddToCard"> <span class="price">{{(menu.price).toFixed(2)}} TL</span>
-                            <div class="addToCardBtn"> <button class="greenBtn hover-effect" (click)="addToCardMenu(menu.menuId)">Sepete Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button></div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3 " style="width: 100%; ">
+            <div class="col " *ngFor="let menu of this.menuList ">
+                <div class="card productCard " style="width: 18rem; ">
+                    <img src="{{menuImgUrl}}{{menu.imgUrl}} " class="card-img-top " alt="... ">
+                    <div class="card-body ">
+                        <h5 class="card-title ">{{menu.name}}</h5>
+                        <p class="card-text ">{{menu.description}}</p>
+                        <div class="priceAndAddToCard "> <span class="price ">{{(menu.price).toFixed(2)}} TL</span>
+                            <div class="addToCardBtn "> <button class="greenBtn hover-effect " (click)="addToCardMenu(menu.menuId) ">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
+                                    </fa-icon></button></div>
                         </div>
                     </div>
                 </div>
@@ -66,23 +75,23 @@
     </div>
 </div>
 
-<div class="card mx-auto mt-5 pb-5" style="width: 90%;">
+<div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
 
-    <div class="container mt-5">
-        <h3 class="mb-4">Yemekler
-            <fa-icon [icon]="faUtensils" class="headerIcon"></fa-icon>
+    <div class="container mt-5 ">
+        <h3 class="mb-4 ">Yemekler
+            <fa-icon [icon]="faUtensils " class="headerIcon "></fa-icon>
         </h3>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
-            <div class="col" *ngFor="let food of foodList">
-                <div class="card productCard" style="width: 18rem;">
-                    <img src="{{foodImgUrl}}{{food.imgUrl}}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{food.name}}</h5>
-                        <p class="card-text">{{food.description}}</p>
-                        <div class="priceAndAddToCard"> <span class="price">{{food.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn"> <button (click)="addToCardFood(food.foodId)" class="greenBtn hover-effect">Sepete
-                                    Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button></div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3 " style="width: 100%; ">
+            <div class="col " *ngFor="let food of foodList ">
+                <div class="card productCard " style="width: 18rem; ">
+                    <img src="{{foodImgUrl}}{{food.imgUrl}} " class="card-img-top " alt="... ">
+                    <div class="card-body ">
+                        <h5 class="card-title ">{{food.name}}</h5>
+                        <p class="card-text ">{{food.description}}</p>
+                        <div class="priceAndAddToCard "> <span class="price ">{{food.price.toFixed(2)}} Tl</span>
+                            <div class="addToCardBtn "> <button (click)="addToCardFood(food.foodId) " class="greenBtn hover-effect ">Sepete
+                                    Ekle <fa-icon [icon]="faPlusCircle "></fa-icon></button></div>
                         </div>
 
                     </div>
@@ -92,22 +101,23 @@
     </div>
 </div>
 
-<div class="card mx-auto mt-5 pb-5" style="width: 90%;">
+<div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
 
-    <div class="container mt-5">
-        <h3 class="mb-4">İçecekler
-            <fa-icon [icon]="faGlassWater" class="headerIcon"></fa-icon>
+    <div class="container mt-5 ">
+        <h3 class="mb-4 ">İçecekler
+            <fa-icon [icon]="faGlassWater " class="headerIcon "></fa-icon>
         </h3>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
-            <div class="col" *ngFor="let drink of drinkList">
-                <div class="card productCard" style="width: 18rem;">
-                    <img src="{{drinkImgUrl}}{{drink.imgUrl}}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{drink.name}}</h5>
-                        <p class="card-text">{{drink.description}}</p>
-                        <div class="priceAndAddToCard"> <span class="price">{{drink.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn"> <button (click)="addToCardDrink(drink.drinkId)" class="greenBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button></div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3 " style="width: 100%; ">
+            <div class="col " *ngFor="let drink of drinkList ">
+                <div class="card productCard " style="width: 18rem; ">
+                    <img src="{{drinkImgUrl}}{{drink.imgUrl}} " class="card-img-top " alt="... ">
+                    <div class="card-body ">
+                        <h5 class="card-title ">{{drink.name}}</h5>
+                        <p class="card-text ">{{drink.description}}</p>
+                        <div class="priceAndAddToCard "> <span class="price ">{{drink.price.toFixed(2)}} Tl</span>
+                            <div class="addToCardBtn "> <button (click)="addToCardDrink(drink.drinkId) " class="greenBtn hover-effect ">Sepete Ekle <fa-icon [icon]="faPlusCircle "></fa-icon>
+                                    </button></div>
                         </div>
                     </div>
                 </div>
@@ -116,10 +126,10 @@
     </div>
 </div>
 
-<div class="card mx-auto mt-5 pb-5" style="width: 90%;">
-    <div class="container mt-5">
-        <h3 class="mb-4">Tatlılar
-            <fa-icon [icon]="faCandyCane" class="headerIcon"></fa-icon>
+<div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
+    <div class="container mt-5 ">
+        <h3 class="mb-4 ">Tatlılar
+            <fa-icon [icon]="faCandyCane " class="headerIcon "></fa-icon>
         </h3>
         <div *ngIf="this.sweetList.length>0" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
             <div *ngFor="let sweet of sweetList">
@@ -130,7 +140,8 @@
                             <h5 class="card-title">{{sweet.name}}</h5>
                             <p class="card-text">{{sweet.description}}</p>
                             <div class="priceAndAddToCard"> <span class="price">{{sweet.price.toFixed(2)}} Tl</span>
-                                <div class="addToCardBtn"> <button (click)="addToCardSweet(sweet.sweetId)" class="greenBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle"></fa-icon></button></div>
+                                <div class="addToCardBtn"> <button (click)="addToCardSweet(sweet.sweetId)" class="greenBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle">
+                                        </fa-icon></button></div>
                             </div>
                         </div>
                     </div>

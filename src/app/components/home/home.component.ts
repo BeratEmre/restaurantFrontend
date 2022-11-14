@@ -338,7 +338,12 @@ export class HomeComponent implements OnInit {
     })
   }
   carouselActiveClass(item:number):string{
-   var resultStr=item==this.menuActive?'carousel-item active':'carousel-item';
+    var resultStr='';
+    if (item==0)
+      resultStr=item==this.menuActive?'carousel-item active':'carousel-item';
+    else
+    resultStr=item-2==this.menuActive?'carousel-item active':'carousel-item';
+
   //  if (this.carouselNext) 
   //   resultStr.concat(' ','carouselNext')
   //   if (this.carouselPrev) 
@@ -346,17 +351,9 @@ export class HomeComponent implements OnInit {
     return resultStr;
   }
   menuActivePluss(){
-    // this.carouselNext=true;
-    // setTimeout(() => {
-    //   this.carouselNext=false;
-    // }, 8000);
     this.menuActive++;
   }
   menuActiveSour(){   
-    // this.carouselPrev=true;
-    // setTimeout(() => {
-    //   this.carouselPrev=false;
-    // }, 8000);
     this.menuActive--;
   }
 
@@ -364,9 +361,19 @@ export class HomeComponent implements OnInit {
     var count=Math.ceil(this.menuStarList.length / 3);
     var arr=[0];
     for (let index = 1; index < count; index++) {     
+      arr.push(index+2);
+    }
+
+    console.log(this.menuStarList)
+    return arr;
+  }
+
+  carouselButonCount(){
+    var count=Math.ceil(this.menuStarList.length / 3);
+    var arr=[0];
+    for (let index = 1; index < count; index++) {     
       arr.push(index);
     }
-    console.log(this.menuStarList.slice(2,3))
     console.log(arr)
     return arr;
   }

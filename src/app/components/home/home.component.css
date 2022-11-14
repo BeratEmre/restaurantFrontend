@@ -211,51 +211,14 @@
     opacity: .8;
 }
 
-
-/* 
-.greenBtn:hover {
-    background-color: var(--add);
-} */
-
-
-/* @media (min-width: 768px) {
-    .carousel-inner .carousel-item-end.active,
-    .carousel-inner .carousel-item-next {
-        transform: translateX(10%);
-    }
-    .carousel-inner .carousel-item-start.active,
-    .carousel-inner .carousel-item-prev {
-        transform: translateX(10%);
-    }
-} */
-
-.carousel-inner .carousel-item-end,
-.carousel-inner .carousel-item-start {
-    transform: translateX(0);
+#carouselExampleControl {
+    height: 410px;
 }
 
-.carouselPrev {
-    animation: prevComing forwards .2s;
+.carousel-inner {
+    height: 100%;
 }
 
-@keyframes prevComing {
-    1% {
-        transform: translateX(-20%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-.carouselNext {
-    animation: prevComing forwards .2s;
-}
-
-@keyframes nextComing {
-    1% {
-        transform: translateX(-33%);
-    }
-    100% {
-        transform: translateX(0);
-    }
+.carousel-indicators [data-bs-target] {
+    background-color: black;
 }
