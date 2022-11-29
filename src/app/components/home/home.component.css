@@ -222,3 +222,7 @@
 .carousel-indicators [data-bs-target] {
     background-color: black;
 }
+
+#basketCardHeader {
+    cursor: pointer;
+}

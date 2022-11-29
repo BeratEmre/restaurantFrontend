@@ -1,6 +1,5 @@
 <h4 class=" mb-3" style="margin-top: 120px;"> Sepetim ({{basketListCount()}})</h4>
 <div class="row">
-
     <div class="col-12 col-md-8">
         <div class="card">
             <div class="m-3 border basketList" *ngFor="let basket of basketList">
@@ -14,6 +13,9 @@
                         </ng-container>
                         <ng-container *ngIf="basket.type==3">
                             <img src="{{sweetImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
+                        </ng-container>
+                        <ng-container *ngIf="basket.type==4">
+                            <img src="{{menuImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
                         </ng-container>
                     </div>
                     <div class="card-element col-6">
@@ -42,7 +44,7 @@
                 <h4>Sepet Toplamı</h4>
                 <p>Sepet Tutarı <span style="position: absolute;right: 30px;">{{sumBasketPrice()}} TL</span></p>
             </div>
-            <button class="green-b">Siparişi Ver</button>
+            <button class="green-b" (click)="addOrder()">Siparişi Ver</button>
         </div>
     </div>
 </div>
@@ -80,4 +82,22 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="successMessageBox" *ngIf="successMessageBox">
+    <div class="row successBoxRow">
+        <div class="col-2" style="align-self: center;">
+            <fa-icon style="font-size: 30px;" [icon]="faCheckCircle"></fa-icon>
+        </div>
+        <div class="col-9">
+            <h5>Başarılı</h5>
+            <p>{{successMessage}}</p>
+        </div>
+        <div class="col-1">
+            <div (click)="closeSuccessMessageBox()" style="cursor: pointer;">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </div>
+        </div>
+    </div>
+    <div class="successBottom"></div>
 </div>

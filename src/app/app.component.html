@@ -9,16 +9,16 @@
             </div>
             <div class="admin-links">
                 <li>
-                    <a class="nav-link" href="/icecekler"> İçecek Listesi</a>
+                    <a class="nav-link" href="/menu">Menü Listesi</a>
                 </li>
                 <li>
                     <a class="nav-link" href="/yiyecekler">Yiyecek Listesi</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="/tatlılar">Tatlı Listesi</a>
+                    <a class="nav-link" href="/icecekler"> İçecek Listesi</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="/menu">Menü Listesi</a>
+                    <a class="nav-link" href="/tatlılar">Tatlı Listesi</a>
                 </li>
             </div>
         </ul>
@@ -46,16 +46,16 @@
                         <a class="nav-link" href="/">Anasayfa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/icecekler"> İçecekler</a>
+                        <a class="nav-link" (click)="goto('menus')">Menüler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/yiyecekler">Yiyecekler</a>
+                        <a class="nav-link" (click)="goto('foods')">Yiyecekler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tatlılar">Tatlılar</a>
+                        <a class="nav-link" (click)="goto('drinks')"> İçecekler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/menu">Menüler</a>
+                        <a class="nav-link" (click)="goto('sweets')">Tatlılar</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/sepetim">Sepetim</a>

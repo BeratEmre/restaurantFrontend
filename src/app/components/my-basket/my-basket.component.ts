@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { faPlusSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faPlusSquare, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { OrderStatus } from 'src/app/enums/order-status';
 import { ProductType } from 'src/app/enums/product-type';
 import DecodeToken from 'src/app/helper/decode-token';
 import { BasketModel } from 'src/app/models/basket-model';
 import { FoodModel } from 'src/app/models/food-model';
 import { OrderModel } from 'src/app/models/order';
+import { OrderDetailService } from 'src/app/services/order-detail.service';
 import { OrderService } from 'src/app/services/order.service';
 import { environment } from 'src/environments/environment';
 
@@ -19,12 +20,15 @@ export class MyBasketComponent implements OnInit {
   foodImgUrl = environment.imgUrl + '/foods/';
   sweetImgUrl = environment.imgUrl + '/sweets/';
   menuImgUrl = environment.imgUrl + '/menus/';
-
+  successMessageBox=false;
   faTrash = faTrash;
   faPlus = faPlusSquare
+  faCheckCircle=faCheckCircle;
+  faTimes=faTimes;
+  successMessage="";
   userId = 0;
   basketList: BasketModel[] = [];
-  constructor(private orderService: OrderService) {
+  constructor(private orderDetailService: OrderDetailService, private orderService:OrderService) {
     this.userId = Number(DecodeToken.decode().id);
     this.getOrders()
   }
@@ -35,7 +39,7 @@ export class MyBasketComponent implements OnInit {
   getOrders() {
     if (this.userId == 0) { return }
     console.log(this.userId)
-    this.orderService.getBasketWithUserId(this.userId).subscribe(res => {
+    this.orderDetailService.getBasketWithUserId(this.userId).subscribe(res => {
 
       if (!res.success || res.data == null || res.data.length < 1) { return }
       this.basketList = res.data;
@@ -74,7 +78,7 @@ export class MyBasketComponent implements OnInit {
     orderModel.userId = this.userId;
     orderModel.status = OrderStatus.basket;
 
-    this.orderService.deleteBasket(orderModel).subscribe(o => {
+    this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id != drinkId && b.type != ProductType.drink);
         this.basketList.splice(index, 1);
@@ -97,7 +101,7 @@ export class MyBasketComponent implements OnInit {
     orderModel.userId = this.userId;
     orderModel.status = OrderStatus.basket;
 
-    this.orderService.deleteBasket(orderModel).subscribe(o => {
+    this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id == foodId && b.type == ProductType.food);
         this.basketList.splice(index, 1)
@@ -120,7 +124,7 @@ export class MyBasketComponent implements OnInit {
     orderModel.userId = this.userId;
     orderModel.status = OrderStatus.basket;
 
-    this.orderService.deleteBasket(orderModel).subscribe(o => {
+    this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id == sweetId && b.type == ProductType.sweet);
         this.basketList.splice(index, 1)
@@ -143,7 +147,7 @@ export class MyBasketComponent implements OnInit {
     orderModel.userId = this.userId;
     orderModel.status = OrderStatus.basket;
 
-    this.orderService.deleteBasket(orderModel).subscribe(o => {
+    this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id == menuId && b.type == ProductType.menu);
         this.basketList.splice(index, 1)
@@ -188,7 +192,7 @@ export class MyBasketComponent implements OnInit {
     order.foodId = id;
     order.userId = this.userId;
 
-    this.orderService.addBasket(order).subscribe(p => {
+    this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success)
         this.basketList.forEach(b => { if (b.id == p.data.foodId) { b.count++ } });
     })
@@ -199,7 +203,7 @@ export class MyBasketComponent implements OnInit {
     order.sweetId = id;
     order.userId = this.userId;
 
-    this.orderService.addBasket(order).subscribe(p => {
+    this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success)
         this.basketList.forEach(b => { if (b.id == p.data.sweetId) { b.count++ } });
     })
@@ -210,7 +214,7 @@ export class MyBasketComponent implements OnInit {
     order.drinkId = id;
     order.userId = this.userId;
 
-    this.orderService.addBasket(order).subscribe(p => {
+    this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success)
         this.basketList.forEach(b => { if (b.id == p.data.drinkId) { b.count++ } });
     })
@@ -221,7 +225,7 @@ export class MyBasketComponent implements OnInit {
     order.menuId = id;
     order.userId = this.userId;
 
-    this.orderService.addBasket(order).subscribe(p => {
+    this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success) 
           this.basketList.forEach(b => { if (b.id == p.data.menuId) { b.count++ } });
     })
@@ -232,5 +236,23 @@ export class MyBasketComponent implements OnInit {
     var res = 0;
     this.basketList.forEach(f => { res = res + f.count * f.price })
     return res;
+  }
+
+  //#region 
+  addOrder(){
+    this.orderService.addOrder(this.userId).subscribe(o=>{
+      console.log(o)
+      if (o.success) {
+        this.successMessageBox=true;
+        this.successMessage=o.message;
+        this.basketList=[];
+      }
+    })
+    this.userId
+  }
+  //#endregion
+  closeSuccessMessageBox(){
+    this.successMessage="";
+    this.successMessageBox=false;
   }
 }

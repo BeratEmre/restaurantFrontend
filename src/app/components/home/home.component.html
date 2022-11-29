@@ -32,7 +32,7 @@
                         <div class="card-body ">
                             <h5 class="card-title ">{{menu.name}}</h5>
                             <p class="card-text ">{{menu.description}}</p>
-                            <button href="# " class="greenBtn hover-effect ">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
+                            <button href="# " class="greenBtn hover-effect" (click)="addToCardMenu(menu.menuId)">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
                                 </fa-icon></button>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
 
 <div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
     <div class="container mt-5 ">
-        <h3 class="mb-4 ">Menüler
+        <h3 class="mb-4" id="menus">Menüler
             <fa-icon [icon]="faUtensilSpoon " class="headerIcon "></fa-icon>
         </h3>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3 " style="width: 100%; ">
@@ -65,7 +65,7 @@
                         <h5 class="card-title ">{{menu.name}}</h5>
                         <p class="card-text ">{{menu.description}}</p>
                         <div class="priceAndAddToCard "> <span class="price ">{{(menu.price).toFixed(2)}} TL</span>
-                            <div class="addToCardBtn "> <button class="greenBtn hover-effect " (click)="addToCardMenu(menu.menuId) ">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
+                            <div class="addToCardBtn "> <button class="greenBtn hover-effect" (click)="addToCardMenu(menu.menuId)">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
                                     </fa-icon></button></div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
 <div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
 
     <div class="container mt-5 ">
-        <h3 class="mb-4 ">Yemekler
+        <h3 class="mb-4" id="foods">Yemekler
             <fa-icon [icon]="faUtensils " class="headerIcon "></fa-icon>
         </h3>
 
@@ -104,7 +104,7 @@
 <div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
 
     <div class="container mt-5 ">
-        <h3 class="mb-4 ">İçecekler
+        <h3 class="mb-4" id="drinks">İçecekler
             <fa-icon [icon]="faGlassWater " class="headerIcon "></fa-icon>
         </h3>
 
@@ -128,7 +128,7 @@
 
 <div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
     <div class="container mt-5 ">
-        <h3 class="mb-4 ">Tatlılar
+        <h3 class="mb-4" id="sweets">Tatlılar
             <fa-icon [icon]="faCandyCane " class="headerIcon "></fa-icon>
         </h3>
         <div *ngIf="this.sweetList.length>0" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
@@ -153,7 +153,7 @@
 
 <!--Sepetim -->
 <div [class]="basketCardClass()">
-    <div class="card-header" (click)="basketSizeChange()">
+    <div class="card-header" (click)="basketSizeChange()" id="basketCardHeader">
         <h4 align="center"> Sepetiniz</h4>
     </div>
     <div class="card-body" *ngIf="basketSize">

@@ -79,3 +79,7 @@ footer .col h5 {
 .contact-span {
     text-decoration: none;
 }
+
+.nav-link {
+    cursor: pointer;
+}

@@ -16,6 +16,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { AuthGuard } from './guard/auth-guard';
+import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AuthGuard } from './guard/auth-guard';
     SignupComponent,
     MyBasketComponent,
     MenuComponent,
-    RegisterComponent
+    RegisterComponent,
+    MyOrdersComponent
   ],
   imports: [
     HttpClientModule,

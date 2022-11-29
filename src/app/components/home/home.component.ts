@@ -12,7 +12,7 @@ import { SweetModel } from 'src/app/models/sweet-model';
 import { DrinkService } from 'src/app/services/drink.service';
 import { FoodService } from 'src/app/services/food.service';
 import { MenuService } from 'src/app/services/menu.service';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderDetailService } from 'src/app/services/order-detail.service';
 import { SweetService } from 'src/app/services/sweet.service';
 import { environment } from 'src/environments/environment';
 
@@ -51,11 +51,10 @@ export class HomeComponent implements OnInit {
   //   this.router.navigate(['/sepetim']);
   // }
   constructor(private sweetService: SweetService, private drinkService: DrinkService, private foodService: FoodService,
-    private menuService: MenuService, private orderService: OrderService) {
+    private menuService: MenuService, private orderDetailService: OrderDetailService) {
     this.userId = Number(DecodeToken.decode().id);
     this.getAllProducts();
-    this.getOrders()
-   
+    this.getOrderDetails()
   }
   ngOnInit(): void {
   }
@@ -83,10 +82,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getOrders() {
+  getOrderDetails() {
     if (this.userId == 0) { return }
-    console.log(this.userId)
-    this.orderService.getBasketWithUserId(this.userId).subscribe(res => {
+    this.orderDetailService.getBasketWithUserId(this.userId).subscribe(res => {
 
       if (!res.success || res.data == null || res.data.length < 1) { return }
       this.basketList = res.data;
@@ -103,7 +101,7 @@ export class HomeComponent implements OnInit {
       isItAlreadyAdded = this.basketList.some(b => b.type == ProductType.food && b.id == order.foodId);
     }
 
-    this.orderService.addBasket(order).subscribe(p => {
+    this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success) {
         if (!isItAlreadyAdded) {
           var orderFood = new FoodModel();
@@ -130,7 +128,7 @@ export class HomeComponent implements OnInit {
       isItAlreadyAdded = this.basketList.some(b => b.type == ProductType.sweet && b.id == order.sweetId);
     }
 
-    this.orderService.addBasket(order).subscribe(p => {
+    this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success) {
         if (!isItAlreadyAdded) {
           var orderSweet = new SweetModel();
@@ -157,7 +155,7 @@ export class HomeComponent implements OnInit {
       isItAlreadyAdded = this.basketList.some(b => b.type == ProductType.drink && b.id == order.drinkId);
     }
 
-    this.orderService.addBasket(order).subscribe(p => {
+    this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success) {
         if (!isItAlreadyAdded) {
           var orderDrink = new DrinkModel();
@@ -183,7 +181,7 @@ export class HomeComponent implements OnInit {
       isItAlreadyAdded = this.basketList.some(b => b.type == ProductType.menu && b.id == order.menuId);
 
 
-    this.orderService.addBasket(order).subscribe(p => {
+    this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success) {
         if (!isItAlreadyAdded) {
           var orderMenu = new MenuModel();
@@ -252,7 +250,7 @@ export class HomeComponent implements OnInit {
     orderModel.userId = this.userId;
     orderModel.status = OrderStatus.basket;
 
-    this.orderService.deleteBasket(orderModel).subscribe(o => {
+    this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id != drinkId && b.type != ProductType.drink);
         this.basketList.splice(index, 1);
@@ -275,7 +273,7 @@ export class HomeComponent implements OnInit {
     orderModel.userId = this.userId;
     orderModel.status = OrderStatus.basket;
 
-    this.orderService.deleteBasket(orderModel).subscribe(o => {
+    this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id == foodId && b.type == ProductType.food);
         this.basketList.splice(index, 1)
@@ -298,7 +296,7 @@ export class HomeComponent implements OnInit {
     orderModel.userId = this.userId;
     orderModel.status = OrderStatus.basket;
 
-    this.orderService.deleteBasket(orderModel).subscribe(o => {
+    this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id == sweetId && b.type == ProductType.sweet);
         this.basketList.splice(index, 1)
@@ -321,7 +319,7 @@ export class HomeComponent implements OnInit {
     orderModel.userId = this.userId;
     orderModel.status = OrderStatus.basket;
 
-    this.orderService.deleteBasket(orderModel).subscribe(o => {
+    this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
         var index = this.basketList.findIndex(b => b.id == menuId && b.type == ProductType.menu);
         this.basketList.splice(index, 1)
@@ -343,11 +341,6 @@ export class HomeComponent implements OnInit {
       resultStr=item==this.menuActive?'carousel-item active':'carousel-item';
     else
     resultStr=item-2==this.menuActive?'carousel-item active':'carousel-item';
-
-  //  if (this.carouselNext) 
-  //   resultStr.concat(' ','carouselNext')
-  //   if (this.carouselPrev) 
-  //   resultStr.concat(' ','carouselPrev')
     return resultStr;
   }
   menuActivePluss(){
@@ -364,7 +357,6 @@ export class HomeComponent implements OnInit {
       arr.push(index+2);
     }
 
-    console.log(this.menuStarList)
     return arr;
   }
 
@@ -374,7 +366,6 @@ export class HomeComponent implements OnInit {
     for (let index = 1; index < count; index++) {     
       arr.push(index);
     }
-    console.log(arr)
     return arr;
   }
 
