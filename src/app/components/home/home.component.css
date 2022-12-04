@@ -193,15 +193,6 @@
     box-shadow: none;
 }
 
-.greenBtn {
-    width: 120px;
-    background-color: var(--green);
-    color: white;
-    border-radius: 10px;
-    border-color: white;
-    padding: 7px 7px;
-}
-
 .basketIcon {
     opacity: .8;
 }

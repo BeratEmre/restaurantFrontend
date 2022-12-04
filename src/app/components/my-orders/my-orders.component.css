@@ -1,0 +1,6 @@
+.vertical-center {
+    display: table-cell;
+    height: 100px;
+    /* resmin boyu kadar */
+    vertical-align: middle;
+}

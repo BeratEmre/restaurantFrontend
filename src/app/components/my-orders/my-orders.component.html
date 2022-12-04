@@ -1,1 +1,51 @@
-<p>my-orders works!</p>
+<div class="row gy-3">
+    <ng-container *ngFor="let basket of basketDtos">
+        <div class="col-md-3">
+            <img src="{{basket.imgUrl}}" width="100px" />
+        </div>
+        <div class="col-3">
+            <div class="vertical-center">
+                <h5>{{basket.name}}</h5>
+                <p>description</p>
+            </div>
+        </div>
+        <div class=" col-2 ">
+            <p class="vertical-center ">{{basket.count}} Adet</p>
+        </div>
+        <div class="col-2 ">
+            <p class="vertical-center ">{{basket.price.toFixed(2)}} TL</p>
+        </div>
+        <div class="col-2 ">
+            <p class="vertical-center ">Sipariş Durumu</p>
+        </div>
+    </ng-container>
+
+</div>
+
+
+
+<dx-data-grid id="gridContainer " [dataSource]="basketDtos " keyExpr="ID " keyExpr="id " [showBorders]="true ">
+    <dxi-column dataField="imgUrl " cellTemplate="img " width="120px " caption="Ürün Resmi "></dxi-column>
+    <dxi-column dataField="name " caption="Adı "></dxi-column>
+    <dxi-column dataField="type " caption="Türü " alignment="left " cellTemplate="type "></dxi-column>
+    <dxi-column dataField="price " caption="Fiyatı (TL) "></dxi-column>
+    <dxi-column dataField="count " caption="Sayısı "></dxi-column>
+
+
+
+    <dxo-paging [pageSize]="12 "></dxo-paging>
+    <dxo-pager [showPageSizeSelector]="true " [allowedPageSizes]="[8, 12, 20] "></dxo-pager>
+    <dxo-search-panel [visible]="true "></dxo-search-panel>
+    <div *dxTemplate="let cell of 'img' ">
+        <img src="{{ cell.value }} " style="width: 100px; " />
+    </div>
+
+    <div *dxTemplate="let cell of 'type' ">
+        <div [ngSwitch]="cell.value ">
+            <span *ngSwitchCase="1 ">Yiyecek</span>
+            <span *ngSwitchCase="2 ">İçecek</span>
+            <span *ngSwitchCase="3 ">Tatlı</span>
+            <span *ngSwitchCase="4 ">Menü</span>
+        </div>
+    </div>
+</dx-data-grid>

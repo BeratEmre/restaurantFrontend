@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/account/login/login.component';
 import { RegisterComponent } from './components/account/register/register.component';
-import { DrinkComponent } from './components/drink/drink.component';
-import { FoodComponent } from './components/food/food.component';
+import { OrdersComponent } from './components/adminPages/orders/orders.component';
+import { DrinkComponent } from './components/adminPages/drink/drink.component';
+import { FoodComponent } from './components/adminPages/food/food.component';
 import { HomeComponent } from './components/home/home.component';
-import { MenuComponent } from './components/menu/menu.component';
+import { MenuComponent } from './components/adminPages/menu/menu.component';
 import { MyBasketComponent } from './components/my-basket/my-basket.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { SweetComponent } from './components/sweet/sweet.component';
+import { SweetComponent } from './components/adminPages/sweet/sweet.component';
 import { AuthGuard } from './guard/auth-guard';
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path:"kayitol",component:RegisterComponent},
   {path:"girisyap",component:LoginComponent},
   {path:"siparislerim",component:MyOrdersComponent},
+  {path:"siparisler",component:OrdersComponent},
   {path:"**",pathMatch:"full",component:HomeComponent},
 ];
 

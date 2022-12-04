@@ -28,6 +28,16 @@ body {
     src: url("./assets/Bellefair-Regular.ttf");
 }
 
+.greenBtn {
+    width: 120px;
+    background-color: var(--green);
+    color: white;
+    border-radius: 10px;
+    border-color: white;
+    padding: 7px 7px;
+    border: none;
+}
+
 .green-b {
     background-color: rgb(0, 200, 151);
     color: white;

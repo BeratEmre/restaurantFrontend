@@ -18,6 +18,8 @@ export class AppComponent {
     if(token!=undefined && token!=null && token != '')
       this.isThisAdmin=true;
   }
+
+  
   goto(id:string){
     console.log(id);
     var el= document.getElementById(id);

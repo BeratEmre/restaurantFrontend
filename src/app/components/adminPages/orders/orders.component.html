@@ -1,0 +1,53 @@
+<h3 class="titleOrders">Siparişler</h3>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-6 g-2 my-4 filterContainer">
+    <div class="col">
+        <input type="date" class="form-control" placeholder="Sipariş Verilme Tarihi Aralığı" />
+
+    </div>
+    <div class="col">
+        <select name="cars" class="form-select">
+            <option value="0" selected>Ürün Türü </option>
+            <option value="1">Yiyecek</option>
+            <option value="2">İçecek</option>
+            <option value="3">Tatlı</option>
+            <option value="4">Menü</option>
+          </select>
+    </div>
+    <div class="col">
+        <input class="form-control" placeholder="Masa Numarası" />
+
+    </div>
+    <div class="col">
+        <input class="form-control" placeholder="Min Fiyatı" />
+
+    </div>
+    <div class="col">
+        <input class="form-control" placeholder="Maksimum Fiyatı" />
+
+    </div>
+    <div class="col">
+        <button class="greenBtn hover-effect">Ara</button>
+    </div>
+</div>
+
+<dx-data-grid id="gridContainer" [dataSource]="orderDtos" keyExpr="ID" keyExpr="orderDetailId" [showBorders]="true">
+    <dxi-column dataField="orderDetailId" caption="Ürün Id" alignment="left"></dxi-column>
+    <dxi-column dataField="userId" caption="Kullanıcı Id" alignment="left"></dxi-column>
+    <dxi-column dataField="name" caption="Adı"></dxi-column>
+    <dxi-column dataField="momentOfOrder" dataType="datetime" format="HH:mm dd/MM/yyyy" caption="Sipariş Verilme Zamanı"></dxi-column>
+    <dxi-column dataField="typeStr" caption="Türü"></dxi-column>
+    <dxi-column dataField="price" caption="Fiyatı (TL)"></dxi-column>
+    <dxi-column dataField="count" caption="Sayısı" alignment="left"></dxi-column>
+    <dxi-column dataField="status" caption="Durumu" alignment="left"></dxi-column>
+
+
+    <dxo-paging [pageSize]="12"></dxo-paging>
+    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[8, 12, 20]"></dxo-pager>
+    <dxo-search-panel [visible]="true"></dxo-search-panel>
+
+    <!-- <dxi-column dataField="imgUrl" cellTemplate="img" width="120px" caption="Ürün Resmi"></dxi-column> -->
+
+    <!-- <div *dxTemplate="let cell of 'img'">
+        <img src="{{ cell.value }}" style="width: 100px;" />
+    </div> -->
+</dx-data-grid>
