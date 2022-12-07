@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ProductType } from 'src/app/enums/product-type';
 import DecodeToken from 'src/app/helper/decode-token';
 import { OrderDtoModel } from 'src/app/models/orderDto-model';
@@ -21,7 +22,14 @@ export class OrdersComponent implements OnInit {
   constructor(private orderService: OrderService) {  
 
   }
-
+  filterForm = new FormGroup({
+    startDate: new FormControl(''),
+    endDate: new FormControl(''),
+    productType: new FormControl(''),
+    tableNumber: new FormControl(''),
+    minPrice: new FormControl(''),
+    maxPrice: new FormControl('')
+  });
 
 
   ngOnInit(): void {
@@ -34,6 +42,15 @@ export class OrdersComponent implements OnInit {
       if (s.success) {
         this.orderDtos = s.data
       }
+    })
+  }
+
+  filterFormSubmit(){
+    console.log(this.filterForm);
+    this.orderService.getFilterOrder(this.filterForm.value).subscribe(r=>{
+      console.log(r)
+        if(r.success)
+          this.orderDtos=r.data;        
     })
   }
 

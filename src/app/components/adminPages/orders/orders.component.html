@@ -1,34 +1,50 @@
 <h3 class="titleOrders">Siparişler</h3>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-6 g-2 my-4 filterContainer">
-    <div class="col">
-        <input type="date" class="form-control" placeholder="Sipariş Verilme Tarihi Aralığı" />
+<form [formGroup]="filterForm" (ngSubmit)="filterFormSubmit()">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-6 g-2 my-4 filterContainer">
+        <div class="col">
+            <label class="form-label">Başlangıç Zamanı</label>
+            <input formControlName="startDate" type="date" class="form-control" placeholder="Sipariş Verilme Tarihi Aralığı" />
+        </div>
 
-    </div>
-    <div class="col">
-        <select name="cars" class="form-select">
-            <option value="0" selected>Ürün Türü </option>
-            <option value="1">Yiyecek</option>
-            <option value="2">İçecek</option>
-            <option value="3">Tatlı</option>
-            <option value="4">Menü</option>
-          </select>
-    </div>
-    <div class="col">
-        <input class="form-control" placeholder="Masa Numarası" />
+        <div class="col">
+            <label class="form-label">Bitiş Zamanı</label>
+            <input formControlName="endDate" type="date" class="form-control" placeholder="Sipariş Verilme Tarihi Aralığı" />
+        </div>
 
-    </div>
-    <div class="col">
-        <input class="form-control" placeholder="Min Fiyatı" />
+        <div class="col">
+            <label class="form-label">Ürün Türü</label>
+            <select formControlName="productType" class="form-select">
+                <option value="0" selected>Hepsi</option>
+                <option value="1">Yiyecek</option>
+                <option value="2">İçecek</option>
+                <option value="3">Tatlı</option>
+                <option value="4">Menü</option>
+            </select>
+        </div>
+        <div class="col">
+            <label class="form-label">Masa Numarası</label>
 
-    </div>
-    <div class="col">
-        <input class="form-control" placeholder="Maksimum Fiyatı" />
+            <input formControlName="tableNumber" class="form-control" placeholder="Masa Numarası" />
+        </div>
 
+        <div class="col">
+            <label class="form-label">Fiyat Aralığı</label>
+
+            <div class="row row-cols-2 g-2">
+                <div class="col">
+                    <input formControlName="minPrice" class="form-control" placeholder="Min Fiyat" />
+                </div>
+                <div class="col">
+                    <input formControlName="maxPrice" class="form-control" placeholder="Maks Fiyat" />
+                </div>
+            </div>
+
+        </div>
+        <div class="col" style="display: flex; align-items:end;">
+            <button type="submit" class="greenBtn hover-effect" style="margin-left: auto;">Ara</button>
+        </div>
     </div>
-    <div class="col">
-        <button class="greenBtn hover-effect">Ara</button>
-    </div>
-</div>
+</form>
 
 <dx-data-grid id="gridContainer" [dataSource]="orderDtos" keyExpr="ID" keyExpr="orderDetailId" [showBorders]="true">
     <dxi-column dataField="orderDetailId" caption="Ürün Id" alignment="left"></dxi-column>
@@ -38,16 +54,20 @@
     <dxi-column dataField="typeStr" caption="Türü"></dxi-column>
     <dxi-column dataField="price" caption="Fiyatı (TL)"></dxi-column>
     <dxi-column dataField="count" caption="Sayısı" alignment="left"></dxi-column>
-    <dxi-column dataField="status" caption="Durumu" alignment="left"></dxi-column>
+    <dxi-column dataField="status" caption="Durumu" alignment="left" cellTemplate="status"></dxi-column>
 
 
     <dxo-paging [pageSize]="12"></dxo-paging>
     <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[8, 12, 20]"></dxo-pager>
     <dxo-search-panel [visible]="true"></dxo-search-panel>
 
-    <!-- <dxi-column dataField="imgUrl" cellTemplate="img" width="120px" caption="Ürün Resmi"></dxi-column> -->
+    <div *dxTemplate="let cell of 'status'">
+        <span [ngSwitch]="cell.value">
+            <p *ngSwitchCase="10">Hazırlanıyor</p>
+            <p *ngSwitchCase="20">Sipariş Masaya Ulaştırıldı</p>
+            <p *ngSwitchCase="30">Ödeme Yapıldı</p>
+        </span>
+    </div>
 
-    <!-- <div *dxTemplate="let cell of 'img'">
-        <img src="{{ cell.value }}" style="width: 100px;" />
-    </div> -->
+
 </dx-data-grid>

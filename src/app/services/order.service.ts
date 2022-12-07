@@ -29,4 +29,8 @@ export class OrderService {
         let newPath = this.apiUrl + "Order/GetOrderDtos";
         return this.httpClient.get<ListResponseModel<OrderDtoModel>>(newPath);
     }
+    getFilterOrder(form:any):Observable<ListResponseModel<OrderDtoModel>>{
+        let newPath = this.apiUrl + "Order/GetFilterOrderDtos";
+        return this.httpClient.post<ListResponseModel<OrderDtoModel>>(newPath,form);
+    }
 }  

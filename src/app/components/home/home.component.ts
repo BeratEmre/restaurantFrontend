@@ -1,6 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { faCandyCane, faGlassWater, faPlus, faPlusCircle,  faStar, faTrash, faUtensils, faUtensilSpoon } from '@fortawesome/free-solid-svg-icons';
-import { OrderStatus } from 'src/app/enums/order-status';
+import { OrderDetailStatus } from 'src/app/enums/order-detail-status';
 import { ProductType } from 'src/app/enums/product-type';
 import DecodeToken from 'src/app/helper/decode-token';
 import { BasketModel } from 'src/app/models/basket-model';
@@ -248,7 +248,7 @@ export class HomeComponent implements OnInit {
     var orderModel = new OrderModel();
     orderModel.drinkId = drinkId;
     orderModel.userId = this.userId;
-    orderModel.status = OrderStatus.basket;
+    orderModel.status = OrderDetailStatus.basket;
 
     this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
@@ -271,7 +271,7 @@ export class HomeComponent implements OnInit {
     var orderModel = new OrderModel();
     orderModel.foodId = foodId;
     orderModel.userId = this.userId;
-    orderModel.status = OrderStatus.basket;
+    orderModel.status = OrderDetailStatus.basket;
 
     this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
@@ -294,7 +294,7 @@ export class HomeComponent implements OnInit {
     var orderModel = new OrderModel();
     orderModel.sweetId = sweetId;
     orderModel.userId = this.userId;
-    orderModel.status = OrderStatus.basket;
+    orderModel.status = OrderDetailStatus.basket;
 
     this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
@@ -317,7 +317,7 @@ export class HomeComponent implements OnInit {
     var orderModel = new OrderModel();
     orderModel.menuId = menuId;
     orderModel.userId = this.userId;
-    orderModel.status = OrderStatus.basket;
+    orderModel.status = OrderDetailStatus.basket;
 
     this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
       if (o.data == 0) {
