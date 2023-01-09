@@ -17,11 +17,8 @@ export class MyOrdersComponent implements OnInit {
   foodImgUrl = environment.imgUrl + '/foods/';
   sweetImgUrl = environment.imgUrl + '/sweets/';
   menuImgUrl = environment.imgUrl + '/menus/';
-  constructor(private orderService: OrderService) {  
-
-  }
-
-
+  ordersTotalPrice:number=0;
+  constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
     this.userId = Number(DecodeToken.decode().id);
@@ -31,7 +28,9 @@ export class MyOrdersComponent implements OnInit {
   getBasketDtos() {
     this.orderService.getBasketWithUserId(this.userId).subscribe(s => {
       if (s.success) {
+        console.log(s.data)
         s.data.forEach(el => {
+          this.ordersTotalPrice=this.ordersTotalPrice+el.price*el.count;
           switch (el.type) {
             case ProductType.food:
               el.imgUrl = this.foodImgUrl + el.imgUrl;
@@ -47,7 +46,6 @@ export class MyOrdersComponent implements OnInit {
               break;
           }
         });
-
         this.basketDtos = s.data
       }
     })

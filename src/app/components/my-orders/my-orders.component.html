@@ -1,30 +1,77 @@
-<div class="row gy-3">
-    <ng-container *ngFor="let basket of basketDtos">
-        <div class="col-md-3">
-            <img src="{{basket.imgUrl}}" width="100px" />
+<div class="myorders-container">
+    <div class="row border-order">
+        <div class="col-md-3 ">
+            <p class=" order-headerp">Resmi</p>
         </div>
-        <div class="col-3">
-            <div class="vertical-center">
-                <h5>{{basket.name}}</h5>
-                <p>description</p>
-            </div>
+        <div class="col-3 ">
+            <p class=" order-headerp">Ürün & Detayı</p>
         </div>
         <div class=" col-2 ">
-            <p class="vertical-center ">{{basket.count}} Adet</p>
+            <p class=" order-headerp">Adedi</p>
         </div>
         <div class="col-2 ">
-            <p class="vertical-center ">{{basket.price.toFixed(2)}} TL</p>
+            <p class=" order-headerp">Fiyatı</p>
         </div>
         <div class="col-2 ">
-            <p class="vertical-center ">Sipariş Durumu</p>
+            <p class=" order-headerp">Sipariş Durumu</p>
         </div>
-    </ng-container>
+    </div>
 
+    <div class="row gy-3 mt-1">
+
+        <ng-container *ngFor="let basket of basketDtos">
+
+            <div class="col-md-3 border-order img-order">
+                <img src="{{basket.imgUrl}}" width="100px" />
+            </div>
+            <div class="col-3 border-order">
+                <div class="">
+                    <h5>{{basket.name}}</h5>
+                    <p>description</p>
+                </div>
+            </div>
+            <div class=" col-2 border-order">
+                <p class="vertical-center ">{{basket.count}} Adet</p>
+            </div>
+            <div class="col-2 border-order">
+                <p class="vertical-center ">{{basket.price.toFixed(2)}} TL</p>
+            </div>
+            <div class="col-2 border-order">
+                <div [ngSwitch]="basket.status">
+                    <p class="vertical-center" *ngSwitchCase="10">Hazırlanıyor</p>
+                    <p class="vertical-center" *ngSwitchCase="20">Getirildi</p>
+                    <p class="vertical-center" *ngSwitchDefault>Belirsiz</p>
+                </div>
+
+
+            </div>
+        </ng-container>
+
+    </div>
+
+    <div class="row border-order-total">
+        <div class="col-md-3 ">
+            <p class=" order-headerp">Toplam</p>
+        </div>
+        <div class="col-3 ">
+            <p class=" order-headerp"></p>
+        </div>
+        <div class=" col-2 ">
+            <p class=" order-headerp"></p>
+        </div>
+        <div class="col-2 ">
+            <p class=" order-headerp">{{ordersTotalPrice}} TL</p>
+        </div>
+        <div class="col-2 ">
+            <p class=" order-headerp"></p>
+        </div>
+    </div>
 </div>
 
 
 
-<dx-data-grid id="gridContainer " [dataSource]="basketDtos " keyExpr="ID " keyExpr="id " [showBorders]="true ">
+
+<!-- <dx-data-grid id="gridContainer " [dataSource]="basketDtos " keyExpr="ID " keyExpr="id " [showBorders]="true ">
     <dxi-column dataField="imgUrl " cellTemplate="img " width="120px " caption="Ürün Resmi "></dxi-column>
     <dxi-column dataField="name " caption="Adı "></dxi-column>
     <dxi-column dataField="type " caption="Türü " alignment="left " cellTemplate="type "></dxi-column>
@@ -48,4 +95,4 @@
             <span *ngSwitchCase="4 ">Menü</span>
         </div>
     </div>
-</dx-data-grid>
+</dx-data-grid> -->

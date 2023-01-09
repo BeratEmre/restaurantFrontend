@@ -5,4 +5,5 @@ export class BasketModel {
     price:number;
     count:number;
     imgUrl:string;
+    status?:number
 }

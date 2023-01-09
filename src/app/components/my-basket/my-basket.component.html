@@ -1,85 +1,74 @@
-<h4 class=" mb-3" style="margin-top: 120px;"> Sepetim ({{basketListCount()}})</h4>
-<div class="row">
-    <div class="col-12 col-md-8">
-        <div class="card">
-            <div class="m-3 border basketList" *ngFor="let basket of basketList">
-                <div class="row">
-                    <div class="card-element col-2">
-                        <ng-container *ngIf="basket.type==1">
-                            <img src="{{foodImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
-                        </ng-container>
-                        <ng-container *ngIf="basket.type==2">
-                            <img src="{{drinkImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
-                        </ng-container>
-                        <ng-container *ngIf="basket.type==3">
-                            <img src="{{sweetImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
-                        </ng-container>
-                        <ng-container *ngIf="basket.type==4">
-                            <img src="{{menuImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
-                        </ng-container>
-                    </div>
-                    <div class="card-element col-6">
-                        <p class="card-text">
-                            <b> <span style="color: var(--green);"> {{basket.price}} TL</span> <br>{{basket.name}} </b>
-                        </p>
-                    </div>
-                    <div class="card-element col-3 ">
-                        <div class="number-of-producs">
-                            <div class="fa-icon" (click)="deleteBasket(basket)">
-                                <fa-icon [icon]="faTrash" class="faTrash"></fa-icon>
-                            </div>
-                            <span class="number-of-producs-text">{{basket.count}}</span>
-                            <div class="fa-icon" (click)="increaseBasket(basket)">
-                                <fa-icon [icon]="faPlus" class="faPlus"></fa-icon>
+<div class="container pb-4">
+    <h4 class=" mb-3" style="margin-top: 120px;"> Sepetim ({{basketListCount()}})</h4>
+
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <div class="">
+                <div class="m-3 border basketList" *ngFor="let basket of basketList">
+                    <div class="row">
+                        <div class="card-element col-2">
+                            <ng-container *ngIf="basket.type==1">
+                                <img src="{{foodImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
+                            </ng-container>
+                            <ng-container *ngIf="basket.type==2">
+                                <img src="{{drinkImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
+                            </ng-container>
+                            <ng-container *ngIf="basket.type==3">
+                                <img src="{{sweetImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
+                            </ng-container>
+                            <ng-container *ngIf="basket.type==4">
+                                <img src="{{menuImgUrl}}{{basket.imgUrl}}" style="width: 100px;" alt="...">
+                            </ng-container>
+                        </div>
+                        <div class="card-element col-6">
+                            <p class="card-text">
+                                <b> <span style="color: var(--green);"> {{basket.price}} TL</span> <br>{{basket.name}}
+                                </b>
+                            </p>
+                        </div>
+                        <div class="card-element col-3 ">
+                            <div class="number-of-producs">
+                                <div class="fa-icon" (click)="deleteBasket(basket)">
+                                    <fa-icon [icon]="faTrash" class="faTrash"></fa-icon>
+                                </div>
+                                <span class="number-of-producs-text">{{basket.count}}</span>
+                                <div class="fa-icon" (click)="increaseBasket(basket)">
+                                    <fa-icon [icon]="faPlus" class="faPlus"></fa-icon>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-12 col-md-4">
-        <div class="card p-4    ">
-            <div class="text-paymeny">
-                <h4>Sepet Toplamı</h4>
-                <p>Sepet Tutarı <span style="position: absolute;right: 30px;">{{sumBasketPrice()}} TL</span></p>
+        <div class="col-12 col-md-4">
+            <div class="card p-4    ">
+                <div class="text-paymeny">
+                    <h4>Sepet Toplamı</h4>
+                    <p>Sepet Tutarı <span style="position: absolute;right: 30px;">{{sumBasketPrice()}} TL</span></p>
+                </div>
+                <button class="blue-b" (click)="addOrder()">Siparişi Ver</button>
             </div>
-            <button class="green-b" (click)="addOrder()">Siparişi Ver</button>
         </div>
     </div>
 </div>
 
-<h4 class="mt-5 mb-4">Önerilen Ürünler</h4>
-
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
-    <div class="col">
-        <div class="card " style="width: 18rem;">
-            <img src="../../../assets/images2.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card " style="width: 18rem;">
-            <img src="../../../assets/images.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card " style="width: 18rem;">
-            <img src="../../../assets/wszd-listing.webp" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+<div class="bgDark py-4">
+    <div class="container">
+        <h4 class="mt-5 mb-4">Önerilen Ürünler</h4>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3" style="width: 100%;">
+            <ng-container *ngFor="let product of recommendedProducts">
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{imgUrl+product.imgUrl}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text">{{product.description}}</p>
+                            <a (click)="addToCard(product.productType)" class="btn btn-primary">Sepete Ekle</a>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

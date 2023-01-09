@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { faCoffee, faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faSearch, faUserCircle,faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,10 @@ export class AppComponent {
   faUser = faUserCircle;
   faSearch = faSearch;
   isThisAdmin=false;
+  faBars=faBars;
+  faTimes=faTimes;
+  navCloseVisible=false;
+  adminNavCloseVisible=false;
   constructor(@Inject(DOCUMENT) document: Document) {
     var token=localStorage.getItem('token');
     if(token!=undefined && token!=null && token != '')

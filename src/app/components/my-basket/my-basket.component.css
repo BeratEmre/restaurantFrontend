@@ -23,13 +23,15 @@
 }
 
 .basketList {
-    box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.30);
+    box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.30);
     padding: 5px;
     border-radius: 5px;
+    transition: all .2s ease-in-out;
 }
 
 .basketList:hover {
-    box-shadow: 2px 5px 9px 1px rgba(0, 0, 0, 0.60);
+    box-shadow: 1px 4px 6px 2px rgba(0, 0, 0, 0.30);
+    transform: scale(1.02);
 }
 
 .fa-icon .faTrash:hover {

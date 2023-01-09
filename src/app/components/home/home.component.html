@@ -4,14 +4,14 @@
 </figure> -->
 <!-- <img src="../../../assets/salmon-2.jpg" style="width: 100%;" alt="..."> -->
 
-<div class="bck-img">
+<!-- <div class="bck-img">
     <div class="img-content">
         <h3 class="content-header">Kolayca Sipariş Verin</h3>
         <p class="content-text">Aradığınız çeşitlilik burada <span class="name">Benim<span
                     class="r">R</span>estoranım</span>da !
         </p>
     </div>
-</div>
+</div> -->
 <h3 class="pt-5 ps-5 pb-4">Seçilmiş Menüler
     <fa-icon [icon]="faStar" class="headerIcon"></fa-icon>
 </h3>
@@ -32,7 +32,7 @@
                         <div class="card-body ">
                             <h5 class="card-title ">{{menu.name}}</h5>
                             <p class="card-text ">{{menu.description}}</p>
-                            <button href="# " class="greenBtn hover-effect" (click)="addToCardMenu(menu.menuId)">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
+                            <button href="# " class="blueBtn hover-effect" (click)="addToCardMenu(menu.menuId)">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
                                 </fa-icon></button>
                         </div>
                     </div>
@@ -52,12 +52,12 @@
 </div>
 
 
-<div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
+<div class="mx-auto py-5 bgDark">
     <div class="container mt-5 ">
         <h3 class="mb-4" id="menus">Menüler
             <fa-icon [icon]="faUtensilSpoon " class="headerIcon "></fa-icon>
         </h3>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3 " style="width: 100%; ">
+        <div class="row row-cols-1 row-cols-md-2  row-cols-lg-3 row-cols-xl-4 gy-4 gx-2" style="width: 100%; ">
             <div class="col " *ngFor="let menu of this.menuList ">
                 <div class="card productCard " style="width: 18rem; ">
                     <img src="{{menuImgUrl}}{{menu.imgUrl}} " class="card-img-top " alt="... ">
@@ -65,7 +65,7 @@
                         <h5 class="card-title ">{{menu.name}}</h5>
                         <p class="card-text ">{{menu.description}}</p>
                         <div class="priceAndAddToCard "> <span class="price ">{{(menu.price).toFixed(2)}} TL</span>
-                            <div class="addToCardBtn "> <button class="greenBtn hover-effect" (click)="addToCardMenu(menu.menuId)">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
+                            <div class="addToCardBtn "> <button class="blueBtn hover-effect" (click)="addToCardMenu(menu.menuId)">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
                                     </fa-icon></button></div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-<div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
+<div class="mx-auto py-5 bgWhite">
 
     <div class="container mt-5 ">
         <h3 class="mb-4" id="foods">Yemekler
@@ -90,7 +90,7 @@
                         <h5 class="card-title ">{{food.name}}</h5>
                         <p class="card-text ">{{food.description}}</p>
                         <div class="priceAndAddToCard "> <span class="price ">{{food.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn "> <button (click)="addToCardFood(food.foodId) " class="greenBtn hover-effect ">Sepete
+                            <div class="addToCardBtn "> <button (click)="addToCardFood(food.foodId) " class="blueBtn hover-effect ">Sepete
                                     Ekle <fa-icon [icon]="faPlusCircle "></fa-icon></button></div>
                         </div>
 
@@ -101,7 +101,7 @@
     </div>
 </div>
 
-<div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
+<div class="card mx-auto mt-5 pb-5 bgDark">
 
     <div class="container mt-5 ">
         <h3 class="mb-4" id="drinks">İçecekler
@@ -116,7 +116,7 @@
                         <h5 class="card-title ">{{drink.name}}</h5>
                         <p class="card-text ">{{drink.description}}</p>
                         <div class="priceAndAddToCard "> <span class="price ">{{drink.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn "> <button (click)="addToCardDrink(drink.drinkId) " class="greenBtn hover-effect ">Sepete Ekle <fa-icon [icon]="faPlusCircle "></fa-icon>
+                            <div class="addToCardBtn "> <button (click)="addToCardDrink(drink.drinkId) " class="blueBtn hover-effect ">Sepete Ekle <fa-icon [icon]="faPlusCircle "></fa-icon>
                                     </button></div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
     </div>
 </div>
 
-<div class="card mx-auto mt-5 pb-5 " style="width: 90%; ">
+<div class="mx-auto py-5 bgWhite">
     <div class="container mt-5 ">
         <h3 class="mb-4" id="sweets">Tatlılar
             <fa-icon [icon]="faCandyCane " class="headerIcon "></fa-icon>
@@ -140,7 +140,7 @@
                             <h5 class="card-title">{{sweet.name}}</h5>
                             <p class="card-text">{{sweet.description}}</p>
                             <div class="priceAndAddToCard"> <span class="price">{{sweet.price.toFixed(2)}} Tl</span>
-                                <div class="addToCardBtn"> <button (click)="addToCardSweet(sweet.sweetId)" class="greenBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle">
+                                <div class="addToCardBtn"> <button (click)="addToCardSweet(sweet.sweetId)" class="blueBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle">
                                         </fa-icon></button></div>
                             </div>
                         </div>
@@ -154,7 +154,8 @@
 <!--Sepetim -->
 <div [class]="basketCardClass()">
     <div class="card-header" (click)="basketSizeChange()" id="basketCardHeader">
-        <h4 align="center"> Sepetiniz</h4>
+        <h4 align="center">
+            <fa-icon [icon]="faSppingBasket " class="headerIcon me-2"></fa-icon> <span> Sepetiniz</span></h4>
     </div>
     <div class="card-body" *ngIf="basketSize">
         <ng-container *ngFor="let basket of basketList">
@@ -181,6 +182,6 @@
             <b class="fs-22">Toplam</b>
             <span style="float: right;">{{basketSum()}} TL</span>
         </p>
-        <button id="greenBtn" class="hover-effect" routerLink="/sepetim">Sepete git</button>
+        <button id="blueBtn" class="hover-effect" routerLink="/sepetim">Sepete git</button>
     </div>
 </div>

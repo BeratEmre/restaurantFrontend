@@ -183,9 +183,9 @@
     text-align: center;
 }
 
-#greenBtn {
+#blueBtn {
     width: 300px;
-    background-color: var(--green);
+    background-color: var(--blue);
     color: white;
     border-radius: 10px;
     border-color: white;

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { faCandyCane, faGlassWater, faPlus, faPlusCircle,  faStar, faTrash, faUtensils, faUtensilSpoon } from '@fortawesome/free-solid-svg-icons';
+import { faBasketShopping, faCandyCane, faGlassWater, faPlus, faPlusCircle,  faStar, faTrash, faUtensils, faUtensilSpoon } from '@fortawesome/free-solid-svg-icons';
 import { OrderDetailStatus } from 'src/app/enums/order-detail-status';
 import { ProductType } from 'src/app/enums/product-type';
 import DecodeToken from 'src/app/helper/decode-token';
@@ -33,7 +33,8 @@ export class HomeComponent implements OnInit {
   faCandyCane=faCandyCane;
   faUtensilSpoon=faUtensilSpoon;
   faGlassWater=faGlassWater;
-  faStar=faStar
+  faSppingBasket=faBasketShopping;
+  faStar=faStar;
   sweetList: SweetModel[] = [];
   drinkList: DrinkModel[] = [];
   foodList: FoodModel[] = [];
@@ -85,7 +86,6 @@ export class HomeComponent implements OnInit {
   getOrderDetails() {
     if (this.userId == 0) { return }
     this.orderDetailService.getBasketWithUserId(this.userId).subscribe(res => {
-
       if (!res.success || res.data == null || res.data.length < 1) { return }
       this.basketList = res.data;
     });
