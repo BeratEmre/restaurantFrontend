@@ -23,16 +23,16 @@ export class MyBasketComponent implements OnInit {
   sweetImgUrl = environment.imgUrl + '/sweets/';
   menuImgUrl = environment.imgUrl + '/menus/';
   imgUrl = environment.imgUrl;
-  successMessageBox=false;
+  successMessageBox = false;
   faTrash = faTrash;
   faPlus = faPlusSquare
-  faCheckCircle=faCheckCircle;
-  faTimes=faTimes;
-  successMessage="";
+  faCheckCircle = faCheckCircle;
+  faTimes = faTimes;
+  successMessage = "";
   userId = 0;
   basketList: BasketModel[] = [];
-  recommendedProducts:ProductCard[]
-  constructor(private orderDetailService: OrderDetailService, private orderService:OrderService, private _favoriteProductService:FavoriteProductService) {
+  recommendedProducts: ProductCard[]
+  constructor(private orderDetailService: OrderDetailService, private orderService: OrderService, private _favoriteProductService: FavoriteProductService) {
     this.userId = Number(DecodeToken.decode().id);
     this.getOrders();
     this.getRecommendedProducts();
@@ -43,18 +43,19 @@ export class MyBasketComponent implements OnInit {
 
   getOrders() {
     if (this.userId == 0) { return }
-    console.log(this.userId)
     this.orderDetailService.getBasketWithUserId(this.userId).subscribe(res => {
 
       if (!res.success || res.data == null || res.data.length < 1) { return }
       this.basketList = res.data;
+      console.log(this.basketList);
     });
   }
 
-  getRecommendedProducts(){
-    this._favoriteProductService.getFavoriteProductsTopx(3).subscribe(s=>{
+  getRecommendedProducts() {
+    this._favoriteProductService.getFavoriteProductsTopx(3).subscribe(s => {
       if (s.success) {
         this.recommendedProducts = s.data;
+        console.log(this.recommendedProducts);
       }
     })
   }
@@ -92,9 +93,10 @@ export class MyBasketComponent implements OnInit {
     orderModel.status = OrderDetailStatus.basket;
 
     this.orderDetailService.deleteBasket(orderModel).subscribe(o => {
+      console.log(o)
       if (o.data == 0) {
-        var index = this.basketList.findIndex(b => b.id != drinkId && b.type != ProductType.drink);
-        this.basketList.splice(index, 1);
+        var index = this.basketList.findIndex(b => b.id == drinkId && b.type == ProductType.drink);
+       this.basketList.splice(index, 1);
         return;
       }
 
@@ -199,16 +201,47 @@ export class MyBasketComponent implements OnInit {
     }
   }
 
-
   addToCardFood(id: number) {
     var order = new OrderModel();
     order.foodId = id;
     order.userId = this.userId;
 
     this.orderDetailService.addBasket(order).subscribe(p => {
-      if (p.success)
-        this.basketList.forEach(b => { if (b.id == p.data.foodId) { b.count++ } });
+      if (p.success) {
+        if (this.basketList.find(x => x.id == p.data.foodId && x.type == ProductType.food) != undefined)
+          this.basketList.forEach(b => { if (b.id == p.data.foodId) { b.count++ } });
+        else
+          this.productAddToBasketList(id, p.data,ProductType.food)
+      }
     })
+  }
+
+  productAddToBasketList(productId: number, data: OrderModel, productType:number) {
+    var re = this.recommendedProducts.find(x => x.productId == productId && x.productType==productType);
+  
+    if (re != undefined) {
+      var img = re.imgUrl.substring(re.imgUrl.indexOf('/') + 1, re.imgUrl.length);
+      img = img.substring(img.indexOf('/') + 1, img.length);
+      var newOrder: BasketModel 
+      switch (productType) {
+        case ProductType.drink:
+           newOrder = { count: 1, id: data.drinkId, imgUrl: img, name: re?.name, price: re?.price, type: re?.productType, status: 0 }
+          break;
+  
+        case ProductType.food:
+          newOrder= { count: 1, id: data.foodId, imgUrl: img, name: re?.name, price: re?.price, type: re?.productType, status: 0 }
+          break;
+  
+        case ProductType.sweet:
+           newOrder= { count: 1, id: data.sweetId, imgUrl: img, name: re?.name, price: re?.price, type: re?.productType, status: 0 }
+          break;
+  
+        default:
+           newOrder= { count: 1, id: data.menuId, imgUrl: img, name: re?.name, price: re?.price, type: re?.productType, status: 0 }
+          break;
+      }
+      this.basketList.push(newOrder)
+    }
   }
 
   addToCardSweet(id: number) {
@@ -217,8 +250,13 @@ export class MyBasketComponent implements OnInit {
     order.userId = this.userId;
 
     this.orderDetailService.addBasket(order).subscribe(p => {
-      if (p.success)
-        this.basketList.forEach(b => { if (b.id == p.data.sweetId) { b.count++ } });
+      console.log(p)
+      if (p.success) {
+        if (this.basketList.find(x => x.id == p.data.sweetId && x.type == ProductType.sweet) != undefined)
+          this.basketList.forEach(b => { if (b.id == p.data.sweetId) { b.count++ } });
+        else
+          this.productAddToBasketList(id, p.data,ProductType.sweet);
+      }
     })
   }
 
@@ -228,8 +266,12 @@ export class MyBasketComponent implements OnInit {
     order.userId = this.userId;
 
     this.orderDetailService.addBasket(order).subscribe(p => {
-      if (p.success)
-        this.basketList.forEach(b => { if (b.id == p.data.drinkId) { b.count++ } });
+      if (p.success) {
+        if (this.basketList.find(x => x.id == p.data.drinkId && x.type == ProductType.drink) != undefined)
+          this.basketList.forEach(b => { if (b.id == p.data.drinkId) { b.count++ } });
+        else
+          this.productAddToBasketList(id, p.data,ProductType.drink)
+      }
     })
   }
 
@@ -240,35 +282,35 @@ export class MyBasketComponent implements OnInit {
 
     this.orderDetailService.addBasket(order).subscribe(p => {
       if (p.success) {
-        // if (this.basketList.some(s=>s.id==p.data.menuId)) 
+        if (this.basketList.find(x => x.id == p.data.menuId && x.type == ProductType.menu) != undefined)
           this.basketList.forEach(b => { if (b.id == p.data.menuId) { b.count++ } });
-        // else{
-        //   this.orderDetailService.getBasket
-        // }
+        else
+          this.productAddToBasketList(id, p.data,ProductType.menu)
       }
     })
   }
-  addToCard(productType:number){
+
+  addToCard(productType: number, id: number) {
     console.log(productType)
     switch (productType) {
       case ProductType.drink:
-        this.addToCardDrink(productType);
+        this.addToCardDrink(id);
         break;
 
       case ProductType.food:
-        this.addToCardFood(productType);
+        this.addToCardFood(id);
         break;
 
       case ProductType.sweet:
-        this.addToCardSweet(productType);
+        this.addToCardSweet(id);
         break;
 
       case ProductType.menu:
-        this.addToCardMenu(productType);
+        this.addToCardMenu(id);
         break;
     }
   }
-  
+
   //#endregion
   sumBasketPrice() {
     var res = 0;
@@ -277,20 +319,20 @@ export class MyBasketComponent implements OnInit {
   }
 
   //#region 
-  addOrder(){
-    this.orderService.addOrder(this.userId).subscribe(o=>{
+  addOrder() {
+    this.orderService.addOrder(this.userId).subscribe(o => {
       console.log(o)
       if (o.success) {
-        this.successMessageBox=true;
-        this.successMessage=o.message;
-        this.basketList=[];
+        this.successMessageBox = true;
+        this.successMessage = o.message;
+        this.basketList = [];
       }
     })
     this.userId
   }
   //#endregion
-  closeSuccessMessageBox(){
-    this.successMessage="";
-    this.successMessageBox=false;
+  closeSuccessMessageBox() {
+    this.successMessage = "";
+    this.successMessageBox = false;
   }
 }
