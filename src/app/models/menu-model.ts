@@ -3,7 +3,7 @@ import { FoodModel } from "./food-model";
 import { SweetModel } from "./sweet-model";
 
 export class MenuModel {
-    menuId: number = 0;
+    id: number = 0;
     name: string = '';
     description: string = '';
     imgUrl:string='';

@@ -1,44 +1,31 @@
-<dir class="container">
+<dir class="container adminNavSize">
     <div class="buttons">
         <button (click)="resetAddForm();" type="button" class="btn btn-success me-3" data-bs-toggle="modal" data-bs-target="#addModal">Menü Ekle</button>
         <button type="button" class="btn btn-danger" (click)="ExportTOExcel()">Exele Aktar</button>
     </div>
-    <table class="table table-striped table-bordered" #TABLE>
-        <thead>
-            <tr class="border">
-                <th class="text-center colspan-5" colspan="6">
-                    <h4>Menü Listesi</h4>
-                </th>
-            </tr>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Resmi</th>
-                <th scope="col">İsmi</th>
-                <th scope="col">Açıklaması</th>
-                <th scope="col">Fyatı (₺)</th>
-                <th scope="col" [width]="75">İşlem</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let menu of menus; let i = index">
-                <!-- <script>
-                    tableIndex++;
-                </script> -->
-                <th>{{i+1}}</th>
-                <td>
-                    <img src="{{imgUrl}}{{menu.imgUrl}}" alt="" style="width: 100px;">
-                </td>
-                <td>{{menu.name}}</td>
-                <td>{{menu.description}}</td>
-                <td>{{menu.price}}</td>
-                <td class="process">
-                    <fa-icon [ngClass]="{ 'shiny': menu.isHaveStar, 'uninspiring': !menu.isHaveStar}" [icon]="faStar" (click)="starTheMenu(menu.menuId)"></fa-icon>
-                    <fa-icon class="ms-2 uninspiring" [icon]="edit" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="updatingMenu(menu.menuId)"></fa-icon>
-                    <fa-icon class="ms-2 uninspiring" [icon]="trash" data-bs-toggle="modal" data-bs-target="#removeMenuModal" (click)="removingMenuFind(menu.menuId)"></fa-icon>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <dx-data-grid id="gridContainer" [dataSource]="menus" keyExpr="ID" keyExpr="id" [showBorders]="true">
+
+        <dxi-column dataField="imgUrl" caption="Resmi" alignment="center" cellTemplate="img"></dxi-column>
+        <!-- <dxi-column dataField="menuId" caption="Id"></dxi-column> -->
+        <dxi-column dataField="name" caption="Adı"></dxi-column>
+        <dxi-column dataField="description" caption="Açıklama"></dxi-column>
+        <dxi-column dataField="price" caption="Fiyatı (TL)"></dxi-column>
+        <dxi-column dataField="id" caption="Sayısı" alignment="left" cellTemplate="template"></dxi-column>
+
+
+        <dxo-paging [pageSize]="12"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[8, 12, 20]"></dxo-pager>
+        <dxo-search-panel [visible]="true"></dxo-search-panel>
+
+        <div *dxTemplate="let cell of 'img'">
+            <img src="{{imgUrl}}{{cell.value}}" alt="" style="width: 100px;">
+        </div>
+        <div *dxTemplate="let cell of 'template'">
+            <fa-icon [ngClass]="{ 'shiny': getMenu(cell.value).isHaveStar, 'uninspiring': !getMenu(cell.value).isHaveStar}" [icon]="faStar" (click)="starTheMenu(cell.value)"></fa-icon>
+            <fa-icon class="ms-2 uninspiring" [icon]="edit" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="updatingMenu(cell.value)"></fa-icon>
+            <fa-icon class="ms-2 uninspiring" [icon]="trash" data-bs-toggle="modal" data-bs-target="#removeMenuModal" (click)="removingMenuFind(cell.value)"></fa-icon>
+        </div>
+    </dx-data-grid>
 </dir>
 
 <div class="modal" tabindex="-1" id="updateModal">

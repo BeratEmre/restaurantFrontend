@@ -55,7 +55,7 @@ export class FoodComponent implements OnInit {
   }
 
   updatingFood(id: number) {
-    var re = this.foods.find(d => d.foodId == id)
+    var re = this.foods.find(d => d.id == id)
     if (re != undefined) {
       this.willUpdatingFood = re;
     }
@@ -68,7 +68,7 @@ export class FoodComponent implements OnInit {
     this.foodService.updateFood(formData).subscribe(res => {
       if (res.success) {
         this.foods.forEach(d => {
-          if (d.foodId == res.data.foodId)
+          if (d.id == res.data.id)
             d = res.data;
         })
         this.successMessage=res.data.name+" ürünü başarıyla güncellendi!";
@@ -141,7 +141,7 @@ export class FoodComponent implements OnInit {
     formData.append('name', this.fileModel.model.name);
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
-    formData.append('foodId', this.fileModel.model.foodId.toString());
+    formData.append('foodId', this.fileModel.model.id.toString());
     return formData;
   }
   
@@ -150,7 +150,7 @@ export class FoodComponent implements OnInit {
   }
 
   removingFoodFind(id:number){
-    var re = this.foods.find(d => d.foodId == id)
+    var re = this.foods.find(d => d.id == id)
     if (re != undefined) {
       this.removingFood = re;
     }
@@ -158,9 +158,9 @@ export class FoodComponent implements OnInit {
 
   removeFood(){
    console.log(this.removingFood)
-    this.foodService.remove(this.removingFood.foodId).subscribe(s=>{
+    this.foodService.remove(this.removingFood.id).subscribe(s=>{
       if (s.success) {
-        this.foods=this.foods.filter(d=>d.foodId!=this.removingFood.foodId);
+        this.foods=this.foods.filter(d=>d.id!=this.removingFood.id);
         this.successMessage=s.data.name+" ürünü başarıyla silindi!";
         this.successMessageBox.nativeElement.classList.remove('d-none');
         setTimeout(() => { this.closeSuccessMessageBox();}, 5000);
@@ -175,5 +175,12 @@ export class FoodComponent implements OnInit {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();  
     XLSX.utils.book_append_sheet(wb, ws, 'Exel');
     XLSX.writeFile(wb, 'İçecek Listesi.xlsx');  
+  }
+
+  getFood(id:number):FoodModel{
+    var food=this.foods.find(x=>x.id==id);
+    if(food==undefined)      
+    food =new FoodModel();
+    return food
   }
 }

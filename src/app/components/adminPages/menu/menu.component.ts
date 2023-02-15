@@ -61,6 +61,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMenus();
+    console.log(this.menus)
   }
 
   getMenus() {
@@ -72,7 +73,7 @@ export class MenuComponent implements OnInit {
   }
 
   updatingMenu(id: number) {
-    var re = this.menus.find(d => d.menuId == id)
+    var re = this.menus.find(d => d.id == id)
     if (re != undefined) {
       this.willUpdatingMenu = re;
     }
@@ -85,7 +86,7 @@ export class MenuComponent implements OnInit {
     this.menuService.updateMenu(formData).subscribe(res => {
       if (res.success) {
         this.menus.forEach(d => {
-          if (d.menuId == res.data.menuId)
+          if (d.id == res.data.id)
             d = res.data;
         })
         this.successMessage = res.data.name + " ürünü başarıyla güncellendi!";
@@ -174,7 +175,7 @@ export class MenuComponent implements OnInit {
     formData.append('name', this.fileModel.model.name);
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
-    formData.append('menuId', this.fileModel.model.menuId.toString());
+    formData.append('menuId', this.fileModel.model.id.toString());
     formData.append('foodId', this.fileModel.model.foodId.toString());
     formData.append('drinkId', this.fileModel.model.drinkId.toString());
     formData.append('sweetId', this.fileModel.model.sweetId.toString());
@@ -186,16 +187,16 @@ export class MenuComponent implements OnInit {
   }
 
   removingMenuFind(id: number) {
-    var re = this.menus.find(d => d.menuId == id)
+    var re = this.menus.find(d => d.id == id)
     if (re != undefined) {
       this.removingMenu = re;
     }
   }
 
   removeMenu() {
-    this.menuService.remove(this.removingMenu.menuId).subscribe(s => {
+    this.menuService.remove(this.removingMenu.id).subscribe(s => {
       if (s.success) {
-        this.menus = this.menus.filter(d => d.menuId != this.removingMenu.menuId);
+        this.menus = this.menus.filter(d => d.id != this.removingMenu.id);
         this.successMessage = s.data.name + " ürünü başarıyla silindi!";
         this.successMessageBox.nativeElement.classList.remove('d-none');
         setTimeout(() => {
@@ -257,9 +258,16 @@ export class MenuComponent implements OnInit {
     console.log(menuId)
     this.menuService.addStar(menuId).subscribe(s=>{
       if (s) {
-        var menu=this.menus.find(m=>m.menuId==menuId);
+        var menu=this.menus.find(m=>m.id==menuId);
         menu!=null?menu.isHaveStar=true:menu;
       }
     })
+  }
+
+  getMenu(id:number):MenuModel{
+    var menu=this.menus.find(x=>x.id==id);
+    if(menu==undefined)      
+      menu =new MenuModel();
+    return menu
   }
 }

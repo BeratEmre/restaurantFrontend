@@ -54,7 +54,7 @@ export class SweetComponent implements OnInit {
   }
 
   updatingSweet(id: number) {
-    var re = this.sweets.find(d => d.sweetId == id)
+    var re = this.sweets.find(d => d.id == id)
     if (re != undefined) {
       this.willUpdatingSweet = re;
     }
@@ -67,7 +67,7 @@ export class SweetComponent implements OnInit {
     this.sweetService.updateSweet(formData).subscribe(res => {
       if (res.success) {
         this.sweets.forEach(d => {
-          if (d.sweetId == res.data.sweetId)
+          if (d.id == res.data.id)
             d = res.data;
         })
         this.successMessage=res.data.name+" ürünü başarıyla güncellendi!";
@@ -144,7 +144,7 @@ export class SweetComponent implements OnInit {
     formData.append('name', this.fileModel.model.name);
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
-    formData.append('sweetId', this.fileModel.model.sweetId.toString());
+    formData.append('sweetId', this.fileModel.model.id.toString());
     return formData;
   }
   
@@ -153,7 +153,7 @@ export class SweetComponent implements OnInit {
   }
 
   removingSweetFind(id:number){
-    var re = this.sweets.find(d => d.sweetId == id)
+    var re = this.sweets.find(d => d.id == id)
     if (re != undefined) {
       this.removingSweet = re;
     }
@@ -161,9 +161,9 @@ export class SweetComponent implements OnInit {
 
   removeSweet(){
    console.log(this.removingSweet)
-    this.sweetService.remove(this.removingSweet.sweetId).subscribe(s=>{
+    this.sweetService.remove(this.removingSweet.id).subscribe(s=>{
       if (s.success) {
-        this.sweets=this.sweets.filter(d=>d.sweetId!=this.removingSweet.sweetId);
+        this.sweets=this.sweets.filter(d=>d.id!=this.removingSweet.id);
         this.successMessage=s.data.name+" ürünü başarıyla silindi!";
         this.successMessageBox.nativeElement.classList.remove('d-none');
         setTimeout(() => {

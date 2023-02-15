@@ -1,5 +1,5 @@
 export class SweetModel {
-    sweetId: number = 0;
+    id: number = 0;
     name: string = '';
     description: string = '';
     imgUrl: string = '';

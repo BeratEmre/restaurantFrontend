@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
       if (p.success) {
         if (!isItAlreadyAdded) {
           var orderFood = new FoodModel();
-          var food = this.foodList.find(f => f.foodId == p.data.foodId);
+          var food = this.foodList.find(f => f.id == p.data.foodId);
           if (food != undefined)
             orderFood = food;
 
@@ -132,7 +132,7 @@ export class HomeComponent implements OnInit {
       if (p.success) {
         if (!isItAlreadyAdded) {
           var orderSweet = new SweetModel();
-          var sweet = this.sweetList.find(f => f.sweetId == p.data.sweetId);
+          var sweet = this.sweetList.find(f => f.id == p.data.sweetId);
           if (sweet != undefined)
             orderSweet = sweet;
 
@@ -159,7 +159,7 @@ export class HomeComponent implements OnInit {
       if (p.success) {
         if (!isItAlreadyAdded) {
           var orderDrink = new DrinkModel();
-          var drink = this.drinkList.find(f => f.drinkId == p.data.drinkId);
+          var drink = this.drinkList.find(f => f.id == p.data.drinkId);
           if (drink != undefined)
             orderDrink = drink;
 
@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit {
       if (p.success) {
         if (!isItAlreadyAdded) {
           var orderMenu = new MenuModel();
-          var menu = this.menuList.find(f => f.menuId == p.data.menuId);
+          var menu = this.menuList.find(f => f.id == p.data.menuId);
           if (menu != undefined)
             orderMenu = menu;
 

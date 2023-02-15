@@ -1,5 +1,5 @@
 export class DrinkModel {
-    drinkId: number = 0;
+    id: number = 0;
     name: string = '';
     description: string = '';
     imgUrl: string = '';

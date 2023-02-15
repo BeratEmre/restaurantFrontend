@@ -55,7 +55,7 @@ export class DrinkComponent implements OnInit {
   }
 
   updatingDrink(id: number) {
-    var re = this.drinks.find(d => d.drinkId == id)
+    var re = this.drinks.find(d => d.id == id)
     if (re != undefined) {
       this.willUpdatingDrink = re;
     }
@@ -122,7 +122,7 @@ export class DrinkComponent implements OnInit {
     this.drinkService.updateDrink(formData).subscribe(res => {
       if (res.success) {
         this.drinks.forEach(d => {
-          if (d.drinkId == res.data.drinkId)
+          if (d.id == res.data.id)
             d = res.data
         })
         this.successMessage=res.data.name+" ürünü başarıyla güncellendi!";
@@ -140,7 +140,7 @@ export class DrinkComponent implements OnInit {
     formData.append('name', this.fileModel.model.name);
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
-    formData.append('drinkId', this.fileModel.model.drinkId.toString());
+    formData.append('drinkId', this.fileModel.model.id.toString());
     return formData;
   }
   
@@ -149,7 +149,7 @@ export class DrinkComponent implements OnInit {
   }
 
   removingDrinkFind(id:number){
-    var re = this.drinks.find(d => d.drinkId == id)
+    var re = this.drinks.find(d => d.id == id)
     if (re != undefined) {
       this.removingDrink = re;
     }
@@ -157,9 +157,9 @@ export class DrinkComponent implements OnInit {
 
   removeDrink(){
    console.log(this.removingDrink)
-    this.drinkService.remove(this.removingDrink.drinkId).subscribe(s=>{
+    this.drinkService.remove(this.removingDrink.id).subscribe(s=>{
       if (s.success) {
-        this.drinks=this.drinks.filter(d=>d.drinkId!=this.removingDrink.drinkId);
+        this.drinks=this.drinks.filter(d=>d.id!=this.removingDrink.id);
         this.successMessage=s.data.name+" ürünü başarıyla silindi!";
         this.successMessageBox.nativeElement.classList.remove('d-none');
         setTimeout(() => { this.closeSuccessMessageBox();}, 5000);
