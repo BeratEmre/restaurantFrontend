@@ -4,4 +4,5 @@ export class DrinkModel {
     description: string = '';
     imgUrl: string = '';
     price: number = 0;
+    isHaveStar:boolean=false;
 }

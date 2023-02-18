@@ -125,3 +125,11 @@ body {
 .fs-26 {
     font-size: 26px;
 }
+
+.uninspiring {
+    opacity: .7;
+}
+
+.shiny {
+    color: rgb(204, 204, 0);
+}

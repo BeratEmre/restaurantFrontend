@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { faCheckCircle, faEdit, faPlus, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faEdit, faPlus, faStar, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { DrinkModel } from 'src/app/models/drink-model';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { DrinkService } from 'src/app/services/drink.service';
@@ -23,6 +23,7 @@ export class DrinkComponent implements OnInit {
   trash = faTrashAlt;
   faTimes=faTimes;
   faCheckCircle=faCheckCircle;
+  faStar=faStar;
   successMessage='';
   drinks: DrinkModel[] = [];
   fileModel: FileUploadModal<DrinkModel> = new FileUploadModal();
@@ -175,4 +176,11 @@ export class DrinkComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Exel');
     XLSX.writeFile(wb, 'İçecek Listesi.xlsx');  
   }  
+
+  getDrink(id:number):DrinkModel{
+    var drink=this.drinks.find(x=>x.id==id);
+    if(drink==undefined)      
+    drink =new DrinkModel();
+    return drink
+  }
 }

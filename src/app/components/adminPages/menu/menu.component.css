@@ -74,11 +74,3 @@
         max-width: 90vw;
     }
 }
-
-.uninspiring {
-    opacity: .7;
-}
-
-.shiny {
-    color: rgb(204, 204, 0);
-}

@@ -217,3 +217,7 @@
 #basketCardHeader {
     cursor: pointer;
 }
+
+.card-img {
+    min-height: 200px;
+}

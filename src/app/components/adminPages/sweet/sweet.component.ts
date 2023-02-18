@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { faCheckCircle, faEdit, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faEdit, faStar, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { SweetModel } from 'src/app/models/sweet-model';
 import { SweetService } from 'src/app/services/sweet.service';
@@ -22,6 +22,8 @@ export class SweetComponent implements OnInit {
   trash = faTrashAlt;
   faTimes=faTimes;
   faCheckCircle=faCheckCircle;
+  faStar=faStar;
+
   successMessage='';
   sweets: SweetModel[] = [];
   fileModel: FileUploadModal<SweetModel> = new FileUploadModal();
@@ -180,5 +182,12 @@ export class SweetComponent implements OnInit {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();  
     XLSX.utils.book_append_sheet(wb, ws, 'Exel');
     XLSX.writeFile(wb, 'İçecek Listesi.xlsx');  
+  }
+
+  getSweet(id:number):SweetModel{
+    var sweet=this.sweets.find(x=>x.id==id);
+    if(sweet==undefined)      
+    sweet =new SweetModel();
+    return sweet;
   }
 }

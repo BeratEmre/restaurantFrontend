@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { faCheckCircle, faEdit, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faEdit, faStar, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { FoodModel } from 'src/app/models/food-model';
 import { FoodService } from 'src/app/services/food.service';
@@ -23,6 +23,7 @@ export class FoodComponent implements OnInit {
   trash = faTrashAlt;
   faTimes=faTimes;
   faCheckCircle=faCheckCircle;
+  faStar=faStar;
   successMessage='';
   foods: FoodModel[] = [];
   fileModel: FileUploadModal<FoodModel> = new FileUploadModal();

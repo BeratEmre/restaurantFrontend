@@ -22,6 +22,8 @@
             <img src="{{imgUrl}}{{cell.value}}" alt="" style="width: 100px;">
         </div>
         <div *dxTemplate="let cell of 'template'">
+            <fa-icon [ngClass]="{ 'shiny': getDrink(cell.value).isHaveStar, 'uninspiring': !getDrink(cell.value).isHaveStar}" [icon]="faStar" (click)="getDrink(cell.value)"></fa-icon>
+
             <fa-icon class="ms-2 uninspiring" [icon]="edit" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="updatingDrink(cell.value)"></fa-icon>
             <fa-icon class="ms-2 uninspiring" [icon]="trash" data-bs-toggle="modal" data-bs-target="#removeMenuModal" (click)="removingDrinkFind(cell.value)"></fa-icon>
         </div>
