@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCheckCircle, faEdit, faStar, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { ProductType } from 'src/app/enums/product-type';
+import FavoriteProductHelper from 'src/app/helper/favoriteProductHelper';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { FoodModel } from 'src/app/models/food-model';
+import { FavoriteProductService } from 'src/app/services/favoriteProduct.service';
 import { FoodService } from 'src/app/services/food.service';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
@@ -38,10 +41,8 @@ export class FoodComponent implements OnInit {
       description: new FormControl('', Validators.required),
       price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")])
     });
-  
 
-
-  constructor(private foodService: FoodService) { }
+  constructor(private foodService: FoodService, private _favoriteService:FavoriteProductService) { }
 
   ngOnInit(): void {
     this.getFoods();
@@ -90,17 +91,12 @@ export class FoodComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.addForm.patchValue({
-        formFile: file
-      });
-    }
+    if (event.target.files.length > 0) 
+      this.fileModel.formFile = event.target.files[0];
   }
   updateFileChange(event:any){
-    if (event.target.files.length > 0) {
-      this.fileModel.formFile = event.target.files[0];
-    }
+    if (event.target.files.length > 0) 
+      this.fileModel.formFile = event.target.files[0];    
   }
 
   addfood(): boolean {
@@ -125,7 +121,7 @@ export class FoodComponent implements OnInit {
   formDataSetsForAdd(): FormData {
     console.log(this.addForm.value.formFile)
     const formData = new FormData();
-    formData.append('formFile', this.addForm.value.formFile as string);
+    formData.append('formFile', this.fileModel.formFile, this.fileModel.formFile.name);
     formData.append('name', this.addForm.value.name as string);
     formData.append('description', this.addForm.value.description as string);
     formData.append('price', this.addForm.value.price as string);
@@ -142,7 +138,7 @@ export class FoodComponent implements OnInit {
     formData.append('name', this.fileModel.model.name);
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
-    formData.append('foodId', this.fileModel.model.id.toString());
+    formData.append('id', this.fileModel.model.id.toString());
     return formData;
   }
   
@@ -183,5 +179,13 @@ export class FoodComponent implements OnInit {
     if(food==undefined)      
     food =new FoodModel();
     return food
+  }
+
+  favoritePositionChange(id:number){
+    var food=this.foods.find(f=>f.id==id);
+    if (food==null || food == undefined )
+      return;
+
+    FavoriteProductHelper.addOrDelte(food,this._favoriteService,ProductType.food.toString());   
   }
 }

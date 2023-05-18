@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,8 +19,14 @@ import { DxDataGridModule } from 'devextreme-angular';
 import { OrdersComponent } from './components/adminPages/orders/orders.component';
 import { SweetComponent } from './components/adminPages/sweet/sweet.component';
 import { MenuComponent } from './components/adminPages/menu/menu.component';
+import { GoogleLoginProvider, SocialLoginModule,SocialAuthServiceConfig  } from 'angularx-social-login';
 
+const googleLoginOptions = {
+  scope: 'profile email',
+  plugin_name:'sample_login' //can be any name
+}; 
 @NgModule({
+  
   declarations: [
     AppComponent,
     HomeComponent,
@@ -42,9 +48,33 @@ import { MenuComponent } from './components/adminPages/menu/menu.component';
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-    DxDataGridModule
+    DxDataGridModule,
+    SocialLoginModule
   ],
-  providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  providers: [AuthGuard ,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '589966651105-ca8omk4l8df5omgrj1t9c45a928u4pvk.apps.googleusercontent.com',
+              googleLoginOptions
+            )
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+
+  ],
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
 })
 export class AppModule { }

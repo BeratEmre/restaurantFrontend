@@ -52,7 +52,7 @@ export class MyBasketComponent implements OnInit {
   }
 
   getRecommendedProducts() {
-    this._favoriteProductService.getFavoriteProductsTopx(3).subscribe(s => {
+    this._favoriteProductService.getFavoriteProductsRandomx(4).subscribe(s => {
       if (s.success) {
         this.recommendedProducts = s.data;
         console.log(this.recommendedProducts);

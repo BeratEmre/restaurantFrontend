@@ -25,8 +25,17 @@ export class FavoriteProductService {
     return this.httpClient.get<ListResponseModel<ProductCard>>(newPath);     
   }
 
+  getFavoriteProductsRandomx(x:number):Observable<ListResponseModel<ProductCard>> {
+    let newPath=this.apiUrl+"FavoriteProducts/GetRandomx?x="+x;
+    return this.httpClient.get<ListResponseModel<ProductCard>>(newPath);     
+  }
   addFavoriteProduct(formData:FormData):Observable<ResponseModel<FavoriteProductModel>> {
     let newPath=this.apiUrl+"FavoriteProducts/add";
+    return this.httpClient.post<ResponseModel<FavoriteProductModel>>(newPath,formData);     
+  }
+
+  delete(formData:FormData):Observable<ResponseModel<FavoriteProductModel>> {
+    let newPath=this.apiUrl+"FavoriteProducts/Delete";
     return this.httpClient.post<ResponseModel<FavoriteProductModel>>(newPath,formData);     
   }
 

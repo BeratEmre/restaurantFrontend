@@ -4,21 +4,25 @@
             <img src="../../../assets/salmon-2.jpg" width="100%" height="100%" class="login-img">
             <div class="img-content">
                 <h3 class="content-header">Aradığınız lezzet</h3>
-                <p class="content-text">Aradığınız çeşitlilik burada <span class="name">Benim<span class="r">R</span>estoranım</span>da !
+                <p class="content-text">Aradığınız çeşitlilik burada <span class="name">Benim<span
+                            class="r">R</span>estoranım</span>da !
                 </p>
             </div>
         </div>
         <div class="col">
+
             <form [formGroup]="loginForm" (submit)="login()" class="p-5">
                 <div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Mail Adresiniz</label>
-                        <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Şifre</label>
-                        <input type="password" formControlName="password" class="form-control" id="password" aria-describedby="passwordHelp">
+                        <input type="password" formControlName="password" class="form-control" id="password"
+                            aria-describedby="passwordHelp">
                         <div id="passwordHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
 
@@ -27,10 +31,29 @@
                         <label class="form-check-label" for="exampleCheck1">Beni Hatırla</label>
                     </div>
                     <button type="submit" class="green-b">Giriş Yap</button>
+                    <button type="button" (click)="loginWithGoogle()" class="btn btn-danger">Login with Google</button>
+                    <button type="button" (click)="logOut()" class="btn btn-secondary">Logout with Google</button>
 
-                    <p class="pt-3">Eğer hesabınız yoksa <a href="/Kaydol">buradan</a> kayıt olabilirsiniz !</p>
+                    <!-- <asl-google-signin-button type='icon' size='medium'></asl-google-signin-button> -->
+                    <!-- <div id="g_id_onload" data-client_id="589966651105-ca8omk4l8df5omgrj1t9c45a928u4pvk.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup"
+                        data-login_uri="http://localhost:4200/girisyap" data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                        data-text="signin_with" data-size="large" data-logo_alignment="left">
+                    </div> -->
+                    <div id="buttonDiv"></div>
                 </div>
+
+
+                <p class="pt-3">Eğer hesabınız yoksa <a href="/Kaydol">buradan</a> kayıt olabilirsiniz !</p>
             </form>
+        </div>
+        <div class="col" *ngIf="user!=null">
+            <img src="{{ user.photoUrl }}">
+            <div>
+                <h4>{{ user.name }}</h4>
+                <p>{{ user.email }}</p>
+            </div>
         </div>
     </div>
 </div>

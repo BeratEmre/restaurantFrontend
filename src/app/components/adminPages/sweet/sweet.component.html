@@ -22,9 +22,9 @@
             <img src="{{imgUrl}}{{cell.value}}" alt="" style="width: 100px;">
         </div>
         <div *dxTemplate="let cell of 'template'">
-            <fa-icon [ngClass]="{ 'shiny': getSweet(cell.value).isHaveStar, 'uninspiring': !getSweet(cell.value).isHaveStar}" [icon]="faStar" (click)="getSweet(cell.value)"></fa-icon>
+            <fa-icon [ngClass]="{ 'shiny': getSweet(cell.value).isHaveStar, 'uninspiring': !getSweet(cell.value).isHaveStar}" [icon]="faStar" (click)="favoritePositionChange(cell.value)"></fa-icon>
             <fa-icon class="ms-2 uninspiring" [icon]="edit" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="updatingSweet(cell.value)"></fa-icon>
-            <fa-icon class="ms-2 uninspiring" [icon]="trash" data-bs-toggle="modal" data-bs-target="#removeMenuModal" (click)="removingSweetFind(cell.value)"></fa-icon>
+            <fa-icon class="ms-2 uninspiring" [icon]="trash" data-bs-toggle="modal" data-bs-target="#removeSweetModal" (click)="removingSweetFind(cell.value)"></fa-icon>
         </div>
     </dx-data-grid>
 

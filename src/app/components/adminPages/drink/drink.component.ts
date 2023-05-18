@@ -1,9 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCheckCircle, faEdit, faPlus, faStar, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { ProductType } from 'src/app/enums/product-type';
+import FavoriteProductHelper from 'src/app/helper/favoriteProductHelper';
 import { DrinkModel } from 'src/app/models/drink-model';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { DrinkService } from 'src/app/services/drink.service';
+import { FavoriteProductService } from 'src/app/services/favoriteProduct.service';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
 
@@ -41,7 +44,7 @@ export class DrinkComponent implements OnInit {
   
 
 
-  constructor(private drinkService: DrinkService) { }
+  constructor(private drinkService: DrinkService, private _favoriteService:FavoriteProductService) { }
 
   ngOnInit(): void {
     this.getDrinks();
@@ -72,12 +75,8 @@ export class DrinkComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.addForm.patchValue({
-        formFile: file
-      });
-    }
+    if (event.target.files.length > 0) 
+      this.fileModel.formFile = event.target.files[0];
   }
 
   updateFileChange(event:any){
@@ -108,7 +107,7 @@ export class DrinkComponent implements OnInit {
   formDataSetsForAdd(): FormData {
     console.log(this.addForm.value.formFile)
     const formData = new FormData();
-    formData.append('formFile', this.addForm.value.formFile as string);
+    formData.append('formFile', this.fileModel.formFile, this.fileModel.formFile.name);
     formData.append('name', this.addForm.value.name as string);
     formData.append('description', this.addForm.value.description as string);
     formData.append('price', this.addForm.value.price as string);
@@ -141,7 +140,7 @@ export class DrinkComponent implements OnInit {
     formData.append('name', this.fileModel.model.name);
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
-    formData.append('drinkId', this.fileModel.model.id.toString());
+    formData.append('id', this.fileModel.model.id.toString());
     return formData;
   }
   
@@ -182,5 +181,13 @@ export class DrinkComponent implements OnInit {
     if(drink==undefined)      
     drink =new DrinkModel();
     return drink
+  }
+
+  favoritePositionChange(id:number){
+    var drink=this.drinks.find(f=>f.id==id);
+    if (drink==null || drink == undefined )
+      return;
+
+    FavoriteProductHelper.addOrDelte(drink,this._favoriteService,ProductType.drink.toString());   
   }
 }

@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCheckCircle, faEdit, faStar, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { ProductType } from 'src/app/enums/product-type';
+import FavoriteProductHelper from 'src/app/helper/favoriteProductHelper';
 import { FileUploadModal } from 'src/app/models/file-upload-model';
 import { SweetModel } from 'src/app/models/sweet-model';
+import { FavoriteProductService } from 'src/app/services/favoriteProduct.service';
 import { SweetService } from 'src/app/services/sweet.service';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
@@ -41,7 +44,7 @@ export class SweetComponent implements OnInit {
   
 
 
-  constructor(private sweetService: SweetService) { }
+  constructor(private sweetService: SweetService, private _favoriteService:FavoriteProductService) { }
 
   ngOnInit(): void {
     this.getSweets();
@@ -92,12 +95,9 @@ export class SweetComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.addForm.patchValue({
-        formFile: file
-      });
-    }
+    if (event.target.files.length > 0)
+      this.fileModel.formFile = event.target.files[0];
+    
   }
   updateFileChange(event:any){
     if (event.target.files.length > 0) {
@@ -111,8 +111,10 @@ export class SweetComponent implements OnInit {
       return false;
 
     var formData = this.formDataSetsForAdd()
+    console.log(formData)
     this.sweetService.addSweet(formData).subscribe(res => {
       if (res.success) {
+        console.log(res)
         this.sweets.push(res.data); 
         this.successMessage ='Ürün Ekleme İşlemi Başarıyla Gerçekleşti';
         this.successMessageBox.nativeElement.classList.remove('d-none')
@@ -129,7 +131,7 @@ export class SweetComponent implements OnInit {
   formDataSetsForAdd(): FormData {
     console.log(this.addForm.value.formFile)
     const formData = new FormData();
-    formData.append('formFile', this.addForm.value.formFile as string);
+    formData.append('formFile', this.fileModel.formFile, this.fileModel.formFile.name);
     formData.append('name', this.addForm.value.name as string);
     formData.append('description', this.addForm.value.description as string);
     formData.append('price', this.addForm.value.price as string);
@@ -146,7 +148,7 @@ export class SweetComponent implements OnInit {
     formData.append('name', this.fileModel.model.name);
     formData.append('imgUrl', this.fileModel.model.imgUrl);
     formData.append('price', this.fileModel.model.price.toString());
-    formData.append('sweetId', this.fileModel.model.id.toString());
+    formData.append('id', this.fileModel.model.id.toString());
     return formData;
   }
   
@@ -155,7 +157,9 @@ export class SweetComponent implements OnInit {
   }
 
   removingSweetFind(id:number){
+    console.log(id)
     var re = this.sweets.find(d => d.id == id)
+    console.log(re)
     if (re != undefined) {
       this.removingSweet = re;
     }
@@ -189,5 +193,13 @@ export class SweetComponent implements OnInit {
     if(sweet==undefined)      
     sweet =new SweetModel();
     return sweet;
+  }
+
+  favoritePositionChange(id:number){
+    var sweet=this.sweets.find(f=>f.id==id);
+    if (sweet==null || sweet == undefined )
+      return;
+
+    FavoriteProductHelper.addOrDelte(sweet,this._favoriteService,ProductType.sweet.toString());   
   }
 }

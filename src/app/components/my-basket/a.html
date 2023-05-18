@@ -1,0 +1,279 @@
+<style>
+    .bacground-img {
+        background-image: url("data:image/png;base64,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");
+        background-repeat: repeat-y;
+        background-position: center;
+        background-position-y: 47px;
+    }
+</style>
+</p>
+<h3 align="center">FONGOGO KİTLE FONLAMA PLATFORMU A.Ş.</h3> <br>
+<div class="bacground-img">
+    <h3 align="center" class="mb-3">KİTLE FONLAMASI SÖZLEŞMESİ</h3><br>
+    <h5 align="justify"><strong>1 TARAFLAR</strong></h5>
+    <p align="justify"> 1.1 İşbu Kitle Fonlaması Sözleşmesi (“<strong>Sözleşme</strong>”), Cumhuriyet Caddesi No: 40/3 Elmadağ, İstanbul 34367 adresi merkezli ve 883556 sicil numarası ile İstanbul Ticaret Sicili’ne kayıtlı Fongogo Kitle Fonlama Platformu Anonim Şirketi (‘’
+        <strong>Platform’’</strong>) ile [?] adresinde mukim [?] Girişimci <strong>/ </strong>[?] adresli merkezde [?] sicil numarası ile [?] Ticaret Sicili’ne kayıtlı [?] Girişim Şirketi (“ <strong>Kaynak Arayan</strong>”)<strong> </strong>arasında aşağıdaki
+        şekilde bir<strong> </strong>sözleşme imzalanmıştır. </p>
+    <p align="justify"> 1.2 İşbu Sözleşme kapsamında Platform ve Kaynak Arayan ayrı ayrı “Taraf” ve birlikte “Taraflar” olarak anılacaktır. </p>
+    <p align="justify"> 1.3 Platform’u temsile yetkili kişiler ve irtibat bilgilerine <a href="https://yatirim.fongogo.com">https://yatirim.fongogo.com</a> (“İnternet Sitesi”) adresinden ulaşılabilmektedir. </p>
+    <h5 align="justify"> <strong>2 TANIMLAR</strong> </h5>
+    <p align="justify"> 2.1 İşbu Sözleşme’de aşağıdaki terimler aksi belirtilmediği sürece yanlarında açıklanmış olan anlamlarda kullanılmışlardır. </p>
+    <table width="626" cellspacing="0" cellpadding="7" class="table">
+        <colgroup>
+            <col width="107">
+            <col width="489"> </colgroup>
+        <tbody>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Borsa </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> 6362 sayılı Kanunun 3’üncü maddesinin birinci fıkrasının (ç) bendinde tanımlanan borsa </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Bilgi Formu </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Girişimci veya girişim şirketi tarafından hazırlanan, projenin ihtiyaç duyduğu fonun toplanabilmesi amacıyla kampanya sayfasında ilan edilen ve standartları Kurulca belirlenen formu </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Emanet Yetkilisi </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Platformlar aracılığıyla toplanan fonu, Girişim Şirketine aktarılana veya yatırımcılara iade edilene kadar Tebliğdeki hükümler çerçevesinde emanetçi sıfatıyla bloke eden İstanbul Takas ve Saklama Bankası A.Ş. ile 2/7/2013 tarihli ve
+                        28695 sayılı Resmî Gazete’de yayımlanan Portföy Saklama Hizmetine ve Bu Hizmette Bulunacak Kuruluşlara İlişkin Esaslar Tebliği (III-56.1)’nde tanımlanan diğer portföy saklayıcıları </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Fonlanan Şirket </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Girişimciler tarafından kurulan anonim şirketi veya emanet yetkilisi nezdindeki hesabına, bloke edilen fon tutarının aktarıldığı girişim şirketini, </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Girişimci </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Projesine paya ve/veya borçlanmaya dayalı kitle fonlaması yoluyla kaynak arayan Türkiye’de yerleşik gerçek kişileri ve limited veya anonim şirket türündeki tüzel kişileri, </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Girişim Şirketi </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Anonim şirket kurma zorunluluğu olmadan faaliyetlerine devam edecek ve Türkiye’de kurulu olan, gelişme potansiyeli taşıyan ve projesine kaynak ihtiyacı bulunan anonim şirketleri veya toplanan fonların emanet yetkilisi nezdinde açılan
+                        bloke hesabına aktarılması öncesinde anonim şirkete dönüşmesi zorunlu olan limited şirketleri, </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Kampanya </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Projenin ihtiyaç duyduğu fonu sağlamak amacıyla gerçekleştirilen fon toplama talebinin platformun internet sitesinde kamuya duyurulmasını, </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Kampanya Sayfası </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Projeye ilişkin olarak platform nezdinde oluşturulan ve yalnızca üyelerin erişimine açık tutulan internet sayfasını, </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Kampanya Süresi </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Yatırım Komitesi tarafından onaylanmış bilgi formunun Kampanya Sayfasında yayımlandığı tarihte başlayan ve en fazla altmış gün olan süre </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Kitle Fonlaması </p>
+                    <p lang="tr-TR" align="justify"> Sözleşmesi (Sözleşme) </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Platform ile Girişimci arasında akdedilen kitle fonlaması faaliyeti sırasında uyulması gereken esasların hükme bağlandığı sözleşme </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> KVKK </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> 24/3/2016 tarihli ve 6698 sayılı Kişisel Verilerin Korunması Kanunu </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> MKK </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Merkezi Kayıt Kuruluşu Anonim Şirketi </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Nitelikli Yatırımcı </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Sermaye Piyasası Kurulu’nun ilgili düzenlemelerinde tanımlanan gerçek ve tüzel kişiler, kamu kurum ve kuruluşları ile 15/2/2013 tarihli ve 28560 sayılı Resmî Gazete’de yayımlanan Bireysel Katılım Sermayesi Hakkında Yönetmelik’te tanımlanan
+                        bireysel katılım yatırımcısı lisansına sahip kişiler </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Proje </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Planlanan teknoloji ve/veya üretim faaliyetlerinin gerçekleştirilmesi için kaynak ihtiyacı olan iş fikrini </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> SPK </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Sermaye Piyasası Kurulu </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> SPKn </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> 6/12/2012 tarihli ve 6362 sayılı Sermaye Piyasası Kanunu </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Tebliğ </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> 27 Ekim 2021 tarihli ve 31641 sayılı Resmî Gazete’de yayımlanarak yürürlüğe giren Kitle Fonlaması Tebliği (III – 35/A.2) </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> TTK </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> 13/1/2011 tarihli ve 6102 sayılı Türk Ticaret Kanunu </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Üye </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Platform ile üyelik sözleşmesi akdeden yatırımcı </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> VUK </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> 10/01/1961 tarihli ve 10705 sayılı Vergi Usul Kanunu </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td width="107">
+                    <p lang="tr-TR" align="justify"> Yatırım Komitesi </p>
+                </td>
+                <td width="489">
+                    <p lang="tr-TR" align="justify"> Girişimci veya girişim şirketi tarafından hazırlanan fizibilite ve/veya kredibilite raporunu değerlendiren, kampanyalara ilişkin hazırlanan bilgi formunu onaylayan ve platform yönetim kurulu tarafından belirlenen komiteyi, </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h5 align="justify"> <strong>3 SÖZLEŞMENİN AMACI, KAPSAMI VE KONUSU</strong> </h5>
+    <p align="justify"> 3.1 İşbu Sözleşme Kaynak Arayan’ın Platform’a başvurması, Platform’un sunduğu hizmetlerden yararlanması ve Tebliğ ve SPK’nın yayınladığı ilgili diğer mevzuata göre Proje’si için fon toplamak maksadı ile Kitle Fonlama Kampanyası yapması süreçlerini
+        kapsar. </p>
+    <p align="justify"> 3.2 Süreç, Kaynak Arayan’ın Platform’a başvurması ile başlar. Tebliğ ve Platform’un öngördüğü diğer kuralların uygulanması işbu Sözleşmenin konusunu oluşturur. </p>
+    <h5 align="justify"> <strong>4 GİRİŞİMCİ’NİN KAMPANYASINA AİT BİLGİLER</strong> </h5>
+    <h6 align="justify"> 4.1 <u><strong> Kapsam/Konu</strong></u> </h6>
+    <p align="justify"> İşbu Sözleşmeye istinaden Kaynak Arayan [[?] adındaki Projesi/ [?] A.Ş. adındaki şirketi]’nin [?] TL tutarında kaynak ihtiyacı için 60 (Altmış) günlük bir Kitle Fonlama Kampanyası gerçekleştirmek üzere Platform’a başvuruda bulunmuştur. İşbu Sözleşme’nin
+        imzalanması ile başlayan süreçte Platform, Değerlendirme Politikası’na uygun bulması halinde Yatırım Komitesi’nin onayı ile söz konusu Kitle Fonlaması Kampanyası’nın Platform’da listelenmesine ve Üyelerin fonlamasına açılmasına karar verebilecektir.
+        </p>
+    <h6 align="justify"> 4.2 <u><strong>Hedeflenen Fonlama ve Ek Satış</strong></u> </h6>
+    <p align="justify"> Kampanya Süresince hedeflenen minimum birim pay satış fiyatı [?] TL ve toplam hedeflenen payların nominal değeri [?] TL olup, Kaynak Arayan ayrıca Tebliğ kapsamında toplam hedeflenen payların nominal değerinin %20’si olan [?] TL tutarına kadar ek
+        fon toplama hakkı olduğunu kabul beyan ve taahhüt eder. Kaynak Arayan, Kampanya’nın gerçekleştirildiği yıla ilişkin SPK tarafından belirlenen ihraç sınırını geçemeyeceğini kabul eder. </p>
+    <h5 align="justify"> <strong>5 KAMPANYA SÜRESİNCE UYGULANACAK PROSEDÜR</strong> </h5>
+    <p align="justify"> 5.1 Kampanya süreci, Kaynak Arayan tarafından Platform’a fon toplama talebiyle başvurulduğu anda başlar. Kaynak Arayan’ın herhangi bir kitle fonlaması platformu nezdinde paya dayalı kitle fonlamasına ilişkin mevcut bir kampanyası olması halinde, ilgili
+        kampanya süreci tamamlanmadan yeni bir Kampanya başlatılamaz. </p>
+    <p align="justify"> 5.2 Kampanya Süresi, Yatırım Komitesi tarafından onaylanmış Bilgi Formu’nun Kampanya Sayfası’nda yayımlandığı tarihte başlar ve bu süre 60 (altmış) günü geçemez. Üye tarafından Kampanya Süresi boyunca ilgili Kaynak Arayan’a yönelik fon sağlama talepleri
+        Platform’a iletilir. </p>
+    <p align="justify"> 5.3 Kampanya Platform’un uygun gördüğü tarihte yayınlanmaya başlayacaktır. Ek pay satışı dahil tüm pay satışları tamamlanana veya Kampanya Süresi sona erene kadar kampanya devam edecektir. </p>
+    <p align="justify"> 5.4 Platform nezdinde Kampanya yürütülebilmesi için Kitle Fonlaması Bilgi Formu’nun Yatırım Komitesi tarafından onaylanması ve bu formun Kampanya Sayfası’nda yayımlanması zorunludur. Yatırım Komitesi tarafından Bilgi Formu’nun onaylanması için asgari
+        olarak Bilgi Formu’nda yer alan bilgilerin tutarlı, anlaşılabilir olması ve SPK tarafından belirlenen Kitle Fonlaması Bilgi Formu standartlarına göre eksiksiz olması gerekmektedir. Kaynak Arayan, Bilgi Formu’nun SPK’nın standartlarına uygun şekilde
+        doldurduğunu kabul, beyan ve taahhüt eder. </p>
+    <p align="justify"> 5.5 Kampanya Süresi içerisinde minimum hedeflenen fon tutarına ulaşılması durumunda Kampanya başarılı kabul edilir. </p>
+    <p align="justify"> 5.6 Kampanya kapsamında yapılan pay satışlarının bedeli Kampanya süresi boyunca Emanet Yetkilisi’nde Platform adına bloke edilecektir. Söz konusu fonlar, Kampanya’nın hedeflenen fon tutarına ulaşarak başarılı olması akabinde kurulu/kurulacak Girişim
+        Şirketi adına açılacak hesaplarda Emanet Yetkilisi’nde bloke edilecektir. </p>
+    <p align="justify"> 5.7 Fonlamanın gerçekleşip gerçekleşmediğine bakılmaksızın, her bir Kampanya için Kampanya Süresi’nin sona ermesini takip eden iş günü fonlama sonuçları Platform üzerinden kamuya duyurulur. </p>
+    <p align="justify"> 5.8 Kampanya sonunda minimum hedeflenen veya ek fon dahil toplam hedeflenen fon tutarına ulaşılması durumunda ve Kampanya Süresi’nin sona ermesiyle birlikte cayma hakkının tüm Üye’ler tarafından sona erdiği tarih itibariyle aşağıda belirtilen süreçler
+        uygulanacaktır; </p>
+    <p align="justify"> 5.8.1 Girişimci tarafından yürütülen Kampanyalarda, kampanya süresinin sona ermesini takip eden 90 gün içinde anonim şirket kurulması ile Platform adına emanet yetkilisi nezdinde açılan hesapta bloke edilen fon, anonim şirketin Emanet Yetkilisi nezdinde
+        açılan bloke hesabına aktarılır ve en geç kuruluş işleminin ticaret siciline tescilini takip eden otuz iş günü içinde Fonlanan Şirket tarafından toplanan fon tutarı kadar sermaye artırımı yapılır. Bunu teminen Kaynak Arayan Fonlanan Şirket, kendisinden
+        Platform tarafından talep edilecek her türlü belgeyi en geç 5 iş günü içerisinde teslim etmeyi kabul beyan ve taahhüt eder. </p>
+    <p align="justify"> 5.8.2 Girişim Şirketi tarafından yürütülen Kampanyalarda, fon toplayan girişim şirketinin anonim şirket olması durumunda, platform adına emanet yetkilisi nezdinde açılan hesapta bloke edilen fon, Fonlanan Şirket’in emanet yetkilisi nezdinde açılan
+        bloke hesabına aktarılır ve Fonlanan Şirket tarafından kampanya süresinin sona ermesini takip eden 30 iş günü içinde toplanan fon tutarı kadar sermaye artırımı yapılır. Fon toplayan girişim şirketinin limited şirket olması durumunda, kampanya
+        süresinin sona ermesini takip eden doksan gün içinde anonim şirkete dönüşüm işlemlerinin tamamlanmış olması, dönüşüm öncesi bilançoda yer alan özkaynak kalemlerinin, dönüşüm sonrası ortaklığın açılış bilançosunda sermaye hesabı altında bir toplulaştırma
+        yapılmadan, bilançoda ayrı kalemler olarak dönüşüm öncesi şirketin devamı olacak şekilde gösterilmiş olması ve söz konusu hususun tespitine ilişkin mali müşavir raporunun düzenlenmesi, toplanan fonun, anonim şirkete dönüşümü takiben Fonlanan Şirket’in
+        emanet yetkilisi nezdinde açılan bloke hesabına aktarılması öncesinde anılan mali müşavir raporunun kampanya sayfasında ilan edilmesi gerekir. Platform adına emanet yetkilisi nezdinde açılan hesapta bloke edilen fon, Fonlanan Şirket’in emanet
+        yetkilisi nezdinde açılan bloke hesabına aktarılır ve Fonlanan Şirket tarafından dönüşüm işlemlerinin tamamlanmasını takip eden 30 iş günü içinde toplanan fon tutarı kadar sermaye artırımı yapılır. Bunu teminen Kaynak Arayan Girişimci, kendisinden
+        Platform tarafından talep edilecek, kuruluşun veya dönüşümün yapıldığını tevsik edici her türlü belgeyi en geç 5 iş günü içerisinde Platform’a teslim etmeyi kabul beyan ve taahhüt eder. </p>
+    <p align="justify"> 5.9 Sermaye artırım işleminin tamamlanmasının ardından platform, her bir yatırımcının sağladığı fon tutarı ve bunun karşılığında çıkarılacak payların toplam nominal değeri bilgisini iki iş günü içinde MKK’ya iletir. Fonlanan Şirket’in sermayesini
+        temsil eden tüm paylarının MKK nezdinde kayden oluşturulmasına ve hak sahiplerinin hesaplarına aktarılmasına yönelik işlemlerin gerçekleştirilmesini sağlar. </p>
+    <p align="justify"> 5.10 Sermaye artırımına ve tüm payların MKK nezdinde kayden oluşturularak hak sahiplerinin hesaplarına aktarılmasına ve bunu takiben Emanet Yetkilisi nezdinde Fonlanan Şirket adına bloke edilen fonun, Fonlanan Şirket’e tevdi edilmesine yönelik işlemlerin
+        tamamlanmasıyla birlikte kampanya süreci sona erer. </p>
+    <p align="justify"> 5.11 Hedeflenen fon tutarının Kampanya Süresinin bitiş tarihi veya Kampanya Süresiyle birlikte cayma hakkı sürelerinin tüm Üye’ler bakımından sona erdiği tarih itibarıyla toplanamamış olması halinde, ilgili sürenin bitimini takip eden işgünü içinde
+        Platform tarafından yapılacak bildirim üzerine Emanet Yetkilisi nezdinde bloke edilen tutarlar ve varsa neması, bu bildirimi takip eden işgünü içinde Emanet Yetkilisi tarafından Üye’lere iade edilir ve bu suretle Kampanya süreci sona erer. </p>
+    <p align="justify"> 5.12 Sözleşme’nin madde 5.8 hükümlerinde düzenlenen yükümlülüklerin, süresi içinde yerine getirilmemesi halinde, söz konusu maddede düzenlenen sürelerin bitimini takip eden iş günü içinde Emanet Yetkilisi nezdinde bloke edilen tutarlar ve varsa neması
+        Üye’lere iade edilir ve bu suretle Kampanya süreci sona erer. </p>
+    <p align="justify"> 5.13 Üye’ler tarafından Kampanya bazında ilgili Platform’a iletilen fon sağlama taleplerine ilişkin ödemeler ile Emanet Yetkilisi’ne intikal eden nakit aktarımlarının eşleştirilmesine ve Kampanya Süresi’nin sona ermesini takiben payların Üye bazında
+        dağıtımının tespitine yönelik işlemler Bilgi Formu’nda belirtilen usul ve esaslar ile MKK ve Emanet Yetkilisi tarafından belirlenen prosedürlere uygun olarak Platform tarafından gerçekleştirilir. </p>
+    <p align="justify"> 5.14 Platform, Üye’ler tarafından kendisine iletilen fon sağlama taleplerini Kampanya Süresi boyunca anlık olarak MKK’ya ve Emanet Yetkilisi’ne iletir. Fonların toplanması, toplanan fonların Emanet Yetkilisi nezdinde Platform adına açılan hesapta
+        bloke edilerek Girişim Şirketi’ne aktarılması ve/veya söz konusu fonların ve varsa nemalarının Üye’lere iade edilmesi Emanet Yetkilisi tarafından sağlanır. </p>
+    <p align="justify"> 5.15 Ek satış dahil hedeflenen fon tutarının Kampanya Süresi’nin bitiş tarihinden önce toplanması halinde, Tebliğ kapsamında Üye’lere tanınan cayma hakkı sürelerinin tüm Üye’ler bakımından sona ermesi şartıyla Kampanya Süresi erken sonlandırılabilir.
+        Kampanya Süresi’nin erken sonlandırılıp, sonlandırılmayacağına ilişkin açıklamalar Bilgi Formu’nda yer alır. </p>
+    <p align="justify"> 5.16 Kampanya Süresi’nde, varsa ek satış dahil hedeflenen fon tutarının üzerinde fon toplanması halinde, Platform’ca Bilgi Formu’nda belirtilen usul ve esaslar çerçevesinde belirlenen dağıtım listesi dikkate alınarak bu tutarı aşan kısmın Üye’lere
+        iadesi Tebliğ madde 8 hükmünde belirlenen esaslara göre Üye’ler arasında eşitsizliğe sebep olmayacak şekilde yerine getirilir. </p>
+    <p align="justify"> 5.17 Üye’ler verilecek payların tüm ortaklık hak ve koşulları ile varsa bu paylara ilişkin imtiyazlar Bilgi Formu’nda açıkça belirtilir. Nitelikli Yatırımcı olarak kabul edilenler hariç olmak üzere Üye’lere verilecek paylar arasında imtiyaz farkı
+        yaratılamaz. </p>
+    <p align="justify"> 5.18 Kaynak Arayan’a ilişkin olarak yapılacak tanıtım ve reklamlarda yer alan bilgiler yanlış, yanıltıcı, temelsiz, abartılı veya eksik olamaz; Kaynak Arayan’ın içinde bulunduğu duruma ilişkin olarak Üye’lerin yanlış fikirler edinmelerine yol açacak
+        nitelikte olamaz. Bu bilgilerin Kitle Fonlaması Bilgi Formu’nda yer verilen bilgilerle tutarlı olması zorunludur. </p>
+    <p align="justify"> 5.19 Kampanya Süresi içinde, Üye’lerin yatırım kararını etkileyebilecek değişikliklerin veya yeni hususların ortaya çıkması halinde, bu durum Bilgi Formu’nun değiştirilmesi ya da yeni eklenmesi öngörülen hususları içeren kısımları ile birlikte Kaynak
+        Arayan tarafından derhal ve en geç 1 iş günü içerisinde Platform’a bildirilir. Yeni Bilgi Formu’nun yatırım komitesi tarafından incelenmesi ve çoğunluk onayı almaması durumunda Platform, tazminat hakkı saklı kalmak kaydıyla ilgili değişiklikler
+        nedeniyle Kampanya’yı iptal etme hakkına sahip olacaktır. </p>
+    <p align="justify"> 5.20 Bilgi Formu’nun değiştirilmesi ya da yeni eklenmesi öngörülen hususları içeren kısımları Kaynak Arayan tarafından yapılacak bildirim tarihinden itibaren 2 iş günü içinde Yatırım Komitesi tarafından değerlendirilir ve Değerlendirme Politikası’na
+        uygunluğuna göre onaylanarak Kampanya Sayfasında derhal yayımlanır. Platform, ilgili Girişim Şirketi veya Projeye yönelik fon sağlama talebini iletmiş olan Üye’lere eş zamanlı olarak uygun iletişim araçlarıyla bilgilendirme yapmakla yükümlüdür.
+        </p>
+    <p align="justify"> 5.21 Bilgi Formu’nda yapılan ek ve değişikliklerin Yatırım Komitesi tarafından onaylanarak yayımlandığı tarihten önce ödeme emrini veren Üye’ler açısından cayma hakkı süresi Platform’un üyelere yapacağı bilgilendirme anından itibaren yeniden başlar.
+        </p>
+    <p align="justify"> 5.22 Yatırım Komitesi ilave gelişmelerin niteliğini ve potansiyel etkilerini değerlendirerek Kampanya sürecini iptal edebilir. Platform’un böyle bir durumda Kampanya sürecini iptal etmesi halinde toplanan fonlar, Tebliğ çerçevesinde Üye’lere iade
+        edilir. </p>
+    <p align="justify"> 5.23 Toplanan fonların aktarılmasından önce girişimci tarafından yeni bir anonim şirketin kurulmuş, limited şirket türündeki girişim şirketleri için anonim şirkete dönüşümün tamamlanarak ticaret siciline tescil ettirilmiş olması ve bu fonların yalnızca
+        sermaye artırımı suretiyle çıkarılacak paylar karşılığında fonlanan şirkete aktarılması zorunludur. Girişim şirketlerinin mevcut paylarının satışı suretiyle fon toplanamaz. </p>
+    <p align="justify"> 5.24 Her bir kaynak arayan tarafından herhangi bir 12 aylık dönemde Platform aracılığıyla en fazla 2 Kampanya ile fon toplanabilir. </p>
+    <p align="justify"> 5.25 ##IndependentAuditReportMinFund## Türk Lirasını aşan fon taleplerinde, hedeflenen fon tutarının toplanmış sayılması için hedeflenen fonun en az %5’ine tekabül eden tutarın kampanya süresi içinde nitelikli yatırımcılar tarafından karşılanmış olması
+        zorunludur. Bu zorunluluk toplanan ek fon bakımından uygulanmaz. Bu fıkrada belirtilen sınırların altında olmamak kaydıyla, girişim şirketi veya girişimci tarafından bilgi formunda belirtilmek kaydıyla nitelikli yatırımcılara tahsisat oranı belirlenebilir.
+        </p>
+    <p align="justify"> 5.26 Girişimciler veya Girişim Şirketi’nin kampanya sürecinin başladığı tarihteki ortaklarından fonlanan şirkette önemli etkiye sahip olacaklar, Kampanya sürecinin başladığı tarihi takip eden üç yıl içerisinde miras, mirasın paylaşımı, eşler arasındaki
+        mal rejimi hükümleri veya cebri icra nedenleriyle yapılacak devirler ile Nitelikli Yatırımcı’lara ya da kendi aralarında yapacakları devirler hariç olmak üzere fonlanan şirketteki paylarını devredemezler. </p>
+    <h5 align="justify"> <strong>6 PAYLARA İLİŞKİN HUSUSLAR</strong> </h5>
+    <p align="justify"> 6.1 Şirketin mevcut nominal sermayesi ___ TL olup ___ adet ___ grubu paydan oluşmaktadır. </p>
+    <p align="justify"> 6.2 İşbu fonlama ile ___ adet ___ grubu nama yazılı pay ihraç edilecektir. Yeni ihraç edilen payların birim satış değeri ___ TL’dir. Şirketin yatırım öncesi toplam değeri ___ TL’dir. </p>
+    <p align="justify"> 6.3 Hedef fon tutarı ___ TL’dir ve bu fon karşılığında %__ hisse arz edilmektedir. Ek fon tutarı ___ TL’dir. Ek fonla beraber toplam hedef fon tutarı ___ TL olup %__ hisseye denk gelmektedir. </p>
+    <p align="justify"> 6.4 Paylara

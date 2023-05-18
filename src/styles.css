@@ -133,3 +133,7 @@ body {
 .shiny {
     color: rgb(204, 204, 0);
 }
+
+.dx-datagrid-table fa-icon {
+    cursor: pointer;
+}
