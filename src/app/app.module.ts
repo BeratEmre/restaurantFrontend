@@ -20,11 +20,13 @@ import { OrdersComponent } from './components/adminPages/orders/orders.component
 import { SweetComponent } from './components/adminPages/sweet/sweet.component';
 import { MenuComponent } from './components/adminPages/menu/menu.component';
 import { GoogleLoginProvider, SocialLoginModule,SocialAuthServiceConfig  } from 'angularx-social-login';
+import { GettingPaidComponent } from './components/adminPages/getting-paid/getting-paid.component';
+import { ProductCommentsComponent } from './components/popups/product-comments/product-comments.component';
 
 const googleLoginOptions = {
   scope: 'profile email',
   plugin_name:'sample_login' //can be any name
-}; 
+};
 @NgModule({
   
   declarations: [
@@ -39,7 +41,9 @@ const googleLoginOptions = {
     MenuComponent,
     RegisterComponent,
     MyOrdersComponent,
-    OrdersComponent
+    OrdersComponent,
+    GettingPaidComponent,
+    ProductCommentsComponent
   ],
   imports: [
     HttpClientModule,

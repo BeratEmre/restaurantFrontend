@@ -20,12 +20,20 @@ export default class AuthService {
     if (token==null||token=='') 
       return false;
     console.log(token)
+    var url=this.apiUrl+'bringauthority';
+     this.httpClient.post<ResponseModel<any>>(url,token).subscribe(r=>{
+      console.log(r)  
+      console.log(r.success)  
+     });
     return true;    
+  }
+  isThisAdmin(token:string):Observable<ResponseModel<null>>{
+    var url=this.apiUrl+'bringauthority?token='+token;
+    return this.httpClient.post<ResponseModel<null>>(url,null);
   }
 
   login(loginModel:LoginModel):Observable<ResponseModel<AccessTokenModel>>{
     var url=this.apiUrl+'login';
     return this.httpClient.post<ResponseModel<AccessTokenModel>>(url,loginModel);
-
   }
 }

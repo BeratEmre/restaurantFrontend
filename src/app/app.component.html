@@ -1,50 +1,20 @@
 <div class="header_bottom">
-    <!-- <div *ngIf="isThisAdmin"> -->
-    <!-- <nav class="admin-navbar bg-dark">
 
-        <ul class="admin-navbar-item">
-            <div class="admin-start">
-                <li>
-                    <a class="nav-link"> Yönetici Paneli</a>
-                </li>
-            </div>
-
-            <div class="faNavIcon d-lg-none d-flex" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="adminNavCloseVisible=!adminNavCloseVisible">
-                <fa-icon [icon]="faBars" *ngIf="adminNavCloseVisible==false"></fa-icon>
-                <fa-icon [icon]="faTimes" *ngIf="adminNavCloseVisible==true"></fa-icon>
-            </div>
-
-            <div class="admin-links collapse navbar-collapse" id="adminNavbar">
-
-                <li>
-                    <a class="nav-link" href="/siparisler">Siparişler</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="/menu">Menü Listesi</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="/yiyecekler">Yiyecek Listesi</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="/icecekler"> İçecek Listesi</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="/tatlılar">Tatlı Listesi</a>
-                </li>
-            </div>
-        </ul>
-    </nav> -->
-    <nav class="navbar navbar-expand-lg bg-dark">
+    <!-- <nav class="navbar navbar-expand-lg bg-dark" *ngIf="this.isThisAdmin==true">
         <div class=" container-fluid">
             <a class="navbar-brand" routerLink="home" style="color: white;cursor: pointer;">Anasayfa</a>
 
-            <div class="faNavIcon d-lg-none d-flex" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="adminNavCloseVisible=!adminNavCloseVisible">
+            <div class="faNavIcon d-lg-none d-flex" data-bs-toggle="collapse" data-bs-target="#adminNavbar"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                (click)="adminNavCloseVisible=!adminNavCloseVisible">
                 <fa-icon [icon]="faBars" *ngIf="adminNavCloseVisible==false"></fa-icon>
                 <fa-icon [icon]="faTimes" *ngIf="adminNavCloseVisible==true"></fa-icon>
             </div>
             <div class="collapse navbar-collapse" id="adminNavbar">
                 <ul class="navbar-nav ms-auto">
-
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="siparisler">Ödeme Al</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" routerLink="siparisler">Siparişler</a>
                     </li>
@@ -63,17 +33,18 @@
                 </ul>
             </div>
         </div>
-    </nav>
-    <!-- </div> -->
+    </nav> -->
 
     <div class="container-fluid custom-nav-container">
         <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand restaurant-name" href="/">                   
-                Benim<span style="color: #361500">R</span>estoranım            
+            <a class="navbar-brand restaurant-name" href="/">
+                <span style="color: #361500">R</span>estoranım
             </a>
 
 
-            <div class="faNavIcon d-lg-none d-flex" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="navCloseVisible=!navCloseVisible">
+            <div class="faNavIcon d-lg-none d-flex" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                (click)="navCloseVisible=!navCloseVisible">
                 <fa-icon [icon]="faBars" *ngIf="navCloseVisible==false"></fa-icon>
                 <fa-icon [icon]="faTimes" *ngIf="navCloseVisible==true"></fa-icon>
             </div>
@@ -85,19 +56,21 @@
                     <button class="btn btn-outline-success hover-effect search-on-nav" type="submit"><fa-icon [icon]="faSearch"></fa-icon></button>
                 </form> -->
                 <ul class="navbar-nav ms-auto">
+                    <ng-container *ngIf="currentRoute=='/anasayfa'">
 
-                    <li class="nav-item">
-                        <a class="nav-link" (click)="goto( 'menus')">Menüler</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" (click)="goto( 'foods')">Yiyecekler</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" (click)="goto( 'drinks')"> İçecekler</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" (click)="goto( 'sweets')">Tatlılar</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="goto( 'menus')">Menüler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="goto( 'foods')">Yiyecekler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="goto( 'drinks')"> İçecekler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="goto( 'sweets')">Tatlılar</a>
+                        </li>
+                    </ng-container>
                     <li class="nav-item">
                         <a class="nav-link" href="/sepetim">Sepetim</a>
                     </li>
@@ -124,16 +97,18 @@
 </div>
 
 <div style="margin-top:130px;">
-    <router-outlet></router-outlet>
+    <router-outlet (dataEvent)="onLogin($event)"></router-outlet>
 </div>
 <footer>
-    <p class="restaurant-name"> Benim<span style="color: #361500">R</span>estoranım</p>
+    <p class="restaurant-name"> Restoran <span style="color: #361500">A</span>dı</p>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         <div class="col">
             <h5>İletişim</h5>
             <p><span class="contact-span">Mail Adresimiz</span><br>
-                <a href="mailto:hege@example.com">hege@example.com</a><br> <span class="contact-span"> Telefon Numaramız</span><br>
-                <a href="mailto:hege@example.com">5055832425</a><br> <span class="contact-span">Mail Adresimiz</span><br>
+                <a href="mailto:hege@example.com">hege@example.com</a><br> <span class="contact-span"> Telefon
+                    Numaramız</span><br>
+                <a href="mailto:hege@example.com">5055832425</a><br> <span class="contact-span">Mail
+                    Adresimiz</span><br>
                 <a href="mailto:hege@example.com">hege@example.com</a>
             </p>
         </div>

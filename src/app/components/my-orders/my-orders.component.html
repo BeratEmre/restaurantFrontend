@@ -34,7 +34,7 @@
                 <p class="vertical-center ">{{basket.count}} Adet</p>
             </div>
             <div class="col-2 border-order">
-                <p class="vertical-center ">{{basket.price.toFixed(2)}} TL</p>
+                <p class="vertical-center ">{{basket.price.toLocaleString('tr-TR')}} TL</p>
             </div>
             <div class="col-2 border-order">
                 <div [ngSwitch]="basket.status">
@@ -42,11 +42,8 @@
                     <p class="vertical-center" *ngSwitchCase="20">Getirildi</p>
                     <p class="vertical-center" *ngSwitchDefault>Belirsiz</p>
                 </div>
-
-
             </div>
         </ng-container>
-
     </div>
 
     <div class="row border-order-total">

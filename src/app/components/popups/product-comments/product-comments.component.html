@@ -1,0 +1,83 @@
+<!-- <p>{{product.description}}</p>
+<div class="card" style="width: 18rem;">
+    <img src="{{imgUrl}}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+        <div *ngFor="let item of [0,1,2,3,4]">
+            <div class="row">
+                <div class="col-2">
+                    <fa-icon [icon]="faUser" id="userIcon"></fa-icon>
+                </div>
+                <div class="col-10">
+                    <h6>Berat</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's
+                        content.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- Button trigger modal -->
+<button type="button" class="d-none" #commentModalBtn data-bs-toggle="modal" data-bs-target="#commentModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="commentModal" #commentModal tabindex="-1" aria-labelledby="commentModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div style="margin:auto; display: flex;">
+                    <img src="{{imgUrl}}" class="card-img-top me-3" alt="" style="width: 75px;">
+                    <h1 class="modal-title fs-5" id="commentModalLabel" style="margin-top: revert;">{{product.name}}
+                    </h1>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    style="position: absolute; right: 30px;"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row gy-3">
+                    <div class="col-1 modalUserIconDiv" >
+                        <fa-icon [icon]="faUser" id="userIcon" *ngIf="addCommitVisibility"></fa-icon>
+                    </div>
+                    <div class="col-11">
+                        <form  [formGroup]="addCommitForm" (submit)="addCommit();" onsubmit="return false">
+                            <button class="blueBtn hover-effect" *ngIf="!addCommitVisibility" (click)="addCommitVisibility=true">
+                                Yorum Yap
+                            </button>
+                            <input formControlName="userName" class="form-control mb-2 addCommitInput" placeholder="İsim" *ngIf="addCommitVisibility">
+                            <input formControlName="productId" class="d-none" [ngModel]="product.id" *ngIf="addCommitVisibility">
+                            <input formControlName="productTypeId" class="d-none" [ngModel]="product.productType" *ngIf="addCommitVisibility">
+                            <input formControlName="content" class="form-control addCommitInput mb-2" placeholder="Yorum Ekle" *ngIf="addCommitVisibility">
+                            <button class="redBtn hover-effect me-3" *ngIf="addCommitVisibility" (click)="addCommitVisibility=false;addCommitForm.reset()">
+                                İptal
+                            </button>
+                            <button class="blueBtn hover-effect" *ngIf="addCommitVisibility" type="submit">
+                                Yorumu Yap
+                            </button>
+                        </form>
+                    </div>
+
+                    <ng-container *ngFor="let comment of commentList">
+
+                        <div class="col-1 modalUserIconDiv">
+                            <fa-icon [icon]="faUser" id="userIcon"></fa-icon>
+                        </div>
+                        <div class="col-11">
+                            <p style="margin-bottom: 0px;"><b>{{comment.userName}}</b></p>
+                            <p class="card-text">{{comment.content}}</p>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="modal-footer d-none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

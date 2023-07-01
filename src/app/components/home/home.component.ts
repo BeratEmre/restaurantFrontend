@@ -1,14 +1,17 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { faBasketShopping, faCandyCane, faGlassWater, faPlus, faPlusCircle,  faStar, faTrash, faUtensils, faUtensilSpoon } from '@fortawesome/free-solid-svg-icons';
+import { faBasketShopping, faCandyCane, faGlassWater, faPlus, faPlusCircle, faStar, faTrash, faUtensils, faUtensilSpoon } from '@fortawesome/free-solid-svg-icons';
 import { OrderDetailStatus } from 'src/app/enums/order-detail-status';
 import { ProductType } from 'src/app/enums/product-type';
 import DecodeToken from 'src/app/helper/decode-token';
 import { BasketModel } from 'src/app/models/basket-model';
+import { CommentModel } from 'src/app/models/commentModel';
 import { DrinkModel } from 'src/app/models/drink-model';
 import { FoodModel } from 'src/app/models/food-model';
 import { MenuModel } from 'src/app/models/menu-model';
 import { OrderModel } from 'src/app/models/order';
+import { ProductBaseModel } from 'src/app/models/product-base-model';
 import { SweetModel } from 'src/app/models/sweet-model';
+import { CommentService } from 'src/app/services/comment.service';
 import { DrinkService } from 'src/app/services/drink.service';
 import { FoodService } from 'src/app/services/food.service';
 import { MenuService } from 'src/app/services/menu.service';
@@ -21,31 +24,34 @@ import { environment } from 'src/environments/environment';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   drinkImgUrl = environment.imgUrl + '/drinks/';
   foodImgUrl = environment.imgUrl + '/foods/';
   sweetImgUrl = environment.imgUrl + '/sweets/';
   menuImgUrl = environment.imgUrl + '/menus/';
   faTrash = faTrash;
   faPlus = faPlus;
-  faPlusCircle= faPlusCircle;
-  faUtensils=faUtensils;
-  faCandyCane=faCandyCane;
-  faUtensilSpoon=faUtensilSpoon;
-  faGlassWater=faGlassWater;
-  faSppingBasket=faBasketShopping;
-  faStar=faStar;
+  faPlusCircle = faPlusCircle;
+  faUtensils = faUtensils;
+  faCandyCane = faCandyCane;
+  faUtensilSpoon = faUtensilSpoon;
+  faGlassWater = faGlassWater;
+  faSppingBasket = faBasketShopping;
+  faStar = faStar;
   sweetList: SweetModel[] = [];
   drinkList: DrinkModel[] = [];
   foodList: FoodModel[] = [];
   menuList: MenuModel[] = [];
   menuStarList: MenuModel[] = [];
   basketList: BasketModel[] = [];
+  commentProduct: ProductBaseModel;
+  commentPageVisible = false;
   userId: number = 0;
-  menuActive=0;
-  basketSize=false;
-  carouselPrev=false;
-  carouselNext=false;
+  menuActive = 0;
+  basketSize = false;
+  carouselPrev = false;
+  carouselNext = false;
+  commentImg = '';
   // @Output() public sendData=new EventEmitter();
   // sendBasket(){
   //   this.sendData.emit(JSON.stringify(this.basketList));
@@ -54,10 +60,9 @@ export class HomeComponent implements OnInit {
   constructor(private sweetService: SweetService, private drinkService: DrinkService, private foodService: FoodService,
     private menuService: MenuService, private orderDetailService: OrderDetailService) {
     this.userId = Number(DecodeToken.decode().id);
+    console.log(this.userId)
     this.getAllProducts();
     this.getOrderDetails()
-  }
-  ngOnInit(): void {
   }
 
   getAllProducts() {
@@ -66,6 +71,7 @@ export class HomeComponent implements OnInit {
         this.sweetList = res.data;
     });
     this.drinkService.getDrinks().subscribe(res => {
+      console.log("içecekler " + res.data)
       if (res.success)
         this.drinkList = res.data;
     });
@@ -171,6 +177,7 @@ export class HomeComponent implements OnInit {
       }
     })
   }
+
   addToCardMenu(id: number) {
     var order = new OrderModel();
     order.menuId = id;
@@ -335,47 +342,63 @@ export class HomeComponent implements OnInit {
       }
     })
   }
-  carouselActiveClass(item:number):string{
-    var resultStr='';
-    if (item==0)
-      resultStr=item==this.menuActive?'carousel-item active':'carousel-item';
+  carouselActiveClass(item: number): string {
+    var resultStr = '';
+    if (item == 0)
+      resultStr = item == this.menuActive ? 'carousel-item active' : 'carousel-item';
     else
-    resultStr=item-2==this.menuActive?'carousel-item active':'carousel-item';
+      resultStr = item - 2 == this.menuActive ? 'carousel-item active' : 'carousel-item';
     return resultStr;
   }
-  menuActivePluss(){
+  menuActivePluss() {
     this.menuActive++;
   }
-  menuActiveSour(){   
+  menuActiveSour() {
     this.menuActive--;
   }
 
-  starMenuGroupCount():Array<number>{
-    var count=Math.ceil(this.menuStarList.length / 3);
-    var arr=[0];
-    for (let index = 1; index < count; index++) {     
-      arr.push(index+2);
+  starMenuGroupCount(): Array<number> {
+    var count = Math.ceil(this.menuStarList.length / 3);
+    var arr = [0];
+    for (let index = 1; index < count; index++) {
+      arr.push(index + 2);
     }
 
     return arr;
   }
 
-  carouselButonCount(){
-    var count=Math.ceil(this.menuStarList.length / 3);
-    var arr=[0];
-    for (let index = 1; index < count; index++) {     
+  carouselButonCount() {
+    var count = Math.ceil(this.menuStarList.length / 3);
+    var arr = [0];
+    for (let index = 1; index < count; index++) {
       arr.push(index);
     }
     return arr;
   }
 
-  basketSizeChange(){
-    this.basketSize=!this.basketSize;
+  basketSizeChange() {
+    this.basketSize = !this.basketSize;
   }
-  basketCardClass():string{
-    if (this.basketSize) 
+  basketCardClass(): string {
+    if (this.basketSize)
       return "basketCard bigBasketCard";
-      return "basketCard smallBasketCard";
+    return "basketCard smallBasketCard";
+  }
+
+  openComments(product: ProductBaseModel, imgUrl: string) {
+    console.log(product);
+
+    this.commentProduct = product;
+    this.commentPageVisible = true;    
+    this.commentImg = imgUrl;
+  }
+
+  pageVisible(pageVisible: any) {
+    console.log("pageVisible " + pageVisible);
+    if (pageVisible == false) {
+      this.commentPageVisible = pageVisible;
+      this.commentProduct = new ProductBaseModel();
+    }
   }
 }
 

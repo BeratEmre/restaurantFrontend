@@ -1,8 +1,4 @@
-export class SweetModel {
-    id: number = 0;
-    name: string = '';
-    description: string = '';
-    imgUrl: string = '';
-    price: number = 0;
-    isHaveStar:boolean=false;
+import { ProductBaseModel } from "./product-base-model";
+
+export class SweetModel extends ProductBaseModel{
 }

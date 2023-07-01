@@ -12,6 +12,7 @@
     --purple: #B1AFFF;
     --blue: #283e6e;
     --bgDark: rgb(57, 62, 70, .1);
+    --commitBoxshadow:0px 2px 0px 1px rgba(0,144,237,.4);
 }
 
 .adminNavSize {
@@ -51,6 +52,16 @@ body {
     border-radius: 10px;
     border-color: white;
     padding: 7px 7px;
+    border: none;
+}
+
+.redBtn {
+    width: auto;
+    background-color: var(--red);
+    color: white;
+    border-radius: 10px;
+    border-color: white;
+    padding: 7px 15px;
     border: none;
 }
 

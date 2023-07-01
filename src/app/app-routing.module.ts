@@ -12,9 +12,11 @@ import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { SweetComponent } from './components/adminPages/sweet/sweet.component';
 import { AuthGuard } from './guard/auth-guard';
+import { GettingPaidComponent } from './components/adminPages/getting-paid/getting-paid.component';
 
 const routes: Routes = [
-  {path:"",pathMatch:"full",component:HomeComponent},
+  {path:"",pathMatch:"full",redirectTo: '/anasayfa'},
+  {path:"anasayfa",pathMatch:"full",component:HomeComponent},
   {path:"icecekler",component:DrinkComponent},
   {path:"yiyecekler",component:FoodComponent},
   {path:"tatlılar",component:SweetComponent},
@@ -25,7 +27,8 @@ const routes: Routes = [
   {path:"girisyap",component:LoginComponent},
   {path:"siparislerim",component:MyOrdersComponent},
   {path:"siparisler",component:OrdersComponent},
-  {path:"**",pathMatch:"full",component:HomeComponent},
+  {path:"OdemeAl",component:GettingPaidComponent},
+  {path:"**",pathMatch:"full",redirectTo: '/anasayfa'},
 ];
 
 @NgModule({

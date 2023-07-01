@@ -1,0 +1,18 @@
+#userIcon{
+    opacity: .8;
+    font-size: 25px;
+}
+.modalUserIconDiv{
+    display: flex;
+    align-items: center;
+}
+
+.addCommitInput{
+    border-left:none;
+    border-right: none;
+    border-top: none;
+}
+.addCommitInput:focus{
+    box-shadow: var(--commitBoxshadow);
+
+}

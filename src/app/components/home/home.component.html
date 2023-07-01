@@ -20,7 +20,9 @@
 <div id="carouselExampleControl" class="carousel slide" data-bs-ride="true">
     <div class="carousel-indicators">
         <ng-container *ngFor="let item of carouselButonCount() ">
-            <button type="button " data-bs-target="#carouselExampleControl" [attr.data-bs-slide-to]="item" [class]="item==0? 'active': '' " [attr.aria-current]="item==0?true:false " [attr.aria-label]=" 'Slide '+ item "></button>
+            <button type="button " data-bs-target="#carouselExampleControl" [attr.data-bs-slide-to]="item"
+                [class]="item==0? 'active': '' " [attr.aria-current]="item==0?true:false "
+                [attr.aria-label]=" 'Slide '+ item "></button>
         </ng-container>
     </div>
     <div class="carousel-inner">
@@ -70,9 +72,20 @@
                         <h5 class="card-title ">{{menu.name}}</h5>
                         <p class="card-text ">{{menu.description}}</p>
                         <div class="priceAndAddToCard "> <span class="price ">{{(menu.price).toFixed(2)}} TL</span>
-                            <div class="addToCardBtn "> <button class="blueBtn hover-effect" (click)="addToCardMenu(menu.id)">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
+                            <div class="addToCardBtn "> <button class="blueBtn hover-effect"
+                                    (click)="addToCardMenu(menu.id)">Sepete Ekle <fa-icon [icon]="faPlusCircle ">
                                     </fa-icon></button></div>
                         </div>
+                    </div>
+                    <div class="card-footer" style="display: flex;">
+                        <div class="rating">
+                            <div *ngFor="let i of [1, 2, 3, 4, 5]">
+                                <fa-icon [icon]="faStar" class="ratingIcon me-2"></fa-icon>
+                            </div>
+                        </div>
+                        <a style="margin-left: auto;cursor: pointer;" (click)="openComments(menu,menuImgUrl+menu.imgUrl)">
+                            Yorumlar
+                        </a>
                     </div>
                 </div>
             </div>
@@ -97,10 +110,21 @@
                         <h5 class="card-title ">{{food.name}}</h5>
                         <p class="card-text ">{{food.description}}</p>
                         <div class="priceAndAddToCard "> <span class="price ">{{food.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn "> <button (click)="addToCardFood(food.id) " class="blueBtn hover-effect ">Sepete
+                            <div class="addToCardBtn "> <button (click)="addToCardFood(food.id) "
+                                    class="blueBtn hover-effect ">Sepete
                                     Ekle <fa-icon [icon]="faPlusCircle "></fa-icon></button></div>
                         </div>
+                    </div>
 
+                    <div class="card-footer" style="display: flex;">
+                        <div class="rating">
+                            <div *ngFor="let i of [1, 2, 3, 4, 5]">
+                                <fa-icon [icon]="faStar" class="ratingIcon me-2"></fa-icon>
+                            </div>
+                        </div>
+                        <a style="margin-left: auto;cursor: pointer;" (click)="openComments(food,foodImgUrl+food.imgUrl)">
+                            Yorumlar
+                        </a>
                     </div>
                 </div>
             </div>
@@ -125,9 +149,21 @@
                         <h5 class="card-title ">{{drink.name}}</h5>
                         <p class="card-text ">{{drink.description}}</p>
                         <div class="priceAndAddToCard "> <span class="price ">{{drink.price.toFixed(2)}} Tl</span>
-                            <div class="addToCardBtn "> <button (click)="addToCardDrink(drink.id) " class="blueBtn hover-effect ">Sepete Ekle <fa-icon [icon]="faPlusCircle "></fa-icon>
+                            <div class="addToCardBtn "> <button (click)="addToCardDrink(drink.id) "
+                                    class="blueBtn hover-effect ">Sepete Ekle <fa-icon [icon]="faPlusCircle "></fa-icon>
                                 </button></div>
                         </div>
+                    </div>
+
+                    <div class="card-footer" style="display: flex;">
+                        <div class="rating">
+                            <div *ngFor="let i of [1, 2, 3, 4, 5]">
+                                <fa-icon [icon]="faStar" class="ratingIcon me-2"></fa-icon>
+                            </div>
+                        </div>
+                        <a style="margin-left: auto;cursor: pointer;" (click)="openComments(drink,drinkImgUrl+drink.imgUrl)">
+                            Yorumlar
+                        </a>
                     </div>
                 </div>
             </div>
@@ -140,7 +176,8 @@
         <h3 class="mb-4" id="sweets">Tatlılar
             <fa-icon [icon]="faCandyCane " class="headerIcon "></fa-icon>
         </h3>
-        <div *ngIf="this.sweetList.length>0" class="row row-cols-1 row-cols-md-2  row-cols-lg-3 row-cols-xxl-4 gy-4 gx-2" style="width: 100%;">
+        <div *ngIf="this.sweetList.length>0"
+            class="row row-cols-1 row-cols-md-2  row-cols-lg-3 row-cols-xxl-4 gy-4 gx-2" style="width: 100%;">
             <div *ngFor="let sweet of sweetList">
                 <div class="col">
                     <div class="card productCard" style="width: 18rem;">
@@ -151,9 +188,20 @@
                             <h5 class="card-title">{{sweet.name}}</h5>
                             <p class="card-text">{{sweet.description}}</p>
                             <div class="priceAndAddToCard"> <span class="price">{{sweet.price.toFixed(2)}} Tl</span>
-                                <div class="addToCardBtn"> <button (click)="addToCardSweet(sweet.id)" class="blueBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle">
+                                <div class="addToCardBtn"> <button (click)="addToCardSweet(sweet.id)"
+                                        class="blueBtn hover-effect">Sepete Ekle <fa-icon [icon]="faPlusCircle">
                                         </fa-icon></button></div>
                             </div>
+                        </div>
+                        <div class="card-footer" style="display: flex;">
+                            <div class="rating">
+                                <div *ngFor="let i of [1, 2, 3, 4, 5]">
+                                    <fa-icon [icon]="faStar" class="ratingIcon me-2"></fa-icon>
+                                </div>
+                            </div>
+                            <a style="margin-left: auto;cursor: pointer;" (click)="openComments(sweet,sweetImgUrl+sweet.imgUrl)">
+                                Yorumlar
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -196,4 +244,8 @@
         </p>
         <button id="blueBtn" class="hover-effect" routerLink="/sepetim">Sepete git</button>
     </div>
+</div>
+
+<div *ngIf="commentPageVisible">
+    <app-product-comments (pageVisibleEvent)="pageVisible($event)" [pageVisible]="commentPageVisible" [product]="commentProduct" [imgUrl]="commentImg"></app-product-comments>
 </div>

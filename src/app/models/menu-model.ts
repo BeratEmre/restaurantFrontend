@@ -1,14 +1,9 @@
 import { DrinkModel } from "./drink-model";
 import { FoodModel } from "./food-model";
+import { ProductBaseModel } from "./product-base-model";
 import { SweetModel } from "./sweet-model";
 
-export class MenuModel {
-    id: number = 0;
-    name: string = '';
-    description: string = '';
-    imgUrl:string='';
-    price:number=0;
-    isHaveStar:boolean=false;
+export class MenuModel extends ProductBaseModel{
     order:number=0;
 
     foodId: number = 0;
